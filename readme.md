@@ -11,7 +11,7 @@ There are a couple of known issues or things to note with my Lovelace
 configuration:
 * The configuration is highly mobile-focused right now. I plan to add some
   PC-centric views down the line, but mobile is definitely the priority.
-* Most of the views are currently geared towards portrait orientain use. A few
+* Most of the views are currently geared towards portrait orientation use. A few
   of them look alright in landscape, but I haven't put a great deal of effort
   into that yet. My focus is definitely on portrait view, scaled to my phone
   screen (LG V30).
