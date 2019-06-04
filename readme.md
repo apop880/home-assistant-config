@@ -26,18 +26,12 @@ configuration:
   you go back into Home Assistant and it has to reconnect. This is generally
   fixed by a refresh of the page.
 
-## Screenshot
+## Screenshots
 
-![alt-text](https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/chromecast_remote.jpg
-"Chromecast Remote")
-![alt-text](https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/xbox_remote.jpg
-"Xbox Remote")
-![alt-text](https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/tvs.jpg
-"Upstairs TV's")
+<img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/chromecast_remote.jpg" width=200>
+<img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/xbox_remote.jpg" width=200>
+<img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/tvs.jpg" width=200>
 
-![alt-text](https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/lights.jpg
-"Lights")
-![alt-text](https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/climate.jpg
-"Climate")
-![alt-text](https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/system.jpg
-"System")
+<img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/lights.jpg" width=200>
+<img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/climate.jpg" width=200>
+<img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/system.jpg" width=200>
