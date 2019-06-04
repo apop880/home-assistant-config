@@ -1,0 +1,427 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 279
+  # metric for Metric, imperial for Imperial
+  unit_system: imperial
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: America/Chicago
+  # Customization file
+  customize: !include customize.yaml
+  whitelist_external_dirs:
+   - /config/www/tileboard/images/screensaver
+
+
+system_health:
+
+# Enables the frontend
+frontend:
+  javascript_version: latest
+  themes: !include themes.yaml
+
+lovelace:
+  mode: yaml
+
+# Enables configuration UI
+config:
+ 
+
+google_assistant:
+  project_id: home-assistant-227322
+  api_key: !secret google_api
+  exposed_domains:
+    - switch
+    - light
+    - input_boolean
+    - script
+  entity_config:
+    light.hue_ambiance_lamp_1:
+      expose: false
+    light.hue_ambiance_lamp_2:
+      expose: false
+    light.hue_ambiance_lamp_3:
+      expose: false
+    light.hue_ambiance_lamp_4:
+      expose: false
+    light.hue_ambiance_lamp_5:
+      expose: false
+    light.hue_color_lamp_1:
+      expose: false
+    light.hue_color_lamp_2:
+      expose: false
+    light.hue_white_lamp_3:
+      expose: false
+    light.hue_white_lamp_4:
+      expose: false
+    light.hue_white_lamp_5:
+      expose: false
+    light.morgan_fun_1:
+      expose: false
+    light.morgan_fun_2:
+      expose: false
+    light.morgan_fun_3:
+      expose: false
+    light.morgan_fun_4:
+      expose: false
+    light.morgan_fun_5:
+      expose: false
+    light.morgan_s_fun_lamp_group:
+      expose: false
+    input_boolean.show_commute:
+      expose: false
+    input_boolean.alex_bed:
+      expose: false
+    input_boolean.alex_basement:
+      expose: false
+    input_boolean.julie_bed:
+      expose: false
+    input_boolean.alarm_clock:
+      expose: false
+    input_boolean.kitchen_light_triggered:
+      expose: false
+    light.kitchen_sink:
+      name: KITCHEN SINK
+      aliases:
+        - ISLAND LIGHTS
+
+# Discover some devices automatically
+discovery:
+    ignore:
+      - igd
+      - harmony
+      - roku
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Recorder customization
+recorder:
+  purge_keep_days: 5
+  include:
+    domains:
+      - light
+      - switch
+      - device_tracker
+      - input_boolean
+      - cover
+    entities:
+      - sensor.load_15m
+      - sensor.disk_use_percent_home
+      - sensor.memory_free
+      - sensor.processor_use
+  exclude:
+    entities:
+      - light.hue_ambiance_lamp_1
+      - light.hue_ambiance_lamp_2
+      - light.hue_ambiance_lamp_3
+      - light.hue_ambiance_lamp_4
+      - light.hue_ambiance_lamp_5
+      - light.hue_color_lamp_1
+      - light.hue_color_lamp_2
+      - light.hue_white_lamp_3
+      - light.hue_white_lamp_4
+      - light.hue_white_lamp_5
+      - light.morgan_fun_1
+      - light.morgan_fun_2
+      - light.morgan_fun_3
+      - light.morgan_fun_4
+      - light.morgan_fun_5
+      - light.morgan_s_fun_lamp_group
+      - input_boolean.alarm_clock
+      - input_boolean.alex_basement
+      - input_boolean.kitchen_light_triggered
+      - input_boolean.show_commute
+    event_types:
+      - service_removed
+      - service_executed
+      - platform_discovered
+      - feedreader
+      - service_registered
+      - call_service
+      - component_loaded
+      - logbook_entry
+      - system_log_event
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+#map:
+
+# Track the sun
+sun:
+
+zwave:
+  usb_path: /dev/ttyUSB0
+
+zha:
+  usb_path: /dev/ttyUSB1
+  database_path: /config/zigbee.db
+
+# Switches
+
+# Sensors
+sensor:
+  # Weather prediction
+  - platform: systemmonitor
+    resources:
+      - type: disk_use_percent
+        arg: /home
+      - type: memory_free
+      - type: load_15m
+      - type: processor_use
+  - platform: darksky
+    api_key: !secret darksky_api
+    forecast:
+      - 0
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+    monitored_conditions:
+      - summary
+      - icon
+      - temperature
+      - temperature_high
+      - temperature_low
+      - apparent_temperature
+      - precip_probability
+      - precip_accumulation
+      - precip_intensity
+      - cloud_cover
+    scan_interval:
+      minutes: 5
+  - platform: waze_travel_time
+    name: "To Home"
+    origin: !secret work
+    destination: !secret home
+    region: 'US'
+  - platform: waze_travel_time
+    name: "To Work"
+    origin: !secret home
+    destination: !secret work
+    region: 'US'
+  # - platform: rest
+  #   name: My Config
+  #   resource: !secret config_url
+  #   authentication: basic
+  #   value_template: "{{ value_json.version }}"
+  #   json_attributes:
+  #     - components
+  #     - unit_system
+  #     - config_dir
+  #   headers:
+  #     Content-Type: application/json
+  #     Authorization: !secret auth_token
+  #     User-Agent: Home Assistant REST sensor
+  - platform: time_date
+    display_options:
+      - 'time'
+  - platform: template
+    sensors:
+      local_time:
+        value_template: "{{as_timestamp(now()) | timestamp_custom('%-I:%M %p')}}"
+        entity_id: sensor.time
+      harmony_activity:
+        value_template: '{{ states.remote.harmony_hub.attributes.current_activity }}'
+        friendly_name: 'Harmony Activity'
+      garage_status:
+        friendly_name: 'Garage Door'
+        value_template: '{% if states.cover.garage_door %}
+          {% if states.cover.garage_door.attributes["door_state"] == "open" %}
+            Open
+          {% elif states.cover.garage_door.attributes["door_state"] == "closed" %}
+            Closed
+          {% elif states.cover.garage_door.attributes["door_state"] == "opening" %}
+            Opening
+          {% elif states.cover.garage_door.attributes["door_state"] == "closing" %}
+            Closing
+          {% else %}
+            Unknown
+          {% endif %}
+          {% else %}
+          n/a
+          {% endif %}'
+      garage_updated:
+        value_template: '{{ as_timestamp(states.cover.garage_door.last_updated) }}'
+  - platform: min_max
+    type: mean
+    round_digits: 1
+    name: Downstairs Temperature
+    entity_ids:
+      - sensor.bar_button
+      - sensor.theater_button
+  - platform: min_max
+    type: mean
+    name: Upstairs Temperature
+    round_digits: 1
+    entity_ids:
+      - sensor.stairs_button
+  - platform: command_line
+    name: CPU Temperature
+    command: "cat /sys/class/thermal/thermal_zone0/temp"
+    unit_of_measurement: "°C"
+    value_template: '{{ value | multiply(0.001) | round(1) }}'
+
+# Text to speech
+tts:
+  - platform: google_translate
+    service_name: google_say
+  
+device_tracker:
+
+# Cloud
+cloud:
+
+http: !secret http
+
+light:
+  - platform: group
+    name: Kitchen Table
+    entities:
+      - light.hue_ambiance_lamp_3
+      - light.hue_ambiance_lamp_4
+      - light.hue_ambiance_lamp_5
+  - platform: group
+    name: Kitchen Sink
+    entities:
+      - light.hue_ambiance_lamp_1
+      - light.hue_ambiance_lamp_2
+  - platform: group
+    name: Garage
+    entities:
+      - light.hue_color_lamp_1
+      - light.hue_color_lamp_2
+  - platform: group
+    name: Theater
+    entities:
+      - light.hue_white_lamp_3
+      - light.hue_white_lamp_4
+      - light.hue_white_lamp_5
+  - platform: group
+    name: Morgan's Fun Lamp Group
+    entities:
+      - light.morgan_fun_1
+      - light.morgan_fun_2
+      - light.morgan_fun_3
+      - light.morgan_fun_4
+      - light.morgan_fun_5
+  - platform: template
+    lights:
+      morgan_fun:
+        friendly_name: "Morgan's Fun Lamp"
+        level_template: >-
+          {% if states.light.morgan_fun_1.attributes.brightness %}
+            {{states.light.morgan_fun_1.attributes.brightness | int}}
+          {% else %}
+            0
+          {% endif %}
+        value_template: >-
+          {% if states.light.morgan_fun_1.attributes.brightness %}
+            on
+          {% else %}
+            off
+          {% endif %}
+        turn_on:
+          event: morgan_fun
+          event_data:
+           status: "on"
+        turn_off:
+          event: morgan_fun
+          event_data:
+           status: "off"
+        set_level:
+          event: morgan_fun_level
+          event_data_template:
+           brightness: "{{ brightness }}"
+      
+cover:
+  platform: opengarage
+  covers:
+      garage: !secret garage
+
+media_player:
+  - platform: onkyo_custom
+    host: !secret onkyo
+    name: receiver
+  - platform: xboxone
+    device: !secret xboxone
+    name: Xbox One
+      
+telegram_bot: !secret telegram_bot
+    
+notify: !secret notify
+    
+    
+#android_ip_webcam:
+#  - host: 192.168.0.118
+#    port: 8080
+#    sensors:
+#      - motion
+
+remote:
+  - platform: harmony
+    name: Harmony Hub
+    host: !secret harmony
+      
+rest_command:
+  google_backup:
+    url: 'http://localhost:8055/gb/doBackup'
+    timeout: '300'
+    
+input_boolean:
+  vacation_mode:
+    name: Vacation Mode
+  night_mode:
+    name: Night Mode
+  circadian_lighting:
+    name: Circadian Lighting
+  guest_mode:
+    name: Guest Mode
+  white_noise:
+    name: White Noise
+  white_noise_morgan:
+    name: Morgan's White Noise
+  show_commute:
+    name: Show Commute
+  alex_bed:
+    name: Alex Bed
+  alex_basement:
+    name: Alex Basement
+  julie_bed:
+    name: Julie Bed
+  alarm_clock:
+    name: Alarm Clock Triggered
+  kitchen_light_triggered:
+    name: Kitchen Trigger
+    
+input_select:
+  front_light_mode:
+    name: Front Light Mode
+    options:
+      - Standard
+      - Christmas
+      - Halloween
+      - Independence Day
+  morgan_lamp_mode:
+    name: Morgan's Lamp Mode
+    options:
+      - Standard
+      - Focus
+      - Princess
+      - Rainbow
+      - Jungle
+      - Ocean
+      - Red
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml

@@ -1,0 +1,327 @@
+anchors:
+  ###    
+  custom_button_label: &custom_button_main_label
+    type: custom:button-card
+    show_name: false
+    show_icon: false
+    show_label: true
+    styles:
+      card:
+        - height: 50px
+        - background: linear-gradient(to right, rgba(255,255,255,0.45) 0%,rgba(255,255,255,0.3) 60%,rgba(255,255,255,0) 85%)
+        - --ha-card-box-shadow: 'none'
+      label:
+        - justify-self: start
+        - padding-left: 10px
+        - font-size: 18pt
+      
+  custom_button_label_on: &custom_button_label_on
+    type: custom:button-card
+    icon: 'mdi:power'
+    show_name: false
+    tap_action:
+      action: call-service
+      service: homeassistant.turn_on
+      service_data:
+        entity_id: entity
+    styles:
+      card:
+        - border-radius: 50%
+        - height: 40px
+        - width: 40px
+        - background: 'rgba(255,255,255,0.45)'
+        - top: 5px
+      icon:
+        - color: green
+        - width: 35px
+        
+  custom_button_label_off: &custom_button_label_off
+    type: custom:button-card
+    icon: 'mdi:power'
+    show_name: false
+    tap_action:
+      action: call-service
+      service: homeassistant.turn_off
+      service_data:
+        entity_id: entity
+    styles:
+      card:
+        - border-radius: 50%
+        - height: 40px
+        - width: 40px
+        - background: 'rgba(255,255,255,0.45)'
+        - top: 5px
+      icon:
+        - color: 'rgb(200,0,0)'
+        - width: 35px
+###
+  light_button: &lightbutton
+    hold_action:
+      action: more-info
+    layout: icon_name_state2nd
+    show_label: true
+    state:
+      - label_template: >
+          return
+          Math.round((entity.attributes.brightness/255)
+          * 100) + "%";
+        styles:
+          icon:
+            - color: 'rgb(250,218,94)'
+        value: 'on'
+      - icon: 'mdi:lightbulb-outline'
+        label: 'Off'
+        styles:
+          icon:
+            - color: '#303741'
+        value: 'off'
+    styles:
+      card:
+        - font-size: 20px
+        - border-radius: 10px
+        - background: 'rgba(255,255,255,0.45)'
+        - height: 65px
+      icon:
+        - width: 40px
+      label:
+        - font-size: 15px
+        - padding-top: 6px
+    type: 'custom:button-card'
+  section_header: &sectionheader
+    card:
+      image: /local/images/section-header6.png
+      type: picture-elements
+    style:
+      '--paper-card-background-color': 'rgba(255,255,255,0.45)'
+    type: 'custom:card-modder'
+  spacer: &spacer
+    type: 'custom:button-card'
+    color_type: blank-card
+    styles:
+      card:
+        - width: 2px
+  light_off: &lightoff
+    icon: 'mdi:lightbulb-outline'
+    label: 'Off'
+    styles:
+      icon:
+        - color: '#303741'
+    value: 'off'
+  power_on: &poweron
+    icon: 'mdi:power'
+    style:
+      background-color: grey
+      border-radius: 20px
+      color: green
+      right: 20%
+      top: 25%
+      transform: 'scale(1.5,1.5)'
+    tap_action:
+      action: call-service
+      service: homeassistant.turn_on
+      service_data:
+        entity_id: group.kitchen
+    type: icon
+  power_off: &poweroff
+    icon: 'mdi:power'
+    style:
+      background-color: grey
+      border-radius: 20px
+      color: 'rgb(200,0,0)'
+      right: 5%
+      top: 25%
+      transform: 'scale(1.5,1.5)'
+    tap_action:
+      action: call-service
+      service: homeassistant.turn_off
+      service_data:
+        entity_id: group.kitchen
+    type: icon
+  section_label: &sectionlabel
+    style:
+      font-size: 18pt
+      left: 50px
+      top: 50%
+    text: Kitchen
+    type: 'custom:text-element'
+background: center / cover no-repeat url("/local/images/day.jpg") fixed
+badges: []
+cards:
+  - background: 'rgba(51,51,51,0.6)'
+    clock: voice
+    clock_format: '12'
+    exceptions:
+      - conditions:
+          user: morgankiosk
+        config:
+          header: false
+          show_tabs: '5'
+      - conditions:
+          user_agent: Android
+        config:
+          menu: hide
+          options: hide
+          hide_tabs: '6'
+      - conditions:
+          user: Julie
+          user_agent: Android
+        config:
+          menu: hide
+          options: hide
+          hide_tabs: '5,6'
+    main_config: true
+    notifications: overflow
+    type: 'custom:compact-custom-header'
+    voice: hide
+  - cards:
+      - type: horizontal-stack
+        cards:
+          - <<: *custom_button_main_label
+            label: "Kitchen"
+          - <<: *custom_button_label_on
+            entity: group.kitchen
+          - <<: *spacer
+          - <<: *custom_button_label_off
+            entity: group.kitchen
+          - <<: *spacer
+      - cards:
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: light.kitchen_sink
+                name: Sink
+              - <<: *lightbutton
+                entity: light.kitchen_table
+                name: Table
+              - <<: *spacer
+            type: horizontal-stack
+        type: vertical-stack
+    type: vertical-stack
+  - cards:
+      - type: horizontal-stack
+        cards:
+          - <<: *custom_button_main_label
+            label: "Master Bedroom"
+          - <<: *custom_button_label_on
+            entity: group.master_bedroom
+          - <<: *spacer
+          - <<: *custom_button_label_off
+            entity: group.master_bedroom
+          - <<: *spacer
+      - cards:
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: light.alex_lamp
+                name: Alex
+              - <<: *lightbutton
+                entity: light.julie_lamp
+                name: Julie
+              - <<: *spacer
+            type: horizontal-stack
+        type: vertical-stack
+    type: vertical-stack
+  - cards:
+      - type: horizontal-stack
+        cards:
+          - <<: *custom_button_main_label
+            label: "Morgan's Room"
+          - <<: *custom_button_label_on
+            entity: group.morgan_room
+          - <<: *spacer
+          - <<: *custom_button_label_off
+            entity: group.morgan_room
+          - <<: *spacer
+      - cards:
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: light.morgan_table
+                name: Table
+              - <<: *lightbutton
+                entity: light.morgan_fun
+                name: Fun
+              - <<: *spacer
+            type: horizontal-stack
+        type: vertical-stack
+    type: vertical-stack
+  - cards:
+      - type: horizontal-stack
+        cards:
+          - <<: *custom_button_main_label
+            label: "Basement"
+          - <<: *custom_button_label_on
+            entity: group.basement
+          - <<: *spacer
+          - <<: *custom_button_label_off
+            entity: group.basement
+          - <<: *spacer
+      - cards:
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: light.stairs
+                name: Stairs
+              - <<: *lightbutton
+                entity: light.theater
+                name: Theater
+              - <<: *spacer
+            type: horizontal-stack
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: light.bar
+                name: Bar
+              - <<: *lightbutton
+                entity: light.gledopto_gledopto_199f0c03_11
+                name: LED Strip
+              - <<: *spacer
+            type: horizontal-stack
+        type: vertical-stack
+    type: vertical-stack
+  - cards:
+      - type: horizontal-stack
+        cards:
+          - <<: *custom_button_main_label
+            label: "Outside"
+          - <<: *custom_button_label_on
+            entity: group.outside
+          - <<: *spacer
+          - <<: *custom_button_label_off
+            entity: group.outside
+          - <<: *spacer
+      - cards:
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: light.front_porch
+                name: Porch
+              - <<: *lightbutton
+                entity: light.garage
+                name: Garage
+              - <<: *spacer
+            type: horizontal-stack
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: switch.rear_floodlights
+                name: Backyard
+                state:
+                  - label: 'On'
+                    styles:
+                      icon:
+                        - color: 'rgb(250,218,94)'
+                    value: 'on'
+                    icon: 'mdi:lightbulb'
+                  - <<: *lightoff
+              - type: 'custom:button-card'
+                color_type: blank-card
+              - <<: *spacer
+            type: horizontal-stack
+        type: vertical-stack
+    type: vertical-stack
+icon: 'mdi:lightbulb'
+panel: false
+path: default_view
+theme: default
+title: Lights

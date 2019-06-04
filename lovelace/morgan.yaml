@@ -1,0 +1,60 @@
+    background: center / cover no-repeat url("/local/images/day.jpg") fixed
+    badges: []
+    cards:
+      - cards:
+          - elements:
+              - type: image
+                entity: light.morgan_fun
+                filter: none
+                tap_action:
+                  action: toggle
+                image: /local/images/fun-lamp-off.png
+                state_image:
+                  'on': /local/images/fun-lamp-on.png
+                style:
+                  top: 125px
+                  left: 175px
+                  width: 310px
+              - type: image
+                entity: light.morgan_table
+                filter: none
+                tap_action:
+                  action: toggle
+                image: /local/images/table-lamp-off.png
+                state_image:
+                  'on': /local/images/table-lamp-on.png
+                style:
+                  top: 280px
+                  left: 175px
+                  width: 310px
+              - type: image
+                entity: input_boolean.white_noise_morgan
+                filter: none
+                tap_action:
+                  action: toggle
+                image: /local/images/white-noise-off.png?v=2
+                state_image:
+                  'on': /local/images/white-noise-on.png
+                style:
+                  top: 320px
+                  right: -60px
+                  width: 140px
+              - type: state-label
+                entity: sensor.local_time
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                style:
+                  top: 25px
+                  right: -55px
+                  font-size: 20pt
+            image: /local/images/monkey.png
+            type: picture-elements
+          - clock: voice
+            clock_format: '12'
+            type: 'custom:compact-custom-header'
+            voice: hide
+        type: vertical-stack
+    panel: true
+    title: Morgan

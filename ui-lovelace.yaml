@@ -1,0 +1,60 @@
+resources:
+  - type: module
+    url: >-
+      /local/custom-lovelace/compact-custom-header/compact-custom-header.js?v=1.2
+  - type: module
+    url: /local/custom-lovelace/button-card/button-card.js?v=1.10
+  - url: /local/custom-lovelace/weather-card/dark-sky-weather-card.js?v=7.11
+    type: module
+  - url: /local/custom-lovelace/mini-media-player/mini-media-player-bundle.js?v=1.1.2
+    type: module
+  - type: css
+    url: 'https://fonts.googleapis.com/css?family=Lato'
+  - type: js
+    url: /local/custom-lovelace/text-element/text-element.js?v=0
+  - type: js
+    url: /local/custom-lovelace/gap-card/gap-card.js?v=0
+  - type: js
+    url: /local/custom-lovelace/popup-card/popup-card.js?v=0
+  - type: js
+    url: /local/custom-lovelace/card-tools/card-tools.js?v=0.2
+  - type: js
+    url: /local/custom-lovelace/slider-entity-row/slider-entity-row.js?v=0
+  - url: /local/custom-lovelace/vertical-stack-in-card/vertical-stack-in-card.js?v=0.1.2
+    type: js
+  - url: /local/custom-lovelace/bar-card/bar-card.js?v=1.0.0
+    type: js
+  - type: js
+    url: /local/custom-lovelace/card-modder/card-modder.js?v=0
+  - type: js
+    url: >-
+      /local/custom-lovelace/lovelace-swipe-navigation/lovelace-swipe-navigation.js?v=1.0.2
+  - url: /local/custom-lovelace/card-templater/lovelace-card-templater.js?v=0.0.2
+    type: js
+title: Home
+popup_cards:
+  light.morgan_fun:
+    title: Morgan's Fun Lamp
+    card:
+      type: 'custom:card-modder'
+      style:
+        box-shadow: none
+        '--paper-card-background-color': 'rgba(255,255,255,0)'
+      card:
+        type: entities
+        entities:
+          - type: 'custom:slider-entity-row'
+            entity: light.morgan_fun
+            toggle: true
+            full_row: true
+            name: Switch
+          - entity: input_select.morgan_lamp_mode
+            name: Mode
+views:
+  - !include /config/lovelace/lights-mobile.yaml
+  - !include /config/lovelace/weather-mobile.yaml
+  - !include /config/lovelace/security-mobile.yaml
+  - !include /config/lovelace/tv-mobile.yaml
+  - !include /config/lovelace/remote.yaml
+  - !include /config/lovelace/system-mobile.yaml
+  - !include /config/lovelace/morgan.yaml

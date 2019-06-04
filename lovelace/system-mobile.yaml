@@ -1,0 +1,131 @@
+anchors:
+  ###    
+  custom_button_label: &custom_button_main_label
+    type: custom:button-card
+    show_name: false
+    show_icon: false
+    show_label: true
+    styles:
+      card:
+        - height: 50px
+        - background: linear-gradient(to right, rgba(255,255,255,0.45) 0%,rgba(255,255,255,0.3) 40%,rgba(255,255,255,0) 70%)
+        - --ha-card-box-shadow: 'none'
+      label:
+        - justify-self: start
+        - padding-left: 20px
+        - font-size: 18pt
+  bar_card: &barcard
+    type: custom:bar-card
+    title_position: inside
+    height: 50px
+    color: 'rgb(0,128,0)'
+    width: 100%
+    padding: 4px
+    card_style:
+      background: 'rgba(255,255,255,0.45)'
+      border-radius: 10px
+      margin: 10px
+    icon_style:
+      height: 60px
+      width: 60px
+      color: '#FF0000'
+    title_style:
+      color: '#FFFFFF'
+      font-size: 16px
+      text-shadow: "0 0 10px #000000"
+    value_style:
+      color: '#FFFFFF'
+      font-size: 20px
+      text-shadow: "0 0 10px #000000"
+background: center / cover no-repeat url("/local/images/day.jpg") fixed
+badges: []
+cards:
+    - type: 'custom:compact-custom-header'
+    - <<: *custom_button_main_label
+      label: "System Monitoring"
+    - <<: *barcard
+      columns: 2
+      entities:
+        - entity: sensor.cpu_temperature
+          title: CPU Temp
+          unit_of_measurement: "°C"
+          min: 86
+          max: 180
+          severity:
+          - value: 140
+            color: 'rgb(0,128,0)'
+          - value: 158
+            color: 'rgb(234,200,4)'
+          - value: 200
+            color: 'rgb(200,0,0)'
+        - entity: sensor.processor_use
+          title: CPU Usage
+          unit_of_measurement: "%"
+          severity:
+          - value: 50
+            color: 'rgb(0,128,0)'
+          - value: 80
+            color: 'rgb(234,200,4)'
+          - value: 100
+            color: 'rgb(200,0,0)'
+        - entity: sensor.disk_use_percent_home
+          title: Disk Usage
+          unit_of_measurement: "%"
+          severity:
+          - value: 70
+            color: 'rgb(0,128,0)'
+          - value: 85
+            color: 'rgb(234,200,4)'
+          - value: 100
+            color: 'rgb(200,0,0)'
+        - entity: sensor.memory_free
+          title: Memory Free
+          unit_of_measurement: "MB"
+          min: 0
+          max: 1000
+          severity:
+          - value: 1200
+            color: 'rgb(0,128,0)'
+          - value: 400
+            color: 'rgb(234,200,4)'
+          - value: 200
+            color: 'rgb(200,0,0)'
+    - <<: *custom_button_main_label
+      label: "Battery Status"
+    - <<: *barcard
+      columns: 2
+      attribute: battery_level
+      unit_of_measurement: "%"
+      severity:
+        - value: 100
+          color: 'rgb(0,128,0)'
+        - value: 40
+          color: 'rgb(234,200,4)'
+        - value: 20
+          color: 'rgb(200,0,0)'
+      entities:
+        - entity: zha.bar_button
+          title: Bar Button
+        - entity: zha.theater_button
+          title: Theater Button
+        - entity: zha.stairs_button
+          title: Stairs Button
+    # - type: 'custom:card-templater'
+    #   card:
+    #     content_template: >-
+    #       {{ "<details>\n"}}
+
+    #       {% for component in
+    #       states.sensor.my_config.attributes.components|sort -%}
+    #         {{ component  + "\n"}}
+    #       {%- endfor %}
+
+    #       {{ "</details>" }}
+    #     title_template: >-
+    #       {{states.sensor.my_config.attributes.components|length}} Components
+    #       Loaded
+    #     type: markdown
+    #   entities:
+    #     - sensor.my_config
+icon: 'mdi:eye-settings'
+title: System

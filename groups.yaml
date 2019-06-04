@@ -1,0 +1,34 @@
+kitchen:
+  name: Kitchen
+  entities:
+    - light.kitchen_sink
+    - light.kitchen_table
+master_bedroom:
+  name: Master Bedroom
+  entities:
+    - light.alex_lamp
+    - light.julie_lamp
+morgan_room:
+  name: Morgan's Room
+  entities:
+    - light.morgan_table
+    - light.morgan_fun
+basement:
+  name: Basement
+  entities:
+    - light.theater
+    - light.stairs
+    - light.bar
+outside:
+  name: Outside
+  entities:
+    - light.front_porch
+    - light.garage
+    - switch.rear_floodlights
+inside_lights:
+  name: Inside
+  entities:
+    - group.kitchen
+    - group.master_bedroom
+    - group.morgan_room
+    - group.basement

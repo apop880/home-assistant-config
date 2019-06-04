@@ -1,0 +1,6 @@
+- alias: 'Tileboard Webhook'
+  trigger:
+    platform: webhook
+    webhook_id: tb_update
+  action:
+    event: tb_update
