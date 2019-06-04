@@ -48,7 +48,7 @@ cards:
       entities:
         - entity: sensor.cpu_temperature
           title: CPU Temp
-          unit_of_measurement: "°C"
+          unit_of_measurement: "°F"
           min: 86
           max: 180
           severity:
