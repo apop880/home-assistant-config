@@ -28,10 +28,10 @@ configuration:
 
 ## Screenshots
 
+<table><tr><td>
 <img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/chromecast_remote.jpg" width=200>
 <img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/xbox_remote.jpg" width=200>
-<img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/tvs.jpg" width=200>
-
+<img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/tvs.jpg" width=200></td></tr><tr><td>
 <img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/lights.jpg" width=200>
 <img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/climate.jpg" width=200>
-<img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/system.jpg" width=200>
+<img src="https://raw.githubusercontent.com/apop880/home-assistant-config/master/lovelace/screenshots/system.jpg" width=200></td></tr></table>
