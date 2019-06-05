@@ -8,7 +8,7 @@ anchors:
     styles:
       card:
         - height: 50px
-        - background: linear-gradient(to right, rgba(255,255,255,0.45) 0%,rgba(255,255,255,0.3) 60%,rgba(255,255,255,0) 85%)
+        - background: linear-gradient(to right, rgba(255,255,255,0.45) 0%,rgba(255,255,255,0.3) 60%,rgba(255,255,255,0) 95%)
         - --ha-card-box-shadow: 'none'
       label:
         - justify-self: start
@@ -76,6 +76,9 @@ anchors:
             - color: '#303741'
         value: 'off'
     styles:
+      grid:
+        - grid-template-areas: '"i n" "i s" "i l"'
+        - grid-template-columns: 1fr 70%
       card:
         - font-size: 20px
         - border-radius: 10px
