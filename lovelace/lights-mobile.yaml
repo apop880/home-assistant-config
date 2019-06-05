@@ -164,7 +164,7 @@ cards:
           user: morgankiosk
         config:
           header: false
-          show_tabs: '5'
+          show_tabs: '6'
       - conditions:
           user_agent: Android
         config:
