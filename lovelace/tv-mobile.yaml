@@ -180,7 +180,7 @@ cards:
                   action: call-service
                   service: script.media_mute
                   service_data:
-                    entity_id: media_player.living_room_tv
+                    entity_id: media_player.vizio_smartcast
               - <<: *spacer
               - <<: *spacer
               - <<: *spacer
@@ -190,26 +190,26 @@ cards:
                   action: call-service
                   service: media_player.volume_down
                   service_data:
-                    entity_id: media_player.living_room_tv
+                    entity_id: media_player.vizio_smartcast
                 hold_action:
                   action: call-service
                   repeat: 500
                   service: media_player.volume_down
                   service_data:
-                    entity_id: media_player.living_room_tv
+                    entity_id: media_player.vizio_smartcast
               - <<: *actionbutton
                 icon: 'mdi:volume-plus'
                 tap_action:
                   action: call-service
                   service: media_player.volume_up
                   service_data:
-                    entity_id: media_player.living_room_tv
+                    entity_id: media_player.vizio_smartcast
                 hold_action:
                   action: call-service
                   repeat: 500
                   service: media_player.volume_up
                   service_data:
-                    entity_id: media_player.living_room_tv
+                    entity_id: media_player.vizio_smartcast
               - type: 'custom:button-card'
                 color_type: blank-card
           - type: 'custom:card-modder'
@@ -218,7 +218,7 @@ cards:
               show_header_toggle: false
               entities:
                 - type: 'custom:slider-entity-row'
-                  entity: media_player.living_room_tv
+                  entity: media_player.vizio_smartcast
                   full_row: true
                   hide_state: true
             style:
