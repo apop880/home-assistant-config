@@ -355,6 +355,9 @@ media_player:
   - platform: xboxone
     device: !secret xboxone
     name: Xbox One
+  - platform: vizio
+    host: !secret vizio
+    device_class: soundbar
       
 telegram_bot: !secret telegram_bot
     
