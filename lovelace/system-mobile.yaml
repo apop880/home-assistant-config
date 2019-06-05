@@ -17,14 +17,14 @@ anchors:
   bar_card: &barcard
     type: custom:bar-card
     title_position: inside
-    height: 50px
+    height: 55px
     color: 'rgb(0,128,0)'
     width: 100%
     padding: 4px
     card_style:
       background: 'rgba(255,255,255,0.45)'
       border-radius: 10px
-      margin: 10px
+      margin: 5px
     icon_style:
       height: 60px
       width: 60px
@@ -32,11 +32,11 @@ anchors:
     title_style:
       color: '#FFFFFF'
       font-size: 16px
-      text-shadow: "0 0 10px #000000"
+      text-shadow: "0 0 5px #000000"
     value_style:
       color: '#FFFFFF'
       font-size: 20px
-      text-shadow: "0 0 10px #000000"
+      text-shadow: "0 0 5px #000000"
 background: center / cover no-repeat url("/local/images/day.jpg") fixed
 badges: []
 cards:
