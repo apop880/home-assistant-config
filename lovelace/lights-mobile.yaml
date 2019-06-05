@@ -156,14 +156,16 @@ anchors:
 background: center / cover no-repeat url("/local/images/day.jpg") fixed
 badges: []
 cards:
-  - background: 'rgba(51,51,51,0.6)'
+  - type: 'custom:compact-custom-header'
+    background: 'rgba(51,51,51,0.6)'
     clock: voice
     clock_format: '12'
     exceptions:
       - conditions:
           user: morgankiosk
         config:
-          header: false
+          kiosk_mode: true
+          swipe: false
           show_tabs: '6'
       - conditions:
           user_agent: Android
@@ -178,10 +180,12 @@ cards:
           menu: hide
           options: hide
           hide_tabs: '5,6'
+          sidebar_swipe: false
     main_config: true
     notifications: overflow
-    type: 'custom:compact-custom-header'
     voice: hide
+    swipe: true
+    swipe_animate: swipe
   - cards:
       - type: horizontal-stack
         cards:

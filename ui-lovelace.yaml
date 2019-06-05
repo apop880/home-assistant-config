@@ -1,36 +1,34 @@
 resources:
-  - type: module
-    url: >-
-      /local/custom-lovelace/compact-custom-header/compact-custom-header.js?v=1.2
-  - type: module
-    url: /local/custom-lovelace/button-card/button-card.js?v=1.10
-  - url: /local/custom-lovelace/weather-card/dark-sky-weather-card.js?v=7.11
+  #HACS Resources (Updated Automatically)
+  - url: /community_plugin/compact-custom-header/compact-custom-header.js
     type: module
-  - url: /local/custom-lovelace/mini-media-player/mini-media-player-bundle.js?v=1.1.2
+  - url: /community_plugin/button-card/button-card.js
     type: module
-  - type: css
-    url: 'https://fonts.googleapis.com/css?family=Lato'
-  - type: css
-    url: /local/custom-lovelace/font.css
-  - type: js
-    url: /local/custom-lovelace/text-element/text-element.js?v=0
-  - type: js
-    url: /local/custom-lovelace/gap-card/gap-card.js?v=0
-  - type: js
-    url: /local/custom-lovelace/popup-card/popup-card.js?v=0
-  - type: js
-    url: /local/custom-lovelace/card-tools/card-tools.js?v=0.2
-  - type: js
-    url: /local/custom-lovelace/slider-entity-row/slider-entity-row.js?v=0
-  - url: /local/custom-lovelace/vertical-stack-in-card/vertical-stack-in-card.js?v=0.1.2
+  - url: /community_plugin/mini-media-player/mini-media-player.js
+    type: module
+  - url: /community_plugin/text-element/text-element.js
     type: js
-  - url: /local/custom-lovelace/bar-card/bar-card.js?v=1.0.0
+  - url: /community_plugin/lovelace-gap-card/gap-card.js
     type: js
-  - type: js
-    url: /local/custom-lovelace/card-modder/card-modder.js?v=0
-  - type: js
-    url: >-
-      /local/custom-lovelace/lovelace-swipe-navigation/lovelace-swipe-navigation.js?v=1.0.2
+  - url: /community_plugin/lovelace-popup-card/popup-card.js
+    type: js
+  - url: /community_plugin/lovelace-card-tools/card-tools.js
+    type: js
+  - url: /community_plugin/lovelace-slider-entity-row/slider-entity-row.js
+    type: js
+  - url: /community_plugin/bar-card/bar-card.js
+    type: js
+  - url: /community_plugin/lovelace-card-modder/card-modder.js
+    type: js
+  - url: /community_plugin/lovelace-card-loader/card-loader.js
+    type: js
+  #Non-HACS Resources
+  - url: /local/custom-lovelace/weather-card/dark-sky-weather-card.js?v=7.3
+    type: module
+  - url: 'https://fonts.googleapis.com/css?family=Lato'
+    type: css
+  - url: /local/custom-lovelace/font.css
+    type: css
   - url: /local/custom-lovelace/card-templater/lovelace-card-templater.js?v=0.0.2
     type: js
 title: Home
