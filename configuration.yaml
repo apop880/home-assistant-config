@@ -15,6 +15,8 @@ homeassistant:
   whitelist_external_dirs:
    - /config/www/tileboard/images/screensaver
 
+hacs:
+  token: !secret hacs_github
 
 system_health:
 
@@ -151,6 +153,8 @@ history:
 
 # View all events in a logbook
 logbook:
+
+logger:
 
 # Enables a map showing the location of tracked devices
 #map:
@@ -424,9 +428,6 @@ input_select:
       - Jungle
       - Ocean
       - Red
-
-hacs:
-  token: !secret hacs_github
 
 group: !include groups.yaml
 automation: !include automations.yaml
