@@ -10,6 +10,8 @@ resources:
     type: module
   - type: css
     url: 'https://fonts.googleapis.com/css?family=Lato'
+  - type: css
+    url: /local/custom-lovelace/font.css
   - type: js
     url: /local/custom-lovelace/text-element/text-element.js?v=0
   - type: js
