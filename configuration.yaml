@@ -425,6 +425,9 @@ input_select:
       - Ocean
       - Red
 
+hacs:
+  token: !secret hacs_github
+
 group: !include groups.yaml
 automation: !include automations.yaml
 script: !include scripts.yaml
