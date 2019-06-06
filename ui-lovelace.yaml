@@ -10,10 +10,6 @@ resources:
     type: js
   - url: /community_plugin/lovelace-gap-card/gap-card.js
     type: js
-  - url: /community_plugin/lovelace-popup-card/popup-card.js
-    type: js
-  - url: /community_plugin/lovelace-card-tools/card-tools.js
-    type: js
   - url: /community_plugin/lovelace-slider-entity-row/slider-entity-row.js
     type: js
   - url: /community_plugin/bar-card/bar-card.js
@@ -21,6 +17,8 @@ resources:
   - url: /community_plugin/lovelace-card-modder/card-modder.js
     type: js
   - url: /community_plugin/lovelace-card-loader/card-loader.js
+    type: js
+  - url: /community_plugin/lovelace-popup-card/popup-card.js
     type: js
   #Non-HACS Resources
   - url: /local/custom-lovelace/weather-card/dark-sky-weather-card.js?v=7.3
@@ -30,6 +28,9 @@ resources:
   - url: /local/custom-lovelace/font.css
     type: css
   - url: /local/custom-lovelace/card-templater/lovelace-card-templater.js?v=0.0.2
+    type: js
+  #card-tools not currently supported by HACS
+  - url: /local/custom-lovelace/card-tools/card-tools.js?v=4
     type: js
 title: Home
 popup_cards:
