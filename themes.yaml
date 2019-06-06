@@ -15,7 +15,9 @@ clear:
     # Header
     primary-color: 'var(--text-color)'                                              # Background
     text-primary-color: '#FFF'                                                      # Text
-    
+    more-info-header-color: 'var(--text-primary-color)'
+    more-info-header-background: 'var(--text-color)'
+
     # Left Menu
     paper-listbox-background-color: 'var(--background-color)'                       # Background
 

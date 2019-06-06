@@ -25,12 +25,15 @@ resources:
     type: module
   - url: 'https://fonts.googleapis.com/css?family=Lato'
     type: css
-  - url: /local/custom-lovelace/font.css
+  - url: /local/custom-lovelace/font.css?v=3
     type: css
   - url: /local/custom-lovelace/card-templater/lovelace-card-templater.js?v=0.0.2
     type: js
   #card-tools not currently supported by HACS
   - url: /local/custom-lovelace/card-tools/card-tools.js?v=4
+    type: js
+  #popup fix
+  - url: /local/custom-lovelace/popupfix.js?v=7
     type: js
 title: Home
 popup_cards:
@@ -41,6 +44,10 @@ popup_cards:
       style:
         box-shadow: none
         '--paper-card-background-color': 'rgba(255,255,255,0)'
+      extra_styles: >
+        .card-content {
+          padding: 0px;
+        }
       card:
         type: entities
         entities:
