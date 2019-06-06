@@ -20,9 +20,7 @@ configuration:
   instead, but for now, the anchors have been the route I've taken. It's a big
   time saver for reusing sections, but it can make it a little more difficult to
   piece together what the config is doing. I'd recommend starting with [this
-  link](https://github.com/thomasloven/hass-config/wiki/Misc-tricks) and [this
-  link](https://community.home-assistant.io/t/solved-using-yaml-anchors-saves-time-and-space/112416)
-  for an introduction to anchors.
+  link](https://github.com/thomasloven/hass-config/wiki/Misc-tricks) and [this link](https://community.home-assistant.io/t/solved-using-yaml-anchors-saves-time-and-space/112416) for an introduction to anchors.
   
 * The configuration is highly mobile-focused
   right now. I plan to add some
@@ -35,12 +33,49 @@ configuration:
   push commits as I make updates. But the Lovelace configuration is in a fully
   usable, pretty finished state, so I wanted to get something out there for
   people to look at and possibly take inspiration from.
-* Sometimes, the conditional views don't always render the first time. I think
+* ~~Sometimes, the conditional views don't always render the first time. I think
   this may be because I have custom button cards inside of stacks, inside of
   conditionals. So, I've noticed occasions where the conditional card won't show
   up. Most often, this seems to occur if the conditional changes to true, and
   you go back into Home Assistant and it has to reconnect. This is generally
-  fixed by a refresh of the page.
+  fixed by a refresh of the page.~~ **fixed as of 6/5/19**
+
+## Custom Lovelace Resouces
+
+I use the following custom resources in my Lovelace setup, as shown in
+ui-lovelace.yaml:
+
+### HACS Supported
+I highly recommend setting up [HACS](https://custom-components.github.io/hacs/) so that you can update these automatically.
+* Compact Custom Header
+* Button Card
+* Mini Media Player (not currently using, but will be using in the future)
+* Text Element
+* Gap-Card
+* Slider-Entity-Row
+* Bar Card
+* Card-Modder
+* Card-Loader
+* Popup-Card
+
+### Other Resources
+* Dark Sky Weather Card: I'm using a fairly customized version of the card at
+  this point. I'll be posting my forked version of it after I clean it up a bit,
+  in case anyone wants to use it. The version I started from is
+  [here.](https://github.com/iammexx/home-assistant-config/tree/master/ui/darksky)
+* Lato font: I am importing the font from Google and then using a custom css
+  file to override the body font so that the Lato font is used in all cards
+  without having to resort to card-modder on every single card. These files are
+  not in my repo yet but will be soon.
+* Lovelace Card Templater: Not currently supported by HACS. I am not using it
+  for anything at the moment but may in the future. You can find the repo
+  [here.](https://github.com/gadgetchnnel/lovelace-card-templater)
+* Card-Tools: [Download
+  here.](https://github.com/thomasloven/lovelace-card-tools) It is not working
+  properly with HACS at the moment, so in the meantime, you would need to grab
+  this one from the GitHub repo.
+* Popupfix.js: This is an additional js file that helps clean up the formatting
+  of popup-card a bit. Not yet on the repo but will be soon.
 
 ## Screenshots
 More screenshots and information on what is happening on each page will be posted soon.
