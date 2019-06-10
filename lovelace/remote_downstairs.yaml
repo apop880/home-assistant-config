@@ -1,0 +1,689 @@
+anchors:
+  spacer: &spacer
+    type: 'custom:button-card'
+    color_type: blank-card
+    styles:
+      card:
+        - width: 2px
+  activity_button: &activitybutton
+    color_type: card
+    show_name: false
+    entity: sensor.harmony_activity
+    styles:
+      card:
+        - background: 'rgba(255,255,255,0.45)'
+        - width: 55px
+        - height: 55px
+        - border-radius: 50%
+      icon:
+        - width: 35px
+        - color: '#303741'
+    type: 'custom:button-card'
+  skip_button: &skipbutton
+    show_label: true
+    styles:
+      card:
+        - background: 'rgba(255,255,255,0.45)'
+        - width: 45px
+        - height: 45px
+        - border-radius: 50%
+      icon:
+        - width: 20px
+        - color: '#303741'
+      label:
+        - font-size: 11px
+        - color: '#303741'
+        - padding-bottom: 3px
+  action_button: &actionbutton
+    color_type: card
+    show_name: false
+    entity: sensor.harmony_activity
+    styles:
+      card:
+        - background: 'rgba(255,255,255,0.45)'
+        - width: 45px
+        - height: 45px
+        - border-radius: 50%
+      icon:
+        - width: 25px
+        - color: '#303741'
+    type: 'custom:button-card'
+  blank_button: &blankbutton
+    type: 'custom:button-card'
+    color_type: blank-card
+    styles:
+      card:
+        - width: 45px
+  activity_off: &activityoff
+    operator: default
+    styles:
+      icon:
+        - color: '#303741'
+  activity_on: &activityon
+    styles:
+      icon:
+        - color: 'rgb(255,255,255)'
+      card:
+        - background: 'rgb(0,128,0)'
+  player_button: &playerbutton
+    show_name: false
+    show_label: true
+    styles:
+      grid:
+        - grid-template-areas: '"i l" "i l" "i l"'
+        - grid-template-columns: 1fr 80%
+      card:
+        - background: 'rgba(255,255,255,0.45)'
+        - height: 65px
+        - border-radius: 10px
+      icon:
+        - width: 40px
+        - color: 'rgb(0,128,0)'
+      label:
+        - font-size: 15px
+        - justify-self: start
+        - text-align: left
+        - margin-right: 10px
+    type: 'custom:button-card'
+background: center / cover no-repeat url("/local/images/day.jpg") fixed
+badges: []
+cards:
+  - clock: voice
+    clock_format: '12'
+    type: 'custom:compact-custom-header'
+    voice: clock
+  - type: custom:card-loader
+    wait:
+      - button-card
+    card:
+      type: vertical-stack
+      cards:
+      #Activity buttons
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:button-card'
+            color_type: blank-card
+          - <<: *activitybutton
+            icon: 'mdi:power'
+            styles:
+              card:
+                - background: 'rgba(255,255,255,0.45)'
+                - width: 55px
+                - height: 55px
+                - border-radius: 50%
+              icon:
+                - width: 35px
+                - color: 'rgb(200,0,0)'
+            tap_action:
+              action: call-service
+              service: remote.turn_off
+              service_data:
+                entity_id: remote.harmony_hub
+          - <<: *activitybutton
+            icon: 'mdi:xbox'
+            state:
+              - value: "Play Xbox One"
+                <<: *activityon
+              - <<: *activityoff
+            tap_action:
+              action: call-service
+              service: remote.turn_on
+              service_data:
+                entity_id: remote.harmony_hub
+                activity: "Play Xbox One"
+          - <<: *activitybutton
+            icon: 'mdi:cast-connected'
+            state:
+              - value: "Chromecast"
+                <<: *activityon
+              - <<: *activityoff
+            tap_action:
+              action: call-service
+              service: remote.turn_on
+              service_data:
+                entity_id: remote.harmony_hub
+                activity: "Chromecast"
+          - <<: *activitybutton
+            icon: 'mdi:laptop-windows'
+            state:
+              - value: "PC"
+                <<: *activityon
+              - <<: *activityoff
+            tap_action:
+              action: call-service
+              service: remote.turn_on
+              service_data:
+                entity_id: remote.harmony_hub
+                activity: "PC"
+          - type: 'custom:button-card'
+            color_type: blank-card
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:gap-card'
+            height: 10
+      #Chromecast controls
+      - type: conditional
+        conditions:
+          - entity: sensor.harmony_activity
+            state: "Chromecast"
+        card:
+            type: vertical-stack
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - <<: *spacer
+                  - icon: mdi:youtube-tv
+                    entity: media_player.basement_tv
+                    tap_action:
+                      action: call-service
+                      service: media_player.media_play_pause
+                      service_data:
+                        entity_id: entity
+                    hold_action:
+                      action: more-info
+                    dbltap_action:
+                      action: call-service
+                      service: media_player.turn_off
+                      service_data:
+                        entity_id: entity
+                    label_template: >
+                      if (typeof entity.attributes.media_title != "undefined") {
+                        var title = entity.attributes.media_title;
+                        var app_name = entity.attributes.app_name;
+                      }
+                      else {
+                        var title = entity.attributes.app_name;
+                        var app_name = '';
+                      }
+                      return(entity.state === 'off'
+                        ? '<span style="font-size:18px">' + 'Not Casting</span>'
+                        : '<span style="font-size:18px">' +
+                        title +
+                        '</span><br>' + '<span style="font-size:15px">' +
+                        app_name
+                        + ' &#183; ' + entity.state.charAt(0).toUpperCase() +
+                        entity.state.slice(1)
+                          + '</span>');
+                    state:
+                      - value: "off"
+                        styles:
+                          icon:
+                            - color: '#303741'
+                    <<: *playerbutton
+                  - <<: *spacer
+              - type: horizontal-stack
+                cards:
+                  - type: 'custom:gap-card'
+                    height: 10
+              - type: horizontal-stack
+                cards:
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+                  - <<: *actionbutton
+                    <<: *skipbutton
+                    icon: 'mdi:skip-backward'
+                    label: "15s"
+                    tap_action:
+                      action: call-service
+                      service: script.cc_skip
+                      service_data:
+                        entity_id: media_player.basement_tv
+                        seconds: -15
+                  - <<: *spacer
+                  - <<: *actionbutton
+                    <<: *skipbutton
+                    icon: 'mdi:skip-forward'
+                    label: "15s"
+                    tap_action:
+                      action: call-service
+                      service: script.cc_skip
+                      service_data:
+                        entity_id: media_player.basement_tv
+                        seconds: 15
+                  - <<: *actionbutton
+                    <<: *skipbutton
+                    icon: 'mdi:skip-forward'
+                    label: "3m"
+                    tap_action:
+                      action: call-service
+                      service: script.cc_skip
+                      service_data:
+                        entity_id: media_player.basement_tv
+                        seconds: 180
+                  - <<: *actionbutton
+                    <<: *skipbutton
+                    icon: 'mdi:skip-forward'
+                    label: "15m"
+                    tap_action:
+                      action: call-service
+                      service: script.cc_skip
+                      service_data:
+                        entity_id: media_player.basement_tv
+                        seconds: 900
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+              - type: 'custom:gap-card'
+                height: 10
+      #Xbox controls
+      - type: conditional
+        conditions:
+          - entity: sensor.harmony_activity
+            state: "Play Xbox One"
+        card:
+            type: vertical-stack
+            cards:
+            #Controller top row
+              - type: horizontal-stack
+                cards:
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+                  - <<: *actionbutton
+                    icon: 'mdi:window-restore'
+                    styles:
+                      card:
+                        - background: 'rgba(255,255,255,0.45)'
+                        - width: 45px
+                        - height: 45px
+                        - border-radius: 50%
+                        - margin-top: 3px
+                      icon:
+                        - width: 25px
+                        - color: '#303741'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: View
+                  - color_type: card
+                    show_name: false
+                    styles:
+                      card:
+                        - background: 'rgba(255,255,255,0.45)'
+                        - width: 50px
+                        - height: 50px
+                        - border-radius: 50%
+                      icon:
+                        - width: 32px
+                        - color: '#303741'
+                    type: 'custom:button-card'
+                    icon: 'mdi:xbox'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: Xbox
+                  - <<: *actionbutton
+                    icon: 'mdi:menu'
+                    styles:
+                      card:
+                        - background: 'rgba(255,255,255,0.45)'
+                        - width: 45px
+                        - height: 45px
+                        - border-radius: 50%
+                        - margin-top: 3px
+                      icon:
+                        - width: 25px
+                        - color: '#303741'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: Menu
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+              - type: 'custom:gap-card'
+                height: 3
+              #Up and Y buttons
+              - type: horizontal-stack
+                cards:
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+                  - <<: *blankbutton
+                  - <<: *actionbutton
+                    icon: 'mdi:arrow-up-drop-circle-outline'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: DirectionUp
+                  - <<: *blankbutton
+                  - <<: *spacer
+                  - <<: *spacer
+                  - <<: *spacer
+                  - <<: *blankbutton
+                  - <<: *actionbutton
+                    icon: 'mdi:alpha-y'
+                    styles:
+                      card:
+                        - background: 'rgba(255,255,255,0.45)'
+                        - width: 45px
+                        - height: 45px
+                        - border-radius: 50%
+                      icon:
+                        - width: 35px
+                        - color: 'rgb(242,255,0)'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: 'Y'
+                  - <<: *blankbutton
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+              #Left/OK/Right/X/B buttons
+              - type: horizontal-stack
+                cards:
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+                  - <<: *actionbutton
+                    icon: 'mdi:arrow-left-drop-circle-outline'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: DirectionLeft
+                  - <<: *actionbutton
+                    show_label: true
+                    show_icon: false
+                    label: 'OK'
+                    styles:
+                      card:
+                        - background: 'rgba(255,255,255,0.45)'
+                        - width: 45px
+                        - height: 45px
+                        - border-radius: 50%
+                      label:
+                        - color: '#303741'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: OK
+                  - <<: *actionbutton
+                    icon: 'mdi:arrow-right-drop-circle-outline'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: DirectionRight
+                  - <<: *spacer
+                  - <<: *spacer
+                  - <<: *spacer
+                  - <<: *actionbutton
+                    icon: 'mdi:alpha-x'
+                    styles:
+                      card:
+                        - background: 'rgba(255,255,255,0.45)'
+                        - width: 45px
+                        - height: 45px
+                        - border-radius: 50%
+                      icon:
+                        - width: 35px
+                        - color: 'rgb(2,82,255)'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: 'X'
+                  - <<: *blankbutton
+                  - <<: *actionbutton
+                    icon: 'mdi:alpha-b'
+                    styles:
+                      card:
+                        - background: 'rgba(255,255,255,0.45)'
+                        - width: 45px
+                        - height: 45px
+                        - border-radius: 50%
+                      icon:
+                        - width: 35px
+                        - color: 'rgb(200,0,0)'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: 'B'
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+              #Down and A buttons
+              - type: horizontal-stack
+                cards:
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+                  - <<: *blankbutton
+                  - <<: *actionbutton
+                    icon: 'mdi:arrow-down-drop-circle-outline'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: DirectionDown
+                  - <<: *blankbutton
+                  - <<: *spacer
+                  - <<: *spacer
+                  - <<: *spacer
+                  - <<: *blankbutton
+                  - <<: *actionbutton
+                    icon: 'mdi:alpha-a'
+                    styles:
+                      card:
+                        - background: 'rgba(255,255,255,0.45)'
+                        - width: 45px
+                        - height: 45px
+                        - border-radius: 50%
+                      icon:
+                        - width: 35px
+                        - color: 'rgb(0,128,0)'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: 'A'
+                  - <<: *blankbutton
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+              - type: 'custom:gap-card'
+                height: 10
+              #What's playing
+              - type: horizontal-stack
+                cards:
+                  - <<: *spacer
+                  - icon: mdi:xbox-controller
+                    entity: media_player.xbox_one
+                    show_name: false
+                    show_label: true
+                    tap_action:
+                      action: call-service
+                      service: script.xbox_play_pause
+                    label_template: >
+                      return '<span style="font-size:18px">' +
+                      entity.attributes.source +
+                      (entity.attributes.source === 'Blu-ray Player'
+                        ? '</span><br><span style="font-size:15px">' +
+                        entity.state.charAt(0).toUpperCase() + entity.state.slice(1)
+                        + '</span>'
+                        : '</span>')      
+                    state:
+                      - operator: template
+                        value: >
+                          return entity.attributes.source === "Blu-ray Player"
+                        icon: mdi:disc-player
+                      - operator: template
+                        value: >
+                          return entity.attributes.source === "Home" ||
+                          entity.attributes.source === "Sign In"
+                        icon: mdi:xbox
+                      - operator: template
+                        value: >
+                          return typeof entity.attributes.source === "undefined"
+                        icon: mdi:loading
+                        spin: true
+                        label_template: >
+                          return '<span style="font-size:18px">Please Wait...</span>'
+                    <<: *playerbutton
+                  - <<: *spacer
+              - type: 'custom:gap-card'
+                height: 10
+              #Additional Media Controls
+              - type: horizontal-stack
+                cards:
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+                  - <<: *actionbutton
+                    icon: mdi:skip-backward
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: SkipBack
+                  - <<: *actionbutton
+                    icon: 'mdi:rewind'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: Rewind
+                  - <<: *spacer
+                  - <<: *actionbutton
+                    icon: 'mdi:stop'
+                    tap_action:
+                      action: call-service
+                      service: script.xbox_stop
+                  - <<: *actionbutton
+                    icon: 'mdi:eject'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: Eject
+                  - <<: *spacer
+                  - <<: *actionbutton
+                    icon: 'mdi:fast-forward'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: FastForward
+                  - <<: *actionbutton
+                    icon: 'mdi:skip-forward'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub
+                        device: Microsoft Xbox One
+                        command: SkipForward
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+              - type: 'custom:gap-card'
+                height: 10
+      #Volume controls
+      - type: conditional
+        conditions:
+          - entity: sensor.harmony_activity
+            state_not: "PowerOff"
+        card:
+            type: vertical-stack
+            cards:
+              - type: horizontal-stack
+                cards:
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+                  - <<: *actionbutton
+                    icon: 'mdi:volume-off'
+                    styles:
+                      card:
+                        - background: 'rgba(255,255,255,0.45)'
+                        - width: 45px
+                        - height: 45px
+                        - border-radius: 50%
+                      icon:
+                        - width: 25px
+                        - color: 'rgb(200,0,0)'
+                    tap_action:
+                      action: call-service
+                      service: script.media_mute
+                      service_data:
+                        entity_id: media_player.receiver
+                  - <<: *spacer
+                  - <<: *spacer
+                  - <<: *spacer
+                  - <<: *actionbutton
+                    icon: 'mdi:volume-minus'
+                    tap_action:
+                      action: call-service
+                      service: media_player.volume_down
+                      service_data:
+                        entity_id: media_player.receiver
+                    hold_action:
+                      action: call-service
+                      repeat: 500
+                      service: media_player.volume_down
+                      service_data:
+                        entity_id: media_player.receiver
+                  - <<: *actionbutton
+                    icon: 'mdi:volume-plus'
+                    tap_action:
+                      action: call-service
+                      service: media_player.volume_up
+                      service_data:
+                        entity_id: media_player.receiver
+                    hold_action:
+                      action: call-service
+                      repeat: 500
+                      service: media_player.volume_up
+                      service_data:
+                        entity_id: media_player.receiver
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+              - type: 'custom:card-modder'
+                card:
+                  type: entities
+                  show_header_toggle: false
+                  entities:
+                    - type: 'custom:slider-entity-row'
+                      entity: media_player.receiver
+                      full_row: true
+                      hide_state: true
+                style:
+                  '--paper-card-background-color': 'rgba(255,255,255,0.45)'
+                  border-radius: 10px
+                  padding: 0px 5px 0px 5px
+                  margin: 10px
+                extra_styles: >
+                  .card-content {
+                    padding: 0px;
+                  }
+icon: 'mdi:projector'
+title: Remote

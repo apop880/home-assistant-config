@@ -237,6 +237,9 @@ sensor:
       harmony_activity:
         value_template: '{{ states.remote.harmony_hub.attributes.current_activity }}'
         friendly_name: 'Harmony Activity'
+      harmony_activity_upstairs:
+        value_template: '{{ states.remote.harmony_hub_upstairs.attributes.current_activity }}'
+        friendly_name: 'Harmony Activity Upstairs'
       garage_status:
         friendly_name: 'Garage Door'
         value_template: '{% if states.cover.garage_door %}
@@ -359,9 +362,6 @@ media_player:
   - platform: xboxone
     device: !secret xboxone
     name: Xbox One
-  - platform: vizio
-    host: !secret vizio
-    device_class: soundbar
       
 telegram_bot: !secret telegram_bot
     
@@ -378,6 +378,9 @@ remote:
   - platform: harmony
     name: Harmony Hub
     host: !secret harmony
+  - platform: harmony
+    name: Harmony Hub Upstairs
+    host: !secret harmony_upstairs
       
 rest_command:
   google_backup:

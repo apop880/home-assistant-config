@@ -166,20 +166,20 @@ cards:
         config:
           kiosk_mode: true
           swipe: false
-          show_tabs: '6'
+          show_tabs: '7'
       - conditions:
           user_agent: Android
         config:
           menu: hide
           options: hide
-          hide_tabs: '6'
+          hide_tabs: '7'
       - conditions:
           user: Julie
           user_agent: Android
         config:
           menu: hide
           options: hide
-          hide_tabs: '5,6'
+          hide_tabs: '6,7'
           sidebar_swipe: false
     main_config: true
     notifications: overflow

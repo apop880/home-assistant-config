@@ -20,6 +20,8 @@ resources:
     type: js
   - url: /community_plugin/lovelace-popup-card/popup-card.js
     type: js
+  - url: /community_plugin/lovelace-card-tools/card-tools.js
+    type: js
   #Non-HACS Resources
   - url: /local/custom-lovelace/weather-card/dark-sky-weather-card.js?v=7.3
     type: module
@@ -28,9 +30,6 @@ resources:
   - url: /local/custom-lovelace/font.css?v=3
     type: css
   - url: /local/custom-lovelace/card-templater/lovelace-card-templater.js?v=0.0.2
-    type: js
-  #card-tools not currently supported by HACS
-  - url: /local/custom-lovelace/card-tools/card-tools.js?v=4
     type: js
   #popup fix
   - url: /local/custom-lovelace/popupfix.js?v=7
@@ -62,7 +61,8 @@ views:
   - !include /config/lovelace/lights-mobile.yaml
   - !include /config/lovelace/weather-mobile.yaml
   - !include /config/lovelace/security-mobile.yaml
+  - !include /config/lovelace/remote_upstairs.yaml
+  - !include /config/lovelace/remote_downstairs.yaml
   - !include /config/lovelace/tv-mobile.yaml
-  - !include /config/lovelace/remote.yaml
   - !include /config/lovelace/system-mobile.yaml
   - !include /config/lovelace/morgan.yaml

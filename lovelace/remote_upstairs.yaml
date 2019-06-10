@@ -8,7 +8,7 @@ anchors:
   activity_button: &activitybutton
     color_type: card
     show_name: false
-    entity: sensor.harmony_activity
+    entity: sensor.harmony_activity_upstairs
     styles:
       card:
         - background: 'rgba(255,255,255,0.45)'
@@ -37,7 +37,7 @@ anchors:
   action_button: &actionbutton
     color_type: card
     show_name: false
-    entity: sensor.harmony_activity
+    entity: sensor.harmony_activity_upstairs
     styles:
       card:
         - background: 'rgba(255,255,255,0.45)'
@@ -116,45 +116,46 @@ cards:
                 - color: 'rgb(200,0,0)'
             tap_action:
               action: call-service
-              service: remote.turn_off
-              service_data:
-                entity_id: remote.harmony_hub
-          - <<: *activitybutton
-            icon: 'mdi:xbox'
-            state:
-              - value: "Play Xbox One"
-                <<: *activityon
-              - <<: *activityoff
-            tap_action:
-              action: call-service
               service: remote.turn_on
               service_data:
-                entity_id: remote.harmony_hub
-                activity: "Play Xbox One"
+                entity_id: remote.harmony_hub_upstairs
+                activity: "Listen to Music"
           - <<: *activitybutton
             icon: 'mdi:cast-connected'
             state:
-              - value: "Chromecast"
+              - value: "Watch TV"
                 <<: *activityon
               - <<: *activityoff
             tap_action:
               action: call-service
               service: remote.turn_on
               service_data:
-                entity_id: remote.harmony_hub
-                activity: "Chromecast"
+                entity_id: remote.harmony_hub_upstairs
+                activity: "Watch TV"
           - <<: *activitybutton
-            icon: 'mdi:laptop-windows'
+            icon: mdi:playstation
             state:
-              - value: "PC"
+              - value: "Play PS3"
                 <<: *activityon
               - <<: *activityoff
             tap_action:
               action: call-service
               service: remote.turn_on
               service_data:
-                entity_id: remote.harmony_hub
-                activity: "PC"
+                entity_id: remote.harmony_hub_upstairs
+                activity: "Play PS3"
+          - <<: *activitybutton
+            icon: 'mdi:wii'
+            state:
+              - value: "Wii"
+                <<: *activityon
+              - <<: *activityoff
+            tap_action:
+              action: call-service
+              service: remote.turn_on
+              service_data:
+                entity_id: remote.harmony_hub_upstairs
+                activity: "Wii"
           - type: 'custom:button-card'
             color_type: blank-card
       - type: horizontal-stack
@@ -164,8 +165,8 @@ cards:
       #Chromecast controls
       - type: conditional
         conditions:
-          - entity: sensor.harmony_activity
-            state: "Chromecast"
+          - entity: sensor.harmony_activity_upstairs
+            state: "Watch TV"
         card:
             type: vertical-stack
             cards:
@@ -173,7 +174,7 @@ cards:
                 cards:
                   - <<: *spacer
                   - icon: mdi:youtube-tv
-                    entity: media_player.basement_tv
+                    entity: media_player.living_room_tv
                     tap_action:
                       action: call-service
                       service: media_player.media_play_pause
@@ -227,7 +228,7 @@ cards:
                       action: call-service
                       service: script.cc_skip
                       service_data:
-                        entity_id: media_player.basement_tv
+                        entity_id: media_player.living_room_tv
                         seconds: -15
                   - <<: *spacer
                   - <<: *actionbutton
@@ -238,7 +239,7 @@ cards:
                       action: call-service
                       service: script.cc_skip
                       service_data:
-                        entity_id: media_player.basement_tv
+                        entity_id: media_player.living_room_tv
                         seconds: 15
                   - <<: *actionbutton
                     <<: *skipbutton
@@ -248,7 +249,7 @@ cards:
                       action: call-service
                       service: script.cc_skip
                       service_data:
-                        entity_id: media_player.basement_tv
+                        entity_id: media_player.living_room_tv
                         seconds: 180
                   - <<: *actionbutton
                     <<: *skipbutton
@@ -258,17 +259,17 @@ cards:
                       action: call-service
                       service: script.cc_skip
                       service_data:
-                        entity_id: media_player.basement_tv
+                        entity_id: media_player.living_room_tv
                         seconds: 900
                   - type: 'custom:button-card'
                     color_type: blank-card
               - type: 'custom:gap-card'
                 height: 10
-      #Xbox controls
+      #PS3 controls
       - type: conditional
         conditions:
-          - entity: sensor.harmony_activity
-            state: "Play Xbox One"
+          - entity: sensor.harmony_activity_upstairs
+            state: "Play PS3"
         card:
             type: vertical-stack
             cards:
@@ -278,24 +279,25 @@ cards:
                   - type: 'custom:button-card'
                     color_type: blank-card
                   - <<: *actionbutton
-                    icon: 'mdi:window-restore'
+                    show_icon: false
+                    show_label: true
+                    label: "SELECT"
                     styles:
                       card:
                         - background: 'rgba(255,255,255,0.45)'
-                        - width: 45px
+                        - width: 65px
                         - height: 45px
-                        - border-radius: 50%
+                        - border-radius: 10px
                         - margin-top: 3px
-                      icon:
-                        - width: 25px
+                      label:
                         - color: '#303741'
                     tap_action:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: View
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Select
                   - color_type: card
                     show_name: false
                     styles:
@@ -308,38 +310,39 @@ cards:
                         - width: 32px
                         - color: '#303741'
                     type: 'custom:button-card'
-                    icon: 'mdi:xbox'
+                    icon: 'mdi:playstation'
                     tap_action:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: Xbox
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: PS
                   - <<: *actionbutton
-                    icon: 'mdi:menu'
+                    show_icon: false
+                    show_label: true
+                    label: "START"
                     styles:
                       card:
                         - background: 'rgba(255,255,255,0.45)'
-                        - width: 45px
+                        - width: 65px
                         - height: 45px
-                        - border-radius: 50%
+                        - border-radius: 10px
                         - margin-top: 3px
-                      icon:
-                        - width: 25px
+                      label:
                         - color: '#303741'
                     tap_action:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: Menu
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Start
                   - type: 'custom:button-card'
                     color_type: blank-card
               - type: 'custom:gap-card'
                 height: 3
-              #Up and Y buttons
+              #Up and triangle buttons
               - type: horizontal-stack
                 cards:
                   - type: 'custom:button-card'
@@ -351,8 +354,8 @@ cards:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
                         command: DirectionUp
                   - <<: *blankbutton
                   - <<: *spacer
@@ -360,7 +363,7 @@ cards:
                   - <<: *spacer
                   - <<: *blankbutton
                   - <<: *actionbutton
-                    icon: 'mdi:alpha-y'
+                    icon: 'mdi:triangle-outline'
                     styles:
                       card:
                         - background: 'rgba(255,255,255,0.45)'
@@ -368,19 +371,19 @@ cards:
                         - height: 45px
                         - border-radius: 50%
                       icon:
-                        - width: 35px
-                        - color: 'rgb(242,255,0)'
+                        - width: 30px
+                        - color: 'rgb(61,244,131)'
                     tap_action:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: 'Y'
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Triangle
                   - <<: *blankbutton
                   - type: 'custom:button-card'
                     color_type: blank-card
-              #Left/OK/Right/X/B buttons
+              #Left/OK/Right/Square/Menu/Circle buttons
               - type: horizontal-stack
                 cards:
                   - type: 'custom:button-card'
@@ -391,8 +394,8 @@ cards:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
                         command: DirectionLeft
                   - <<: *actionbutton
                     show_label: true
@@ -410,23 +413,23 @@ cards:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: OK
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Enter
                   - <<: *actionbutton
                     icon: 'mdi:arrow-right-drop-circle-outline'
                     tap_action:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
                         command: DirectionRight
                   - <<: *spacer
                   - <<: *spacer
                   - <<: *spacer
                   - <<: *actionbutton
-                    icon: 'mdi:alpha-x'
+                    icon: 'mdi:square-outline'
                     styles:
                       card:
                         - background: 'rgba(255,255,255,0.45)'
@@ -434,18 +437,17 @@ cards:
                         - height: 45px
                         - border-radius: 50%
                       icon:
-                        - width: 35px
-                        - color: 'rgb(2,82,255)'
+                        - width: 30px
+                        - color: 'rgb(207,31,226)'
                     tap_action:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: 'X'
-                  - <<: *blankbutton
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Square
                   - <<: *actionbutton
-                    icon: 'mdi:alpha-b'
+                    icon: mdi:menu
                     styles:
                       card:
                         - background: 'rgba(255,255,255,0.45)'
@@ -454,17 +456,35 @@ cards:
                         - border-radius: 50%
                       icon:
                         - width: 35px
+                        - color: '#303741'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: TopMenu
+                  - <<: *actionbutton
+                    icon: 'mdi:circle-outline'
+                    styles:
+                      card:
+                        - background: 'rgba(255,255,255,0.45)'
+                        - width: 45px
+                        - height: 45px
+                        - border-radius: 50%
+                      icon:
+                        - width: 30px
                         - color: 'rgb(200,0,0)'
                     tap_action:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: 'B'
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Circle
                   - type: 'custom:button-card'
                     color_type: blank-card
-              #Down and A buttons
+              #Down and X buttons
               - type: horizontal-stack
                 cards:
                   - type: 'custom:button-card'
@@ -476,8 +496,8 @@ cards:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
                         command: DirectionDown
                   - <<: *blankbutton
                   - <<: *spacer
@@ -485,69 +505,75 @@ cards:
                   - <<: *spacer
                   - <<: *blankbutton
                   - <<: *actionbutton
-                    icon: 'mdi:alpha-a'
+                    show_icon: false
+                    show_label: true
+                    label: 'X'
                     styles:
                       card:
                         - background: 'rgba(255,255,255,0.45)'
                         - width: 45px
                         - height: 45px
                         - border-radius: 50%
-                      icon:
-                        - width: 35px
-                        - color: 'rgb(0,128,0)'
+                      label:
+                        - color: 'rgb(14,111,175)'
+                        - font-size: 30px
                     tap_action:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: 'A'
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Cross
                   - <<: *blankbutton
                   - type: 'custom:button-card'
                     color_type: blank-card
               - type: 'custom:gap-card'
                 height: 10
-              #What's playing
+              #Additional Media Controls Row 1
               - type: horizontal-stack
                 cards:
-                  - <<: *spacer
-                  - icon: mdi:xbox-controller
-                    entity: media_player.xbox_one
-                    show_name: false
-                    show_label: true
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+                  - <<: *actionbutton
+                    icon: mdi:play
                     tap_action:
                       action: call-service
-                      service: script.xbox_play_pause
-                    label_template: >
-                      return '<span style="font-size:18px">' +
-                      entity.attributes.source +
-                      (entity.attributes.source === 'Blu-ray Player'
-                        ? '</span><br><span style="font-size:15px">' +
-                        entity.state.charAt(0).toUpperCase() + entity.state.slice(1)
-                        + '</span>'
-                        : '</span>')      
-                    state:
-                      - operator: template
-                        value: >
-                          return entity.attributes.source === "Blu-ray Player"
-                        icon: mdi:disc-player
-                      - operator: template
-                        value: >
-                          return entity.attributes.source === "Home" ||
-                          entity.attributes.source === "Sign In"
-                        icon: mdi:xbox
-                      - operator: template
-                        value: >
-                          return typeof entity.attributes.source === "undefined"
-                        icon: mdi:loading
-                        spin: true
-                        label_template: >
-                          return '<span style="font-size:18px">Please Wait...</span>'
-                    <<: *playerbutton
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Play
+                  - <<: *actionbutton
+                    icon: mdi:pause
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Pause
                   - <<: *spacer
-              - type: 'custom:gap-card'
-                height: 10
-              #Additional Media Controls
+                  - <<: *actionbutton
+                    icon: 'mdi:stop'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Stop
+                  - <<: *actionbutton
+                    icon: 'mdi:eject'
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Eject
+                  - type: 'custom:button-card'
+                    color_type: blank-card
+              #Additional Media Controls Row 2
               - type: horizontal-stack
                 cards:
                   - type: 'custom:button-card'
@@ -558,33 +584,18 @@ cards:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: SkipBack
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Prev
                   - <<: *actionbutton
                     icon: 'mdi:rewind'
                     tap_action:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: Rewind
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:stop'
-                    tap_action:
-                      action: call-service
-                      service: script.xbox_stop
-                  - <<: *actionbutton
-                    icon: 'mdi:eject'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: Eject
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: ScanPrev
                   - <<: *spacer
                   - <<: *actionbutton
                     icon: 'mdi:fast-forward'
@@ -592,18 +603,18 @@ cards:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: FastForward
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: ScanNext
                   - <<: *actionbutton
                     icon: 'mdi:skip-forward'
                     tap_action:
                       action: call-service
                       service: remote.send_command
                       service_data:
-                        entity_id: remote.harmony_hub
-                        device: Microsoft Xbox One
-                        command: SkipForward
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: Next
                   - type: 'custom:button-card'
                     color_type: blank-card
               - type: 'custom:gap-card'
@@ -611,7 +622,7 @@ cards:
       #Volume controls
       - type: conditional
         conditions:
-          - entity: sensor.harmony_activity
+          - entity: sensor.harmony_activity_upstairs
             state_not: "PowerOff"
         card:
             type: vertical-stack
@@ -633,9 +644,11 @@ cards:
                         - color: 'rgb(200,0,0)'
                     tap_action:
                       action: call-service
-                      service: script.media_mute
+                      service: remote.send_command
                       service_data:
-                        entity_id: media_player.receiver
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Vizio Amp
+                        command: Mute
                   - <<: *spacer
                   - <<: *spacer
                   - <<: *spacer
@@ -643,47 +656,37 @@ cards:
                     icon: 'mdi:volume-minus'
                     tap_action:
                       action: call-service
-                      service: media_player.volume_down
+                      service: remote.send_command
                       service_data:
-                        entity_id: media_player.receiver
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Vizio Amp
+                        command: VolumeDown
                     hold_action:
                       action: call-service
-                      repeat: 500
-                      service: media_player.volume_down
+                      repeat: 300
+                      service: remote.send_command
                       service_data:
-                        entity_id: media_player.receiver
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Vizio Amp
+                        command: VolumeDown
                   - <<: *actionbutton
                     icon: 'mdi:volume-plus'
                     tap_action:
                       action: call-service
-                      service: media_player.volume_up
+                      service: remote.send_command
                       service_data:
-                        entity_id: media_player.receiver
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Vizio Amp
+                        command: VolumeUp
                     hold_action:
                       action: call-service
-                      repeat: 500
-                      service: media_player.volume_up
+                      repeat: 300
+                      service: remote.send_command
                       service_data:
-                        entity_id: media_player.receiver
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Vizio Amp
+                        command: VolumeUp
                   - type: 'custom:button-card'
                     color_type: blank-card
-              - type: 'custom:card-modder'
-                card:
-                  type: entities
-                  show_header_toggle: false
-                  entities:
-                    - type: 'custom:slider-entity-row'
-                      entity: media_player.receiver
-                      full_row: true
-                      hide_state: true
-                style:
-                  '--paper-card-background-color': 'rgba(255,255,255,0.45)'
-                  border-radius: 10px
-                  padding: 0px 5px 0px 5px
-                  margin: 10px
-                extra_styles: >
-                  .card-content {
-                    padding: 0px;
-                  }
 icon: 'mdi:remote'
 title: Remote
