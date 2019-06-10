@@ -57,6 +57,7 @@ I highly recommend setting up [HACS](https://custom-components.github.io/hacs/) 
 * Card-Modder
 * Card-Loader
 * Popup-Card
+* Card-Tools
 
 ### Other Resources
 * Dark Sky Weather Card: I'm using a fairly customized version of the card at
@@ -70,10 +71,6 @@ I highly recommend setting up [HACS](https://custom-components.github.io/hacs/) 
 * Lovelace Card Templater: Not currently supported by HACS. I am not using it
   for anything at the moment but may in the future. You can find the repo
   [here.](https://github.com/gadgetchnnel/lovelace-card-templater)
-* Card-Tools: [Download
-  here.](https://github.com/thomasloven/lovelace-card-tools) It is not working
-  properly with HACS at the moment, so in the meantime, you would need to grab
-  this one from the GitHub repo.
 * Popupfix.js: This is an additional js file that helps clean up the formatting
   of popup-card a bit. Not yet on the repo but will be soon.
 
