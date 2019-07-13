@@ -84,12 +84,12 @@ cards:
           min: 0
           max: 1000
           severity:
-          - value: 1200
-            color: 'rgb(0,128,0)'
-          - value: 400
-            color: 'rgb(234,200,4)'
           - value: 200
             color: 'rgb(200,0,0)'
+          - value: 400
+            color: 'rgb(234,200,4)'
+          - value: 1200
+            color: 'rgb(0,128,0)'
     - <<: *custom_button_main_label
       label: "Battery Status"
     - <<: *barcard
