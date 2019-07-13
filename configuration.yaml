@@ -12,11 +12,10 @@ homeassistant:
   time_zone: America/Chicago
   # Customization file
   customize: !include customize.yaml
-  whitelist_external_dirs:
-   - /config/www/tileboard/images/screensaver
 
 hacs:
   token: !secret hacs_github
+  appdaemon: True
 
 system_health:
 
@@ -83,6 +82,10 @@ google_assistant:
       expose: false
     input_boolean.alarm_clock:
       expose: false
+    input_boolean.check_config:
+      expose: false
+    input_boolean.valid_config:
+      expose: false
     input_boolean.kitchen_light_triggered:
       expose: false
     light.kitchen_sink:
@@ -137,6 +140,10 @@ recorder:
       - input_boolean.alex_basement
       - input_boolean.kitchen_light_triggered
       - input_boolean.show_commute
+      - input_boolean.tv
+      - input_boolean.projector
+      - input_boolean.check_config
+      - input_boolean.valid_config
     event_types:
       - service_removed
       - service_executed
@@ -412,6 +419,14 @@ input_boolean:
     name: Alarm Clock Triggered
   kitchen_light_triggered:
     name: Kitchen Trigger
+  tv:
+    name: TV
+  projector:
+    name: Projector
+  check_config:
+    name: Check Config
+  valid_config:
+    name: Valid Config
     
 input_select:
   front_light_mode:
