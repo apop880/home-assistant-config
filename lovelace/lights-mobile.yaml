@@ -286,7 +286,7 @@ cards:
                 entity: light.bar
                 name: Bar
               - <<: *lightbutton
-                entity: light.gledopto_gledopto_199f0c03_11
+                entity: light.led_strip
                 name: LED Strip
               - <<: *spacer
             type: horizontal-stack

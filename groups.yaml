@@ -19,6 +19,7 @@ basement:
     - light.theater
     - light.stairs
     - light.bar
+    - light.led_strip
 outside:
   name: Outside
   entities:
