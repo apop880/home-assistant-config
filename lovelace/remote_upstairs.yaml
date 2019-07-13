@@ -318,6 +318,13 @@ cards:
                         entity_id: remote.harmony_hub_upstairs
                         device: Sony PS3
                         command: PS
+                    hold_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Sony PS3
+                        command: PSHold
                   - <<: *actionbutton
                     show_icon: false
                     show_label: true
