@@ -65,6 +65,9 @@ clear:
     paper-font-caption_-_font-family: "var(--primary-font-family)"
     paper-font-title_-_font-family: "var(--primary-font-family)"
 
+    #HACS
+    hacs-badge-text-color: "var(--text-primary-color)"
+
 midnight:
     # Main colors
     primary-color: '#5294E2'                                                        # Header
