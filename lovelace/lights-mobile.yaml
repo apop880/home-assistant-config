@@ -156,36 +156,6 @@ anchors:
 background: center / cover no-repeat url("/local/images/day.jpg") fixed
 badges: []
 cards:
-  - type: 'custom:compact-custom-header'
-    background: 'rgba(51,51,51,0.6)'
-    clock: voice
-    clock_format: '12'
-    exceptions:
-      - conditions:
-          user: morgankiosk
-        config:
-          kiosk_mode: true
-          swipe: false
-          show_tabs: '7'
-      - conditions:
-          user_agent: Android
-        config:
-          menu: hide
-          options: hide
-          hide_tabs: '7'
-      - conditions:
-          user: Julie
-          user_agent: Android
-        config:
-          menu: hide
-          options: hide
-          hide_tabs: '6,7'
-          sidebar_swipe: false
-    main_config: true
-    notifications: overflow
-    voice: hide
-    swipe: true
-    swipe_animate: swipe
   - cards:
       - type: horizontal-stack
         cards:

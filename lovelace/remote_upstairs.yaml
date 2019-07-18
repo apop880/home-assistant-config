@@ -88,10 +88,6 @@ anchors:
 background: center / cover no-repeat url("/local/images/day.jpg") fixed
 badges: []
 cards:
-  - clock: voice
-    clock_format: '12'
-    type: 'custom:compact-custom-header'
-    voice: clock
   - type: custom:card-loader
     wait:
       - button-card

@@ -57,6 +57,36 @@ popup_cards:
             name: Switch
           - entity: input_select.morgan_lamp_mode
             name: Mode
+cch:
+  background: 'rgba(51,51,51,0.6)'
+  clock: voice
+  clock_format: '12'
+  exceptions:
+    - conditions:
+        user: morgankiosk
+      config:
+        kiosk_mode: true
+        swipe: false
+        show_tabs: '7'
+    - conditions:
+        user_agent: Android
+      config:
+        menu: hide
+        options: hide
+        hide_tabs: '7'
+    - conditions:
+        user: Julie
+        user_agent: Android
+      config:
+        menu: hide
+        options: hide
+        hide_tabs: '6,7'
+        sidebar_swipe: false
+        #disable_sidebar: true #after .96 upgrade
+  notifications: overflow
+  voice: hide
+  swipe: true
+  swipe_animate: swipe
 views:
   - !include /config/lovelace/lights-mobile.yaml
   - !include /config/lovelace/weather-mobile.yaml

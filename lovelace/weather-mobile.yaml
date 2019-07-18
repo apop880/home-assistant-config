@@ -1,7 +1,6 @@
 background: center / cover no-repeat url("/local/images/day.jpg") fixed
 badges: []
 cards:
-    - type: 'custom:compact-custom-header'
     - type: 'custom:dark-sky-weather-card'
       entity_current_conditions: sensor.dark_sky_icon
       entity_temperature: sensor.dark_sky_temperature

@@ -37,7 +37,6 @@ anchors:
 background: center / cover no-repeat url("/local/images/day.jpg") fixed
 badges: []
 cards:
-    - type: 'custom:compact-custom-header'
     - type: horizontal-stack
       cards:
         - <<: *spacer

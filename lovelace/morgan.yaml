@@ -51,10 +51,6 @@
                   font-size: 20pt
             image: /local/images/monkey.png
             type: picture-elements
-          - clock: voice
-            clock_format: '12'
-            type: 'custom:compact-custom-header'
-            voice: hide
         type: vertical-stack
     panel: true
     title: Morgan
