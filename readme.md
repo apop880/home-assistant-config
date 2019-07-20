@@ -1,6 +1,7 @@
 # My Home Assistant Config
 
 _If you find this information helpful, feel free to Buy Me A Coffee:_
+
 <a href="https://www.buymeacoffee.com/uMhxJCzPS" target="_blank"><img
 src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png"
 alt="Buy Me A Coffee" style="height: 41px !important;width: 174px
@@ -9,7 +10,7 @@ alt="Buy Me A Coffee" style="height: 41px !important;width: 174px
 !important;" ></a>
 
 _I also have a blog about Home Assistant and Home Automation with lots more
-information: [My Blog](https://alex-p.com/blog)
+information: [My Blog](https://alex-p.com/blog)_
 
 This is very much still a work in progress, but I wanted to share my
 configuration as a few people have asked for it. So far, I just have my
