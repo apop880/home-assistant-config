@@ -110,6 +110,12 @@ cards:
           title: Theater Button
         - entity: zha.stairs_button
           title: Stairs Button
+    - type: entities
+      title: Check Configuration
+      show_header_toggle: false
+      entities:
+        - script.check_config
+        - sensor.config_result
     # - type: 'custom:card-templater'
     #   card:
     #     content_template: >-
