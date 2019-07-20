@@ -1,11 +1,27 @@
 # My Home Assistant Config
 
+_If you find this information helpful, feel free to Buy Me A Coffee:_
+<a href="https://www.buymeacoffee.com/uMhxJCzPS" target="_blank"><img
+src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png"
+alt="Buy Me A Coffee" style="height: 41px !important;width: 174px
+!important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5)
+!important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5)
+!important;" ></a>
+
+_I also have a blog about Home Assistant and Home Automation with lots more
+information: [My Blog](https://alex-p.com/blog)
+
 This is very much still a work in progress, but I wanted to share my
 configuration as a few people have asked for it. So far, I just have my
 configuration.yaml file, my Lovelace configuration, and a few other files. I
-will be putting my AppDaemon scripts out here soon but I'm finishing up some
-clean-up with those. In the meantime, I do have a couple of scripts currently
-posted [in a separate repo.](https://github.com/apop880/AppDaemon)
+also have a couple of AppDaemon scripts currently
+posted [in a separate repo](https://github.com/apop880/AppDaemon), though I will
+be deprecating that soon. I have a handful of other AppDaemon repos that I have
+separated out that have HACS support:
+* [STButton](https://github.com/apop880/SmartThings-Button)
+* [Nightmode](https://github.com/apop880/Night-Mode)
+* [Whitenoise](https://github.com/apop880/White-Noise)
+* [Config Check](https://github.com/apop880/config-check)
 
 There are a couple of known issues or things to note with my Lovelace
 configuration:
