@@ -81,8 +81,7 @@ cch:
         menu: hide
         options: hide
         hide_tabs: '6,7'
-        sidebar_swipe: false
-        #disable_sidebar: true #after .96 upgrade
+        disable_sidebar: true
   notifications: overflow
   voice: hide
   swipe: true
