@@ -93,7 +93,6 @@ cards:
       label: "Battery Status"
     - <<: *barcard
       columns: 2
-      attribute: battery_level
       indicator: 'off'
       unit_of_measurement: "%"
       severity:
