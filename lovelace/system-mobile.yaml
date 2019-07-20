@@ -104,11 +104,11 @@ cards:
         - value: 20
           color: 'rgb(200,0,0)'
       entities:
-        - entity: zha.bar_button
+        - entity: sensor.bar_button_battery
           title: Bar Button
-        - entity: zha.theater_button
+        - entity: sensor.theater_button_battery
           title: Theater Button
-        - entity: zha.stairs_button
+        - entity: sensor.stairs_button_battery
           title: Stairs Button
     - type: entities
       title: Check Configuration
