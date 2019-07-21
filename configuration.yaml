@@ -12,6 +12,8 @@ homeassistant:
   time_zone: America/Chicago
   # Customization file
   customize: !include customize.yaml
+  whitelist_external_dirs:
+    - /config
 
 hacs:
   token: !secret hacs_github
@@ -171,6 +173,13 @@ zwave:
 zha:
   usb_path: /dev/ttyUSB1
   database_path: /config/zigbee.db
+
+folder_watcher:
+  - folder: /config
+    patterns:
+      - '*.yaml'
+
+config_check:
 
 # Switches
 
