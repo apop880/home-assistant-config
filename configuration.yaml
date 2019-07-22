@@ -120,6 +120,7 @@ recorder:
       - sensor.disk_use_percent_home
       - sensor.memory_free
       - sensor.processor_use
+      - sensor.zooz_zse40_4_in_1_sensor_luminance_2
   exclude:
     entities:
       - light.hue_ambiance_lamp_1
@@ -180,6 +181,9 @@ folder_watcher:
       - '*.yaml'
 
 config_check:
+
+mqtt:
+  broker: !secret mqtt_broker
 
 # Switches
 
