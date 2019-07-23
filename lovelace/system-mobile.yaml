@@ -109,6 +109,14 @@ cards:
           title: Theater Button
         - entity: sensor.stairs_button_battery
           title: Stairs Button
+        - entity: sensor.front_door_battery
+          title: Front Door
+        - entity: sensor.garage_entry_door_battery
+          title: Garage Entry
+        - entity: sensor.upstairs_back_door_battery
+          title: Upstairs Back Door
+        - entity: sensor.downstairs_back_door
+          title: Downstairs Back Door
     - type: entities
       title: Check Configuration
       show_header_toggle: false
