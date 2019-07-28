@@ -229,6 +229,9 @@ sensor:
     origin: !secret home
     destination: !secret work
     region: 'US'
+  - platform: mqtt
+    name: "Garage Door"
+    state_topic: "homeassistant/garage/state"
   # - platform: rest
   #   name: My Config
   #   resource: !secret config_url
@@ -256,25 +259,11 @@ sensor:
       harmony_activity_upstairs:
         value_template: '{{ states.remote.harmony_hub_upstairs.attributes.current_activity }}'
         friendly_name: 'Harmony Activity Upstairs'
-      garage_status:
-        friendly_name: 'Garage Door'
-        value_template: '{% if states.cover.garage_door %}
-          {% if states.cover.garage_door.attributes["door_state"] == "open" %}
-            Open
-          {% elif states.cover.garage_door.attributes["door_state"] == "closed" %}
-            Closed
-          {% elif states.cover.garage_door.attributes["door_state"] == "opening" %}
-            Opening
-          {% elif states.cover.garage_door.attributes["door_state"] == "closing" %}
-            Closing
-          {% else %}
-            Unknown
-          {% endif %}
-          {% else %}
-          n/a
-          {% endif %}'
-      garage_updated:
-        value_template: '{{ as_timestamp(states.cover.garage_door.last_updated) }}'
+      kitchen_motion_battery:
+        value_template: "{{ states.zwave.zooz_zse40_4_in_1_sensor.attributes.battery_level }}"
+        friendly_name: "Kitchen Motion Battery"
+        entity_id: zwave.zooz_zse40_4_in_1_sensor
+        unit_of_measurement: '%'
   - platform: min_max
     type: mean
     round_digits: 1
@@ -288,10 +277,10 @@ sensor:
     round_digits: 1
     entity_ids:
       - sensor.stairs_button
+      - sensor.zooz_zse40_4_in_1_sensor_temperature_2
   - platform: command_line
     name: CPU Temperature
     command: "cat /sys/class/thermal/thermal_zone0/temp"
-    unit_of_measurement: "°C"
     value_template: '{{ value | multiply(0.001) | round(1) }}'
 
 # Text to speech
@@ -300,6 +289,10 @@ tts:
     service_name: google_say
   
 device_tracker:
+  - platform: mqtt
+    devices:
+      alex: 'location/alex'
+      #julie: 'location/julie'
 
 # Cloud
 cloud:
@@ -365,11 +358,6 @@ light:
           event: morgan_fun_level
           event_data_template:
            brightness: "{{ brightness }}"
-      
-cover:
-  platform: opengarage
-  covers:
-      garage: !secret garage
 
 media_player:
   - platform: onkyo_custom
