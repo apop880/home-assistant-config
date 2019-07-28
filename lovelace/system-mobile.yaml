@@ -47,15 +47,15 @@ cards:
       entities:
         - entity: sensor.cpu_temperature
           title: CPU Temp
-          unit_of_measurement: "°F"
-          min: 86
-          max: 180
+          unit_of_measurement: "°C"
+          min: 30
+          max: 80
           severity:
-          - value: 140
+          - value: 60
             color: 'rgb(0,128,0)'
-          - value: 158
+          - value: 70
             color: 'rgb(234,200,4)'
-          - value: 200
+          - value: 100
             color: 'rgb(200,0,0)'
         - entity: sensor.processor_use
           title: CPU Usage
@@ -114,9 +114,11 @@ cards:
         - entity: sensor.garage_entry_door_battery
           title: Garage Entry
         - entity: sensor.upstairs_back_door_battery
-          title: Upstairs Back Door
+          title: Deck Door
         - entity: sensor.downstairs_back_door
-          title: Downstairs Back Door
+          title: Patio Door
+        - entity: sensor.kitchen_motion_battery
+          title: Kitchen Motion
     - type: entities
       title: Check Configuration
       show_header_toggle: false
