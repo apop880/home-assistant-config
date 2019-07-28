@@ -51,24 +51,30 @@ cards:
       cards:
         - <<: *spacer
         - hold_action:
-            action: more-info         
+            action: more-info
+          tap_action:
+            action: call-service
+            service: mqtt.publish
+            service_data:
+              topic: "homeassistant/garage/command"
+              payload: "toggle"
           layout: icon_name_state2nd
           show_label: true
           label_template: >
-            return states['sensor.garage_status'].state;
+            return states['sensor.garage_door'].state;
           state:
             - icon: 'mdi:garage-open'
               operator: template
               value: >
-                return states['sensor.garage_status'].state === 'Open';
+                return states['sensor.garage_door'].state === 'Open';
             - icon: 'mdi:arrow-up-bold-circle'
               operator: template
               value: >
-                return states['sensor.garage_status'].state === 'Opening';
+                return states['sensor.garage_door'].state === 'Opening';
             - icon: 'mdi:arrow-down-bold-circle'
               operator: template
               value: >
-                return states['sensor.garage_status'].state === 'Closing';
+                return states['sensor.garage_door'].state === 'Closing';
             - icon: 'mdi:garage'
               operator: 'default'
           styles:
@@ -94,8 +100,23 @@ cards:
               - padding-top: 6px
               - padding-right: 10px
           type: 'custom:button-card'
-          entity: cover.garage_door
+          entity: sensor.garage_door
           name: Garage Door
         - <<: *spacer
+    - type: glance
+      title: Doors
+      entities:
+        - entity: binary_sensor.front_door
+          name: Front
+          icon: mdi:door
+        - entity: binary_sensor.garage_entry_door
+          name: Garage
+          icon: mdi:door
+        - entity: binary_sensor.upstairs_back_door
+          name: Deck
+          icon: mdi:door
+        - entity: binary_sensor.downstairs_back_door
+          name: Patio
+          icon: mdi:door
 icon: 'mdi:shield-home'
 title: Security
