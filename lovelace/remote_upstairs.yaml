@@ -635,6 +635,17 @@ cards:
                   - type: 'custom:button-card'
                     color_type: blank-card
                   - <<: *actionbutton
+                    <<: *skipbutton
+                    icon: mdi:rotate-right
+                    label: "INPUT"
+                    tap_action:
+                      action: call-service
+                      service: remote.send_command
+                      service_data:
+                        entity_id: remote.harmony_hub_upstairs
+                        device: Vizio Amp
+                        command: InputNext
+                  - <<: *actionbutton
                     icon: 'mdi:volume-off'
                     styles:
                       card:
