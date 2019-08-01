@@ -42,8 +42,8 @@ configuration:
 * The configuration is highly mobile-focused
   right now. I plan to add some
   PC-centric views down the line, but mobile is definitely the priority.
-* Most of the views are currently geared towards portrait orientation use. A few
-  of them look alright in landscape, but I haven't put a great deal of effort
+* Most of the views are currently geared towards portrait orientation use. They mostly look
+  alright in landscape, but I haven't put a great deal of effort
   into that yet. My focus is definitely on portrait view, scaled to my phone
   screen (LG V30).
 * I still have some minor cleanup to do in some of the code and will continue to
@@ -66,12 +66,12 @@ ui-lovelace.yaml:
 I highly recommend setting up [HACS](https://custom-components.github.io/hacs/) so that you can update these automatically.
 * Compact Custom Header
 * Button Card
-* Mini Media Player (not currently using, but will be using in the future)
+* Mini Media Player
 * Text Element
 * Gap-Card
 * Slider-Entity-Row
 * Bar Card
-* Card-Modder
+* Card-Mod (replaced Card-Modder on 7/30)
 * Card-Loader
 * Popup-Card
 * Card-Tools
