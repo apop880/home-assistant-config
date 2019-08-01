@@ -103,20 +103,50 @@ cards:
           entity: sensor.garage_door
           name: Garage Door
         - <<: *spacer
-    - type: glance
-      title: Doors
-      entities:
-        - entity: binary_sensor.front_door
-          name: Front
-          icon: mdi:door
-        - entity: binary_sensor.garage_entry_door
-          name: Garage
-          icon: mdi:door
-        - entity: binary_sensor.upstairs_back_door
-          name: Deck
-          icon: mdi:door
-        - entity: binary_sensor.downstairs_back_door
-          name: Patio
-          icon: mdi:door
+    - type: horizontal-stack
+      cards:
+        - <<: *spacer
+        - type: entities
+          show_header_toggle: false
+          style:
+            .: |
+              ha-card {
+                background: rgba(255,255,255,0.45);
+                border-radius: 15px;
+              }
+              .card-content {
+                padding-top: 2px;
+                padding-bottom: 2px;
+              }
+            "#states div":
+              hui-text-entity-row:
+                $:
+                  hui-generic-entity-row:
+                    $: |
+                      div.info {
+                        font-size: 16px;
+                      }
+                      div.secondary, ha-relative-time {
+                        color: #303741 !important;
+                        font-size: 13px;
+                      }
+          entities:
+            - entity: binary_sensor.front_door
+              name: Front Door
+              icon: mdi:door
+              secondary_info: last-changed
+            - entity: binary_sensor.garage_entry_door
+              name: Garage Entry
+              icon: mdi:door
+              secondary_info: last-changed
+            - entity: binary_sensor.upstairs_back_door
+              name: Deck Door
+              icon: mdi:door
+              secondary_info: last-changed
+            - entity: binary_sensor.downstairs_back_door
+              name: Patio Door
+              icon: mdi:door
+              secondary_info: last-changed
+        - <<: *spacer
 icon: 'mdi:shield-home'
 title: Security

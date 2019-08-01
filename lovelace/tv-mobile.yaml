@@ -214,23 +214,23 @@ cards:
                         entity_id: media_player.bedroom_tv
                   - type: 'custom:button-card'
                     color_type: blank-card
-              - type: 'custom:card-modder'
-                card:
-                  type: entities
-                  show_header_toggle: false
-                  entities:
-                    - type: 'custom:slider-entity-row'
-                      entity: media_player.bedroom_tv
-                      full_row: true
-                      hide_state: true
-                style:
-                  '--paper-card-background-color': 'rgba(255,255,255,0.45)'
-                  border-radius: 10px
-                  padding: 0px 5px 0px 5px
-                  margin: 10px
-                extra_styles: >
+              - type: entities
+                show_header_toggle: false
+                entities:
+                  - type: 'custom:slider-entity-row'
+                    entity: media_player.bedroom_tv
+                    full_row: true
+                    hide_state: true
+                style: |
+                  ha-card {
+                    border-radius: 10px;
+                    padding: 0px 5px 0px 5px;
+                    margin: 10px;
+                    --paper-slider-container-color: #FFFFFF;
+                  }
                   .card-content {
                     padding: 0px;
+                    --background-card-color: 'rgba(255,255,255,0.45)';
                   }
 icon: mdi:hotel
 title: TV

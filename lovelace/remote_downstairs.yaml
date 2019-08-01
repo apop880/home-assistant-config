@@ -663,23 +663,73 @@ cards:
                         entity_id: media_player.receiver
                   - type: 'custom:button-card'
                     color_type: blank-card
-              - type: 'custom:card-modder'
-                card:
-                  type: entities
-                  show_header_toggle: false
-                  entities:
-                    - type: 'custom:slider-entity-row'
-                      entity: media_player.receiver
-                      full_row: true
-                      hide_state: true
-                style:
-                  '--paper-card-background-color': 'rgba(255,255,255,0.45)'
-                  border-radius: 10px
-                  padding: 0px 5px 0px 5px
-                  margin: 10px
-                extra_styles: >
+              - type: entities
+                show_header_toggle: false
+                entities:
+                  - type: 'custom:slider-entity-row'
+                    entity: media_player.receiver
+                    full_row: true
+                    hide_state: true
+                style: |
+                  ha-card {
+                    border-radius: 10px;
+                    padding: 0px 5px 0px 5px;
+                    margin: 10px;
+                    --paper-slider-container-color: #FFFFFF;
+                  }
                   .card-content {
                     padding: 0px;
+                    --background-card-color: 'rgba(255,255,255,0.45)';
                   }
+      #Music controls
+      - type: conditional
+        conditions:
+          - entity: media_player.theater
+            state_not: "off"
+          - entity: sensor.harmony_activity
+            state: "PowerOff"
+        card:
+            type: vertical-stack
+            cards:
+              - type: horizontal-stack
+                cards:
+                - <<: *spacer
+                - type: custom:mini-media-player
+                  entity: media_player.theater
+                  artwork: full-cover
+                  hide:
+                    name: true
+                    icon: true
+                  style:
+                    .: |
+                      ha-card > div.mmp-player {
+                        padding-left: 0px !important;
+                        padding-right: 0px !important;
+                        padding-bottom: 0px !important;
+                        --paper-slider-knob-color: white;
+                        --paper-slider-active-color: white;
+                        --paper-slider-container-color: #303741;
+                      }
+                      ha-card > div.mmp-player div {
+                        padding-left: 10px !important;
+                        padding-right: 10px !important;
+                        background: rgba(0,0,0,0.8);
+                      }
+                      ha-card > div.mmp-player div .entity__info,
+                      ha-card > div.mmp-player div .entity__info__media {
+                        background: rgba(0,0,0,0);
+                        padding: 0px !important;
+                      }
+                      ha-card > div.mmp-player div .entity__info__media span:nth-of-type(2)::before {
+                        content: '\000A' !important;
+                        white-space: pre !important;
+                      }
+                      ha-card > div.mmp-player div .entity__info__media span {
+                        color: #FFFFFF !important;
+                      }
+                      ha-card > div.mmp-player .mmp-player__adds mmp-media-controls {
+                        padding-bottom: 10px !important;
+                      }
+                - <<: *spacer
 icon: 'mdi:projector'
 title: Remote

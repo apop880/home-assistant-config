@@ -14,14 +14,14 @@ resources:
     type: js
   - url: /community_plugin/bar-card/bar-card.js
     type: js
-  - url: /community_plugin/lovelace-card-modder/card-modder.js
-    type: js
   - url: /community_plugin/lovelace-card-loader/card-loader.js
     type: js
   - url: /community_plugin/lovelace-popup-card/popup-card.js
     type: js
   - url: /community_plugin/lovelace-card-tools/card-tools.js
     type: js
+  - url: /community_plugin/lovelace-card-mod/card-mod.js
+    type: module
   #Non-HACS Resources
   - url: /local/custom-lovelace/weather-card/dark-sky-weather-card.js?v=7.3
     type: module

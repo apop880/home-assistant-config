@@ -68,6 +68,8 @@ clear:
     #HACS
     hacs-badge-text-color: "var(--text-primary-color)"
 
+    mini-media-player-overlay-color: 'rgba(0,0,0,0)'
+
 midnight:
     # Main colors
     primary-color: '#5294E2'                                                        # Header

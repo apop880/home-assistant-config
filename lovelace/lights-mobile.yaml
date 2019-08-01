@@ -96,13 +96,6 @@ anchors:
         - padding-top: 6px
         - padding-right: 10px
     type: 'custom:button-card'
-  section_header: &sectionheader
-    card:
-      image: /local/images/section-header6.png
-      type: picture-elements
-    style:
-      '--paper-card-background-color': 'rgba(255,255,255,0.45)'
-    type: 'custom:card-modder'
   spacer: &spacer
     type: 'custom:button-card'
     color_type: blank-card
