@@ -114,7 +114,6 @@ recorder:
       - switch
       - device_tracker
       - input_boolean
-      - cover
     entities:
       - sensor.load_15m
       - sensor.disk_use_percent_home
@@ -439,6 +438,19 @@ input_select:
       - Jungle
       - Ocean
       - Red
+  basement_scene:
+    name: Basement Scene
+    options:
+      - None
+      - Blue/Gold
+      - Light Blue
+      - Red/Gold
+      - Red
+      - Gold
+      - Green
+      - Green/Gold
+      - Purple/Pink
+      - Rainbow
 
 group: !include groups.yaml
 automation: !include automations.yaml

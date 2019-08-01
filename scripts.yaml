@@ -111,3 +111,11 @@ xbox_stop:
 check_config:
   sequence: []
   alias: Check Configuration
+
+###################
+# GLEDOPTO On/Off #
+###################
+
+gledopto_on_off:
+  sequence: []
+  alias: Gledopto On/Off
