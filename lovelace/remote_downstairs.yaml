@@ -116,18 +116,6 @@ cards:
               service_data:
                 entity_id: remote.harmony_hub
           - <<: *activitybutton
-            icon: 'mdi:xbox'
-            state:
-              - value: "Play Xbox One"
-                <<: *activityon
-              - <<: *activityoff
-            tap_action:
-              action: call-service
-              service: remote.turn_on
-              service_data:
-                entity_id: remote.harmony_hub
-                activity: "Play Xbox One"
-          - <<: *activitybutton
             icon: 'mdi:cast-connected'
             state:
               - value: "Chromecast"
@@ -139,6 +127,18 @@ cards:
               service_data:
                 entity_id: remote.harmony_hub
                 activity: "Chromecast"
+          - <<: *activitybutton
+            icon: 'mdi:xbox'
+            state:
+              - value: "Play Xbox One"
+                <<: *activityon
+              - <<: *activityoff
+            tap_action:
+              action: call-service
+              service: remote.turn_on
+              service_data:
+                entity_id: remote.harmony_hub
+                activity: "Play Xbox One"
           - <<: *activitybutton
             icon: 'mdi:laptop-windows'
             state:

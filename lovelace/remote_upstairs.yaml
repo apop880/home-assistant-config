@@ -627,6 +627,8 @@ cards:
         conditions:
           - entity: sensor.harmony_activity_upstairs
             state_not: "PowerOff"
+          - entity: media_player.living_room
+            state: "off"
         card:
             type: vertical-stack
             cards:
@@ -702,5 +704,53 @@ cards:
                         command: VolumeUp
                   - type: 'custom:button-card'
                     color_type: blank-card
+      #Music controls
+      - type: conditional
+        conditions:
+          - entity: media_player.living_room
+            state_not: "off"
+        card:
+            type: vertical-stack
+            cards:
+              - type: horizontal-stack
+                cards:
+                - <<: *spacer
+                - type: custom:mini-media-player
+                  entity: media_player.living_room
+                  artwork: full-cover
+                  hide:
+                    name: true
+                    icon: true
+                  style:
+                    .: |
+                      ha-card > div.mmp-player {
+                        padding-left: 0px !important;
+                        padding-right: 0px !important;
+                        padding-bottom: 0px !important;
+                        --paper-slider-knob-color: white;
+                        --paper-slider-active-color: white;
+                        --paper-slider-container-color: #303741;
+                      }
+                      ha-card > div.mmp-player div {
+                        padding-left: 10px !important;
+                        padding-right: 10px !important;
+                        background: rgba(0,0,0,0.8);
+                      }
+                      ha-card > div.mmp-player div .entity__info,
+                      ha-card > div.mmp-player div .entity__info__media {
+                        background: rgba(0,0,0,0);
+                        padding: 0px !important;
+                      }
+                      ha-card > div.mmp-player div .entity__info__media span:nth-of-type(2)::before {
+                        content: '\000A' !important;
+                        white-space: pre !important;
+                      }
+                      ha-card > div.mmp-player div .entity__info__media span {
+                        color: #FFFFFF !important;
+                      }
+                      ha-card > div.mmp-player .mmp-player__adds mmp-media-controls {
+                        padding-bottom: 10px !important;
+                      }
+                - <<: *spacer
 icon: 'mdi:remote'
 title: Remote

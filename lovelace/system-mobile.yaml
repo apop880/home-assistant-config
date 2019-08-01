@@ -119,12 +119,6 @@ cards:
           title: Patio Door
         - entity: sensor.kitchen_motion_battery
           title: Kitchen Motion
-    - type: entities
-      title: Check Configuration
-      show_header_toggle: false
-      entities:
-        - script.check_config
-        - sensor.config_result
     # - type: 'custom:card-templater'
     #   card:
     #     content_template: >-
