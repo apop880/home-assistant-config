@@ -1,4 +1,4 @@
-background: center / cover no-repeat url("/local/images/day.jpg") fixed
+background: var(--background-image)
 badges: []
 cards:
     - type: 'custom:dark-sky-weather-card'
