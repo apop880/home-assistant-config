@@ -94,7 +94,7 @@ anchors:
         - width: 25px
         - color: '#303741'
     type: 'custom:button-card'
-background: center / cover no-repeat url("/local/images/day.jpg") fixed
+background: var(--background-image)
 badges: []
 cards:
   - type: custom:card-loader

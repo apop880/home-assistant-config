@@ -37,7 +37,7 @@ anchors:
       color: '#FFFFFF'
       font-size: 20px
       text-shadow: "0 0 5px #000000"
-background: center / cover no-repeat url("/local/images/day.jpg") fixed
+background: var(--background-image)
 badges: []
 cards:
     - <<: *custom_button_main_label
@@ -119,6 +119,25 @@ cards:
           title: Patio Door
         - entity: sensor.kitchen_motion_battery
           title: Kitchen Motion
+    - <<: *custom_button_main_label
+      label: "ZHA"
+    - columns:
+        - name: Name
+          prop: name
+        - attr: available
+          id: available
+          modify: x || "false"
+          name: Online
+        - attr: rssi
+          name: RSSI
+      style:
+        .: |
+          ha-card {
+            background: rgba(255,255,255,0.45);
+            border-radius: 15px;
+          }
+      sort_by: available
+      type: 'custom:zha-network-card'
     # - type: 'custom:card-templater'
     #   card:
     #     content_template: >-

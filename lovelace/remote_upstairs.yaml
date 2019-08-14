@@ -85,7 +85,7 @@ anchors:
         - text-align: left
         - margin-right: 10px
     type: 'custom:button-card'
-background: center / cover no-repeat url("/local/images/day.jpg") fixed
+background: var(--background-image)
 badges: []
 cards:
   - type: custom:card-loader
@@ -638,7 +638,7 @@ cards:
                     color_type: blank-card
                   - <<: *actionbutton
                     <<: *skipbutton
-                    icon: mdi:rotate-right
+                    icon: mdi:speaker
                     label: "INPUT"
                     tap_action:
                       action: call-service

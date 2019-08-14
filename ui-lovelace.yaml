@@ -22,6 +22,8 @@ resources:
     type: js
   - url: /community_plugin/lovelace-card-mod/card-mod.js
     type: module
+  - url: /community_plugin/zha-network-card/zha-network-card.js
+    type: js
   #Non-HACS Resources
   - url: /local/custom-lovelace/weather-card/dark-sky-weather-card.js?v=7.3
     type: module
@@ -39,24 +41,24 @@ popup_cards:
   light.morgan_fun:
     title: Morgan's Fun Lamp
     card:
-      type: 'custom:card-modder'
+      type: entities
+      entities:
+        - type: 'custom:slider-entity-row'
+          entity: light.morgan_fun
+          toggle: true
+          full_row: true
+          name: Switch
+        - entity: input_select.morgan_lamp_mode
+          name: Mode
       style:
-        box-shadow: none
-        '--paper-card-background-color': 'rgba(255,255,255,0)'
-      extra_styles: >
-        .card-content {
-          padding: 0px;
-        }
-      card:
-        type: entities
-        entities:
-          - type: 'custom:slider-entity-row'
-            entity: light.morgan_fun
-            toggle: true
-            full_row: true
-            name: Switch
-          - entity: input_select.morgan_lamp_mode
-            name: Mode
+        .: |
+          ha-card {
+            background: rgba(255,255,255,0);
+            box-shadow: none;
+          }
+          .card-content {
+            padding: 0px;
+          }
 cch:
   background: 'rgba(51,51,51,0.6)'
   clock: voice

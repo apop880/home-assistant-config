@@ -1,6 +1,7 @@
 clear:
     # Background image
-    background-image: 'center / cover no-repeat url("/local/images/day.jpg") fixed'
+    #background-image: 'center / cover no-repeat url("/local/images/day.jpg") fixed'
+    background-image: "radial-gradient(at 50% 50%, rgba(230, 161, 57, 0.7) 0%, rgba(11, 49, 97, 0.7) 80%)"
 
     # Colors
     text-color: '#303741'                                                           # Grey text

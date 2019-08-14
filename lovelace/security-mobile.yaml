@@ -34,7 +34,7 @@ anchors:
     styles:
       card:
         - width: 2px
-background: center / cover no-repeat url("/local/images/day.jpg") fixed
+background: var(--background-image)
 badges: []
 cards:
     - type: horizontal-stack

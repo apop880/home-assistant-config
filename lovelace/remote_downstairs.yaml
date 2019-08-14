@@ -85,7 +85,7 @@ anchors:
         - text-align: left
         - margin-right: 10px
     type: 'custom:button-card'
-background: center / cover no-repeat url("/local/images/day.jpg") fixed
+background: var(--background-image)
 badges: []
 cards:
   - type: custom:card-loader

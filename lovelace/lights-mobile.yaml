@@ -146,7 +146,7 @@ anchors:
       top: 50%
     text: Kitchen
     type: 'custom:text-element'
-background: center / cover no-repeat url("/local/images/day.jpg") fixed
+background: var(--background-image)
 badges: []
 cards:
   - cards:
