@@ -34,6 +34,14 @@ ocean:
       entity_id: input_select.morgan_lamp_mode
       option: Ocean
 
+halloween:
+  alias: Halloween Lighting
+  sequence:
+    service: input_select.select_option
+    data:
+      entity_id: input_select.morgan_lamp_mode
+      option: Halloween
+
 chiefs:
   alias: Chiefs Lighting
   sequence:
@@ -103,6 +111,15 @@ xbox_stop:
       entity_id: remote.harmony_hub
       device: Microsoft Xbox One
       command: Stop
+
+#Expose Xbox to Google Home
+xbox_on:
+  sequence:
+    service: remote.turn_on
+    data:
+      entity_id: remote.harmony_hub
+      activity: "Play Xbox One"
+  alias: Xbox
 
 ################
 # Check Config #

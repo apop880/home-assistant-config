@@ -40,104 +40,108 @@ anchors:
 background: var(--background-image)
 badges: []
 cards:
-    - <<: *custom_button_main_label
-      label: "System Monitoring"
-    - <<: *barcard
-      columns: 2
-      entities:
-        - entity: sensor.cpu_temperature
-          title: CPU Temp
-          unit_of_measurement: "°C"
-          min: 30
-          max: 80
-          severity:
-          - value: 60
-            color: 'rgb(0,128,0)'
-          - value: 70
-            color: 'rgb(234,200,4)'
+    - type: vertical-stack
+      cards:
+      - <<: *custom_button_main_label
+        label: "System Monitoring"
+      - <<: *barcard
+        columns: 2
+        entities:
+          - entity: sensor.cpu_temperature
+            title: CPU Temp
+            unit_of_measurement: "°C"
+            min: 30
+            max: 80
+            severity:
+            - value: 60
+              color: 'rgb(0,128,0)'
+            - value: 70
+              color: 'rgb(234,200,4)'
+            - value: 100
+              color: 'rgb(200,0,0)'
+          - entity: sensor.processor_use
+            title: CPU Usage
+            unit_of_measurement: "%"
+            severity:
+            - value: 50
+              color: 'rgb(0,128,0)'
+            - value: 80
+              color: 'rgb(234,200,4)'
+            - value: 100
+              color: 'rgb(200,0,0)'
+          - entity: sensor.disk_use_percent_home
+            title: Disk Usage
+            unit_of_measurement: "%"
+            severity:
+            - value: 70
+              color: 'rgb(0,128,0)'
+            - value: 85
+              color: 'rgb(234,200,4)'
+            - value: 100
+              color: 'rgb(200,0,0)'
+          - entity: sensor.memory_free
+            title: Memory Free
+            unit_of_measurement: "MB"
+            min: 0
+            max: 1000
+            severity:
+            - value: 200
+              color: 'rgb(200,0,0)'
+            - value: 400
+              color: 'rgb(234,200,4)'
+            - value: 1200
+              color: 'rgb(0,128,0)'
+      - <<: *custom_button_main_label
+        label: "Battery Status"
+      - <<: *barcard
+        columns: 2
+        indicator: 'off'
+        unit_of_measurement: "%"
+        severity:
           - value: 100
-            color: 'rgb(200,0,0)'
-        - entity: sensor.processor_use
-          title: CPU Usage
-          unit_of_measurement: "%"
-          severity:
-          - value: 50
             color: 'rgb(0,128,0)'
-          - value: 80
+          - value: 40
             color: 'rgb(234,200,4)'
-          - value: 100
+          - value: 20
             color: 'rgb(200,0,0)'
-        - entity: sensor.disk_use_percent_home
-          title: Disk Usage
-          unit_of_measurement: "%"
-          severity:
-          - value: 70
-            color: 'rgb(0,128,0)'
-          - value: 85
-            color: 'rgb(234,200,4)'
-          - value: 100
-            color: 'rgb(200,0,0)'
-        - entity: sensor.memory_free
-          title: Memory Free
-          unit_of_measurement: "MB"
-          min: 0
-          max: 1000
-          severity:
-          - value: 200
-            color: 'rgb(200,0,0)'
-          - value: 400
-            color: 'rgb(234,200,4)'
-          - value: 1200
-            color: 'rgb(0,128,0)'
-    - <<: *custom_button_main_label
-      label: "Battery Status"
-    - <<: *barcard
-      columns: 2
-      indicator: 'off'
-      unit_of_measurement: "%"
-      severity:
-        - value: 100
-          color: 'rgb(0,128,0)'
-        - value: 40
-          color: 'rgb(234,200,4)'
-        - value: 20
-          color: 'rgb(200,0,0)'
-      entities:
-        - entity: sensor.bar_button_battery
-          title: Bar Button
-        - entity: sensor.theater_button_battery
-          title: Theater Button
-        - entity: sensor.stairs_button_battery
-          title: Stairs Button
-        - entity: sensor.front_door_battery
-          title: Front Door
-        - entity: sensor.garage_entry_door_battery
-          title: Garage Entry
-        - entity: sensor.upstairs_back_door_battery
-          title: Deck Door
-        - entity: sensor.downstairs_back_door
-          title: Patio Door
-        - entity: sensor.kitchen_motion_battery
-          title: Kitchen Motion
-    - <<: *custom_button_main_label
-      label: "ZHA"
-    - columns:
-        - name: Name
-          prop: name
-        - attr: available
-          id: available
-          modify: x || "false"
-          name: Online
-        - attr: rssi
-          name: RSSI
-      style:
-        .: |
-          ha-card {
-            background: rgba(255,255,255,0.45);
-            border-radius: 15px;
-          }
-      sort_by: available
-      type: 'custom:zha-network-card'
+        entities:
+          - entity: sensor.bar_button_battery
+            title: Bar Button
+          - entity: sensor.theater_button_battery
+            title: Theater Button
+          - entity: sensor.stairs_button_battery
+            title: Stairs Button
+          - entity: sensor.front_door_battery
+            title: Front Door
+          - entity: sensor.garage_entry_door_battery
+            title: Garage Entry
+          - entity: sensor.upstairs_back_door_battery
+            title: Deck Door
+          - entity: sensor.downstairs_back_door
+            title: Patio Door
+          - entity: sensor.kitchen_motion_battery
+            title: Kitchen Motion
+      - <<: *custom_button_main_label
+        label: "ZHA"
+      - columns:
+          - name: Name
+            prop: name
+          - attr: available
+            id: available
+            modify: x || "false"
+            name: Online
+          - attr: rssi
+            name: RSSI
+        style:
+          .: |
+            ha-card {
+              background: rgba(255,255,255,0.45);
+              border-radius: 15px;
+              --paper-card-background-color: rgba(255,255,255,0.45);
+              --secondary-background-color: rgba(255,255,255,0.35);
+            }
+        sort_by: available
+        type: 'custom:zha-network-card'
     # - type: 'custom:card-templater'
     #   card:
     #     content_template: >-

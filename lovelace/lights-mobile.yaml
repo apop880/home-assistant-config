@@ -177,6 +177,37 @@ cards:
       - type: horizontal-stack
         cards:
           - <<: *custom_button_main_label
+            label: "Dining Room"
+          - <<: *custom_button_label_on
+            entity: group.dining
+          - <<: *spacer
+          - <<: *custom_button_label_off
+            entity: group.dining
+          - <<: *spacer
+      - cards:
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: light.dining_lamp
+                name: Lamp
+                state:
+                  - label: 'On'
+                    styles:
+                      icon:
+                        - color: 'rgb(250,218,94)'
+                    value: 'on'
+                    icon: 'mdi:lightbulb'
+                  - <<: *lightoff
+              - type: 'custom:button-card'
+                color_type: blank-card
+              - <<: *spacer
+            type: horizontal-stack
+        type: vertical-stack
+    type: vertical-stack
+  - cards:
+      - type: horizontal-stack
+        cards:
+          - <<: *custom_button_main_label
             label: "Master Bedroom"
           - <<: *custom_button_label_on
             entity: group.master_bedroom

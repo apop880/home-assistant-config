@@ -3,6 +3,10 @@ kitchen:
   entities:
     - light.kitchen_sink
     - light.kitchen_table
+dining:
+  name: Dining Room
+  entities:
+    - light.dining_lamp
 master_bedroom:
   name: Master Bedroom
   entities:
@@ -30,6 +34,7 @@ inside_lights:
   name: Inside
   entities:
     - group.kitchen
+    - group.dining
     - group.master_bedroom
     - group.morgan_room
     - group.basement

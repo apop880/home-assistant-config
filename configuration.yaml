@@ -88,7 +88,17 @@ google_assistant:
       expose: false
     input_boolean.valid_config:
       expose: false
-    input_boolean.kitchen_light_triggered:
+    script.cc_skip:
+      expose: false
+    script.check_config:
+      expose: false
+    script.gledopto_on_off:
+      expose: false
+    script.media_mute:
+      expose: false
+    script.xbox_play_pause:
+      expose: false
+    script.xbox_stop:
       expose: false
     light.kitchen_sink:
       name: KITCHEN SINK
@@ -119,19 +129,23 @@ recorder:
       - sensor.disk_use_percent_home
       - sensor.memory_free
       - sensor.processor_use
-      - sensor.zooz_zse40_4_in_1_sensor_luminance_2
+      - sensor.garage_door
+      - binary_sensor.front_door
+      - binary_sensor.garage_entry_door
+      - binary_sensor.upstairs_back_door
+      - binary_sensor.downstairs_back_door
   exclude:
     entities:
-      - light.hue_ambiance_lamp_1
-      - light.hue_ambiance_lamp_2
-      - light.hue_ambiance_lamp_3
-      - light.hue_ambiance_lamp_4
-      - light.hue_ambiance_lamp_5
-      - light.hue_color_lamp_1
-      - light.hue_color_lamp_2
-      - light.hue_white_lamp_3
-      - light.hue_white_lamp_4
-      - light.hue_white_lamp_5
+      - light.sink_1
+      - light.sink_2
+      - light.table_1
+      - light.table_2
+      - light.table_3
+      - light.garage_1
+      - light.garage_2
+      - light.theater_1
+      - light.theater_2
+      - light.theater_3
       - light.morgan_fun_1
       - light.morgan_fun_2
       - light.morgan_fun_3
@@ -140,7 +154,6 @@ recorder:
       - light.morgan_s_fun_lamp_group
       - input_boolean.alarm_clock
       - input_boolean.alex_basement
-      - input_boolean.kitchen_light_triggered
       - input_boolean.show_commute
       - input_boolean.tv
       - input_boolean.projector
@@ -157,6 +170,7 @@ recorder:
 
 # Enables support for tracking state changes over time
 history:
+
 
 # View all events in a logbook
 logbook:
@@ -231,6 +245,11 @@ sensor:
   - platform: mqtt
     name: "Garage Door"
     state_topic: "homeassistant/garage/state"
+  - platform: mqtt
+    name: "Morgan Panel Battery"
+    state_topic: "wallpanel/mywallpanel/sensor/battery"
+    value_template: "{{ value_json.value }}"
+    unit_of_measurement: '%'
   # - platform: rest
   #   name: My Config
   #   resource: !secret config_url
@@ -276,7 +295,6 @@ sensor:
     round_digits: 1
     entity_ids:
       - sensor.stairs_button
-      - sensor.zooz_zse40_4_in_1_sensor_temperature_2
   - platform: command_line
     name: CPU Temperature
     command: "cat /sys/class/thermal/thermal_zone0/temp"
@@ -291,7 +309,7 @@ device_tracker:
   - platform: mqtt
     devices:
       alex: 'location/alex'
-      #julie: 'location/julie'
+      julie: 'location/julie'
 
 # Cloud
 cloud:
@@ -302,25 +320,25 @@ light:
   - platform: group
     name: Kitchen Table
     entities:
-      - light.hue_ambiance_lamp_3
-      - light.hue_ambiance_lamp_4
-      - light.hue_ambiance_lamp_5
+      - light.table_1
+      - light.table_2
+      - light.table_3
   - platform: group
     name: Kitchen Sink
     entities:
-      - light.hue_ambiance_lamp_1
-      - light.hue_ambiance_lamp_2
+      - light.sink_1
+      - light.sink_2
   - platform: group
     name: Garage
     entities:
-      - light.hue_color_lamp_1
-      - light.hue_color_lamp_2
+      - light.garage_1
+      - light.garage_2
   - platform: group
     name: Theater
     entities:
-      - light.hue_white_lamp_3
-      - light.hue_white_lamp_4
-      - light.hue_white_lamp_5
+      - light.theater_1
+      - light.theater_2
+      - light.theater_3
   - platform: group
     name: Morgan's Fun Lamp Group
     entities:
@@ -413,8 +431,6 @@ input_boolean:
     name: Julie Bed
   alarm_clock:
     name: Alarm Clock Triggered
-  kitchen_light_triggered:
-    name: Kitchen Trigger
   tv:
     name: TV
   projector:
@@ -437,6 +453,7 @@ input_select:
       - Rainbow
       - Jungle
       - Ocean
+      - Halloween
       - Red
   basement_scene:
     name: Basement Scene
@@ -451,6 +468,14 @@ input_select:
       - Green/Gold
       - Purple/Pink
       - Rainbow
+
+input_number:
+  tablet_level:
+    min: 0
+    max: 100
+  tablet_battery:
+    min: 0
+    max: 100
 
 group: !include groups.yaml
 automation: !include automations.yaml
