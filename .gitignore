@@ -8,12 +8,14 @@
 !*.md
 !lovelace
 !lovelace/screenshots
+!appdaemon
+!appdaemon/apps
+!*.py
 
 # Ignore folders.
 .storage
 .cloud
 .google.token
-.appdaemon
 .custom_components
 .deps
 .tts
