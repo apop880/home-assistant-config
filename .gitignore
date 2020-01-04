@@ -11,6 +11,7 @@
 !appdaemon
 !appdaemon/apps
 !*.py
+!esphome
 
 # Ignore folders.
 .storage

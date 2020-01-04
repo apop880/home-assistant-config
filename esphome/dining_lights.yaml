@@ -1,0 +1,48 @@
+esphome:
+  name: dining_lights
+  platform: ESP8266
+  board: esp01_1m
+
+wifi:
+  ssid: !secret ssid
+  password: !secret pass
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Dining Lights Fallback Hotspot"
+    password: "BCdcHoMz9JAT"
+
+captive_portal:
+
+# Enable logging
+logger:
+  baud_rate: 0
+  level: NONE
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+sensor:
+  - platform: uptime
+    name: Dining Dimmer Uptime
+    
+  - platform: wifi_signal
+    name: Dining Dimmer Wifi Signal
+    update_interval: 60s
+
+uart:
+  rx_pin: GPIO3
+  tx_pin: GPIO1
+  baud_rate: 9600
+  
+tuya:
+
+light:
+  - platform: "tuya"
+    name: "Dining Dimmer"
+    dimmer_datapoint: 2
+    switch_datapoint: 1
+    min_value: 10
+    max_value: 1000
