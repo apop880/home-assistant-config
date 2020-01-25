@@ -1,7 +1,9 @@
 resources:
   #HACS Resources (Updated Automatically)
-  - url: /community_plugin/compact-custom-header/compact-custom-header.js
+  - url: /community_plugin/custom-header/custom-header.js
     type: module
+  - url: /community_plugin/lovelace-swipe-navigation/swipe-navigation.js
+    type: js
   - url: /community_plugin/button-card/button-card.js
     type: module
   - url: /community_plugin/mini-media-player/mini-media-player.js
@@ -15,8 +17,6 @@ resources:
   - url: /community_plugin/bar-card/bar-card.js
     type: js
   - url: /community_plugin/lovelace-card-loader/card-loader.js
-    type: js
-  - url: /community_plugin/lovelace-popup-card/popup-card.js
     type: js
   - url: /community_plugin/lovelace-card-tools/card-tools.js
     type: js
@@ -55,39 +55,39 @@ popup_cards:
           ha-card {
             background: rgba(255,255,255,0);
             box-shadow: none;
+            width: 95%;
           }
           .card-content {
-            padding: 0px;
+            padding: 10px;
           }
-cch:
+custom_header:
   background: 'rgba(51,51,51,0.6)'
-  clock: voice
-  clock_format: '12'
+  compact_mode: true
+  voice_hide: true
   exceptions:
     - conditions:
         user: morgankiosk
       config:
         kiosk_mode: true
-        swipe: false
         show_tabs: '7'
     - conditions:
         user_agent: Android
       config:
-        menu: hide
-        options: hide
+        menu_hide: true
+        options_hide: true
         hide_tabs: '7'
     - conditions:
         user: Julie
         user_agent: Android
       config:
-        menu: hide
-        options: hide
+        menu_hide: true
+        options_hide: true
         hide_tabs: '6,7'
         disable_sidebar: true
-  notifications: overflow
-  voice: hide
-  swipe: true
-  swipe_animate: swipe
+swipe_nav:
+  animate: fade
+  prevent_default: true
+  swipe_amount: 30
 views:
   - !include /config/lovelace/lights-mobile.yaml
   - !include /config/lovelace/weather-mobile.yaml
