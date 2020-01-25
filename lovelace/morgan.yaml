@@ -12,9 +12,9 @@
                 state_image:
                   'on': /local/images/fun-lamp-on.png
                 style:
-                  top: 125px
-                  left: 175px
-                  width: 310px
+                  top: 195px
+                  left: 265px
+                  width: 470px
               - type: image
                 entity: light.morgan_table
                 filter: none
@@ -24,9 +24,9 @@
                 state_image:
                   'on': /local/images/table-lamp-on.png
                 style:
-                  top: 280px
-                  left: 175px
-                  width: 310px
+                  top: 455px
+                  left: 265px
+                  width: 470px
               - type: image
                 entity: input_boolean.white_noise_morgan
                 filter: none
@@ -36,9 +36,9 @@
                 state_image:
                   'on': /local/images/white-noise-on.png
                 style:
-                  top: 320px
-                  right: -60px
-                  width: 140px
+                  top: 510px
+                  right: -100px
+                  width: 255px
               - type: state-label
                 entity: sensor.local_time
                 tap_action:
@@ -46,9 +46,9 @@
                 hold_action:
                   action: none
                 style:
-                  top: 25px
-                  right: -55px
-                  font-size: 20pt
+                  top: 35px
+                  right: -45px
+                  font-size: 30pt
             image: /local/images/monkey.png
             type: picture-elements
         type: vertical-stack
