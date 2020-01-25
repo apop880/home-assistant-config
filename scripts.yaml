@@ -42,6 +42,14 @@ halloween:
       entity_id: input_select.morgan_lamp_mode
       option: Halloween
 
+christmas:
+  alias: Christmas Lighting
+  sequence:
+    service: input_select.select_option
+    data:
+      entity_id: input_select.morgan_lamp_mode
+      option: Christmas
+
 chiefs:
   alias: Chiefs Lighting
   sequence:

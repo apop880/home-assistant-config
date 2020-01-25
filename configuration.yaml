@@ -74,6 +74,14 @@ google_assistant:
       expose: false
     light.morgan_s_fun_lamp_group:
       expose: false
+    light.morgankiosk:
+      expose: false
+    light.alex_laptop:
+      expose: false
+    light.alex_phone:
+      expose: false
+    light.julie_phone:
+      expose: false
     input_boolean.show_commute:
       expose: false
     input_boolean.alex_bed:
@@ -100,6 +108,12 @@ google_assistant:
       expose: false
     script.xbox_stop:
       expose: false
+    switch.garage_opener_restart:
+      expose: false
+    switch.garage_buzzer:
+      expose: false
+    switch.outdoor_plug_2:
+      name: Humidifier
     light.kitchen_sink:
       name: KITCHEN SINK
       aliases:
@@ -117,6 +131,7 @@ conversation:
 
 # Recorder customization
 recorder:
+  db_url: !secret db_url
   purge_keep_days: 5
   include:
     domains:
@@ -129,7 +144,7 @@ recorder:
       - sensor.disk_use_percent_home
       - sensor.memory_free
       - sensor.processor_use
-      - sensor.garage_door
+      - cover.garage_door
       - binary_sensor.front_door
       - binary_sensor.garage_entry_door
       - binary_sensor.upstairs_back_door
@@ -152,6 +167,13 @@ recorder:
       - light.morgan_fun_4
       - light.morgan_fun_5
       - light.morgan_s_fun_lamp_group
+      - light.morgankiosk
+      - light.alex_laptop
+      - light.alex_phone
+      - light.julie_phone
+      - switch.fire_tablet
+      - switch.morgan_room_control
+      - switch.garage_opener_restart
       - input_boolean.alarm_clock
       - input_boolean.alex_basement
       - input_boolean.show_commute
@@ -200,6 +222,7 @@ mqtt:
 
 # Switches
 
+
 # Sensors
 sensor:
   # Weather prediction
@@ -242,14 +265,6 @@ sensor:
     origin: !secret home
     destination: !secret work
     region: 'US'
-  - platform: mqtt
-    name: "Garage Door"
-    state_topic: "homeassistant/garage/state"
-  - platform: mqtt
-    name: "Morgan Panel Battery"
-    state_topic: "wallpanel/mywallpanel/sensor/battery"
-    value_template: "{{ value_json.value }}"
-    unit_of_measurement: '%'
   # - platform: rest
   #   name: My Config
   #   resource: !secret config_url
@@ -347,6 +362,12 @@ light:
       - light.morgan_fun_3
       - light.morgan_fun_4
       - light.morgan_fun_5
+  - platform: group
+    name: Main Room
+    entities:
+      - light.kitchen_table
+      - light.chandelier
+      - light.dining_lamp
   - platform: template
     lights:
       morgan_fun:
@@ -380,9 +401,9 @@ media_player:
   - platform: onkyo_custom
     host: !secret onkyo
     name: receiver
-  - platform: xboxone
-    device: !secret xboxone
-    name: Xbox One
+  # - platform: xboxone
+  #   device: !secret xboxone
+  #   name: Xbox One
       
 telegram_bot: !secret telegram_bot
     
@@ -454,6 +475,7 @@ input_select:
       - Jungle
       - Ocean
       - Halloween
+      - Christmas
       - Red
   basement_scene:
     name: Basement Scene
@@ -476,6 +498,20 @@ input_number:
   tablet_battery:
     min: 0
     max: 100
+  tablet_battery_morgan:
+    min: 0
+    max: 100
+
+browser_mod:
+  devices:
+    79636ce4-fb4ff72b:
+      name: morgankiosk
+    53e31f06-5c77d879:
+      name: alex_laptop
+    a2eadc1b-7c5cfb65:
+      name: alex_phone
+    d5101afa-30549193:
+      name: julie_phone
 
 group: !include groups.yaml
 automation: !include automations.yaml

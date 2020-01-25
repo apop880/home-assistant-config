@@ -188,6 +188,9 @@ cards:
           - cards:
               - <<: *spacer
               - <<: *lightbutton
+                entity: light.chandelier
+                name: Chandelier
+              - <<: *lightbutton
                 entity: light.dining_lamp
                 name: Lamp
                 state:
@@ -198,8 +201,6 @@ cards:
                     value: 'on'
                     icon: 'mdi:lightbulb'
                   - <<: *lightoff
-              - type: 'custom:button-card'
-                color_type: blank-card
               - <<: *spacer
             type: horizontal-stack
         type: vertical-stack
