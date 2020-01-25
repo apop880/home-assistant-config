@@ -1,0 +1,164 @@
+esphome:
+  name: garageopener
+  platform: ESP8266
+  board: nodemcuv2
+
+wifi:
+  ssid: !secret ssid
+  password: !secret pass
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Garage Door Fallback Hotspot"
+    password: "56pgJsCc5rsarKYG"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+
+sensor:
+  - platform: ultrasonic
+    trigger_pin: D6
+    echo_pin: D5
+    update_interval: 8s
+    unit_of_measurement: cm
+    accuracy_decimals: 0
+    name: "Door Position Sensor"
+    id: door_sensor
+    filters:
+    - debounce: 0.1s
+    - multiply: 100
+    - lambda: !lambda |-
+        if (x != x) {
+          return 200;
+        }
+        else {
+          return x;
+        }
+    - median:
+        window_size: 5
+        send_every: 5
+    on_raw_value:
+      then:
+        - if:
+            condition:
+              and:
+                - lambda: 'return x == x;'
+                - lambda: 'return id(garage_door).state == COVER_CLOSED;'
+            then:
+              - delay: 250ms
+              - component.update: door_sensor
+            else:
+              - if:
+                  condition:
+                    and:
+                      - lambda: 'return x != x;'
+                      - lambda: 'return id(garage_door).state == COVER_OPEN;'
+                  then:
+                    - delay: 750ms
+                    - component.update: door_sensor
+    
+  - platform: wifi_signal
+    name: "Garage Opener Wifi"
+    update_interval: 60s
+    
+# is the output used to create a buzzer # 
+output:
+  - platform: esp8266_pwm
+    pin: D7
+    id: buzzer_output
+    
+switch:
+  - platform: gpio
+    pin: D8
+    name: "Garage Door Switch"
+    id: open_switch
+    internal: True
+  # restart gives a switch in HA that can be used to reboot the NodeMCU #  
+  - platform: restart
+    name: garage opener restart
+    id: restart_garage
+  - platform: template
+    name: "Garage Buzzer"
+    id: buzzer_switch
+    turn_on_action:
+      - output.esp8266_pwm.set_frequency:
+          id: buzzer_output
+          frequency: 800Hz
+      - output.set_level:
+          id: buzzer_output
+          level: 50%
+      - switch.template.publish:
+          id: buzzer_switch
+          state: ON
+    turn_off_action:
+      - output.turn_off: buzzer_output
+      - switch.template.publish:
+          id: buzzer_switch
+          state: OFF
+  
+cover:
+  - platform: template
+    name: "Garage Door"
+    id: garage_door
+    # set the value so that it is higher than value when door is in open state. In my case it reads 5cm so set it at 10cm #
+    lambda: !lambda |-
+      if ((id(door_sensor).state > 105) or (id(door_sensor).state < 95)) {
+        return COVER_CLOSED;
+      } else {
+        return COVER_OPEN;
+      }
+    open_action:
+      # Cancel any previous action
+      - switch.turn_off: open_switch
+      # Turn the OPEN/CLOSE switch/relay on briefly
+      - cover.template.publish:
+          id: garage_door
+          current_operation: OPENING
+      - switch.turn_on: open_switch
+      - delay: 0.2s
+      - switch.turn_off: open_switch
+      - delay: 15s
+      - cover.template.publish:
+          id: garage_door
+          current_operation: IDLE
+    close_action:
+      # Cancel any previous action
+      - switch.turn_off: open_switch
+      # Turn the OPEN/CLOSE switch/relay on briefly
+      - cover.template.publish:
+          id: garage_door
+          current_operation: CLOSING
+      - switch.turn_on: open_switch
+      - delay: 0.2s
+      - switch.turn_off: open_switch
+      - delay: 15s
+      - cover.template.publish:
+          id: garage_door
+          current_operation: IDLE
+          
+script:
+  - id: buzzer_script
+    then:
+      - output.esp8266_pwm.set_frequency:
+          id: buzzer_output
+          frequency: 550Hz
+      - while:
+          condition:
+            switch.is_on: buzzer_switch
+          then:
+          - output.set_level:
+              id: buzzer_output
+              level: 50%
+          - delay: 500ms
+          - output.esp8266_pwm.set_frequency:
+              id: buzzer_output
+              frequency: 750Hz
+          - delay: 500ms
