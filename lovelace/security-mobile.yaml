@@ -54,27 +54,26 @@ cards:
             action: more-info
           tap_action:
             action: call-service
-            service: mqtt.publish
+            service: cover.toggle
             service_data:
-              topic: "homeassistant/garage/command"
-              payload: "toggle"
+              entity_id: cover.garage_door
           layout: icon_name_state2nd
           show_label: true
           label_template: >
-            return states['sensor.garage_door'].state;
+            return states['cover.garage_door'].state.charAt(0).toUpperCase() + states['cover.garage_door'].state.substring(1);
           state:
             - icon: 'mdi:garage-open'
               operator: template
               value: >
-                return states['sensor.garage_door'].state === 'Open';
+                return states['cover.garage_door'].state === 'open';
             - icon: 'mdi:arrow-up-bold-circle'
               operator: template
               value: >
-                return states['sensor.garage_door'].state === 'Opening';
+                return states['cover.garage_door'].state === 'opening';
             - icon: 'mdi:arrow-down-bold-circle'
               operator: template
               value: >
-                return states['sensor.garage_door'].state === 'Closing';
+                return states['cover.garage_door'].state === 'closing';
             - icon: 'mdi:garage'
               operator: 'default'
           styles:
