@@ -140,6 +140,9 @@ cards:
               --paper-card-background-color: rgba(255,255,255,0.45);
               --secondary-background-color: rgba(255,255,255,0.35);
             }
+            thead th {
+              background-color: var(--text-color);
+            }
         sort_by: available
         type: 'custom:zha-network-card'
     # - type: 'custom:card-templater'
