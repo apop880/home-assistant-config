@@ -8,6 +8,9 @@ dining:
   entities:
     - light.dining_lamp
     - light.chandelier
+    - light.entry
+    - light.living_room_main_lights
+    - light.living_room_fan_light
 master_bedroom:
   name: Master Bedroom
   entities:

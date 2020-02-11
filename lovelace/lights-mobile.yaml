@@ -177,7 +177,7 @@ cards:
       - type: horizontal-stack
         cards:
           - <<: *custom_button_main_label
-            label: "Dining Room"
+            label: "Main Room"
           - <<: *custom_button_label_on
             entity: group.dining
           - <<: *spacer
@@ -185,6 +185,16 @@ cards:
             entity: group.dining
           - <<: *spacer
       - cards:
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: light.living_room_main_lights
+                name: Main
+              - <<: *lightbutton
+                entity: light.living_room_fan_light
+                name: Fan
+              - <<: *spacer
+            type: horizontal-stack
           - cards:
               - <<: *spacer
               - <<: *lightbutton
@@ -201,6 +211,15 @@ cards:
                     value: 'on'
                     icon: 'mdi:lightbulb'
                   - <<: *lightoff
+              - <<: *spacer
+            type: horizontal-stack
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: light.entry
+                name: Entry
+              - type: 'custom:button-card'
+                color_type: blank-card
               - <<: *spacer
             type: horizontal-stack
         type: vertical-stack
@@ -228,6 +247,30 @@ cards:
               - <<: *spacer
             type: horizontal-stack
         type: vertical-stack
+      - cards:
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: input_boolean.white_noise
+                name: White Noise
+                state:
+                  - label: 'On'
+                    styles:
+                      icon:
+                        - color: 'rgb(43,143,224)'
+                    value: 'on'
+                    icon: 'mdi:sleep'
+                  - label: 'Off'
+                    styles:
+                      icon:
+                        - color: '#303741'
+                    value: 'off'
+                    icon: 'mdi:sleep-off'
+              - type: 'custom:button-card'
+                color_type: blank-card
+              - <<: *spacer
+            type: horizontal-stack
+        type: vertical-stack
     type: vertical-stack
   - cards:
       - type: horizontal-stack
@@ -249,6 +292,30 @@ cards:
               - <<: *lightbutton
                 entity: light.morgan_fun
                 name: Fun
+              - <<: *spacer
+            type: horizontal-stack
+        type: vertical-stack
+      - cards:
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: input_boolean.white_noise_morgan
+                name: White Noise
+                state:
+                  - label: 'On'
+                    styles:
+                      icon:
+                        - color: 'rgb(43,143,224)'
+                    value: 'on'
+                    icon: 'mdi:sleep'
+                  - label: 'Off'
+                    styles:
+                      icon:
+                        - color: '#303741'
+                    value: 'off'
+                    icon: 'mdi:sleep-off'
+              - type: 'custom:button-card'
+                color_type: blank-card
               - <<: *spacer
             type: horizontal-stack
         type: vertical-stack

@@ -21,6 +21,8 @@ hacs:
 
 system_health:
 
+mobile_app:
+
 # Enables the frontend
 frontend:
   javascript_version: latest
@@ -35,32 +37,38 @@ config:
 
 google_assistant:
   project_id: home-assistant-227322
-  api_key: !secret google_api
+  service_account: !include service-account.json
   exposed_domains:
     - switch
     - light
     - input_boolean
     - script
   entity_config:
-    light.hue_ambiance_lamp_1:
+    light.sink_1:
       expose: false
-    light.hue_ambiance_lamp_2:
+    light.sink_2:
       expose: false
-    light.hue_ambiance_lamp_3:
+    light.table_1:
       expose: false
-    light.hue_ambiance_lamp_4:
+    light.table_2:
       expose: false
-    light.hue_ambiance_lamp_5:
+    light.table_3:
       expose: false
-    light.hue_color_lamp_1:
+    light.garage_1:
       expose: false
-    light.hue_color_lamp_2:
+    light.garage_2:
       expose: false
-    light.hue_white_lamp_3:
+    light.theater_1:
       expose: false
-    light.hue_white_lamp_4:
+    light.theater_2:
       expose: false
-    light.hue_white_lamp_5:
+    light.theater_3:
+      expose: false
+    light.entry_1:
+      expose: false
+    light.entry_2:
+      expose: false
+    light.entry_3:
       expose: false
     light.morgan_fun_1:
       expose: false
@@ -161,6 +169,9 @@ recorder:
       - light.theater_1
       - light.theater_2
       - light.theater_3
+      - light.entry_1
+      - light.entry_2
+      - light.entry_3
       - light.morgan_fun_1
       - light.morgan_fun_2
       - light.morgan_fun_3
@@ -355,6 +366,12 @@ light:
       - light.theater_2
       - light.theater_3
   - platform: group
+    name: Entry
+    entities:
+      - light.entry_1
+      - light.entry_2
+      - light.entry_3
+  - platform: group
     name: Morgan's Fun Lamp Group
     entities:
       - light.morgan_fun_1
@@ -465,6 +482,7 @@ input_select:
       - Christmas
       - Halloween
       - Independence Day
+      - Chiefs
   morgan_lamp_mode:
     name: Morgan's Lamp Mode
     options:
