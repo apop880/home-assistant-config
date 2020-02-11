@@ -88,669 +88,667 @@ anchors:
 background: var(--background-image)
 badges: []
 cards:
-  - type: custom:card-loader
-    wait:
-      - button-card
-    card:
-      type: vertical-stack
+  - type: vertical-stack
+    cards:
+    #Activity buttons
+    - type: horizontal-stack
       cards:
-      #Activity buttons
-      - type: horizontal-stack
-        cards:
-          - type: 'custom:button-card'
-            color_type: blank-card
-          - <<: *activitybutton
-            icon: 'mdi:power'
-            styles:
-              card:
-                - background: 'rgba(255,255,255,0.45)'
-                - width: 55px
-                - height: 55px
-                - border-radius: 50%
-              icon:
-                - width: 35px
-                - color: 'rgb(200,0,0)'
-            tap_action:
-              action: call-service
-              service: remote.turn_on
-              service_data:
-                entity_id: remote.harmony_hub_upstairs
-                activity: "Listen to Music"
-          - <<: *activitybutton
-            icon: 'mdi:cast-connected'
-            state:
-              - value: "Watch TV"
-                <<: *activityon
-              - <<: *activityoff
-            tap_action:
-              action: call-service
-              service: remote.turn_on
-              service_data:
-                entity_id: remote.harmony_hub_upstairs
-                activity: "Watch TV"
-          - <<: *activitybutton
-            icon: mdi:playstation
-            state:
-              - value: "Play PS3"
-                <<: *activityon
-              - <<: *activityoff
-            tap_action:
-              action: call-service
-              service: remote.turn_on
-              service_data:
-                entity_id: remote.harmony_hub_upstairs
-                activity: "Play PS3"
-          - <<: *activitybutton
-            icon: 'mdi:wii'
-            state:
-              - value: "Wii"
-                <<: *activityon
-              - <<: *activityoff
-            tap_action:
-              action: call-service
-              service: remote.turn_on
-              service_data:
-                entity_id: remote.harmony_hub_upstairs
-                activity: "Wii"
-          - type: 'custom:button-card'
-            color_type: blank-card
-      - type: horizontal-stack
-        cards:
-          - type: 'custom:gap-card'
-            height: 10
-      #Chromecast controls
-      - type: conditional
-        conditions:
-          - entity: sensor.harmony_activity_upstairs
-            state: "Watch TV"
-        card:
-            type: vertical-stack
-            cards:
-              - type: horizontal-stack
-                cards:
-                  - <<: *spacer
-                  - icon: mdi:youtube-tv
-                    entity: media_player.living_room_tv
-                    tap_action:
-                      action: call-service
-                      service: media_player.media_play_pause
-                      service_data:
-                        entity_id: entity
-                    hold_action:
-                      action: more-info
-                    dbltap_action:
-                      action: call-service
-                      service: media_player.turn_off
-                      service_data:
-                        entity_id: entity
-                    label_template: >
-                      if (typeof entity.attributes.media_title != "undefined") {
-                        var title = entity.attributes.media_title;
-                        var app_name = entity.attributes.app_name;
-                      }
-                      else {
-                        var title = entity.attributes.app_name;
-                        var app_name = '';
-                      }
-                      return(entity.state === 'off'
-                        ? '<span style="font-size:18px">' + 'Not Casting</span>'
-                        : '<span style="font-size:18px">' +
-                        title +
-                        '</span><br>' + '<span style="font-size:15px">' +
-                        app_name
-                        + ' &#183; ' + entity.state.charAt(0).toUpperCase() +
-                        entity.state.slice(1)
-                          + '</span>');
-                    state:
-                      - value: "off"
-                        styles:
-                          icon:
-                            - color: '#303741'
-                    <<: *playerbutton
-                  - <<: *spacer
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:gap-card'
-                    height: 10
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:skip-backward'
-                    label: "15s"
-                    tap_action:
-                      action: call-service
-                      service: script.cc_skip
-                      service_data:
-                        entity_id: media_player.living_room_tv
-                        seconds: -15
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:skip-forward'
-                    label: "15s"
-                    tap_action:
-                      action: call-service
-                      service: script.cc_skip
-                      service_data:
-                        entity_id: media_player.living_room_tv
-                        seconds: 15
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:skip-forward'
-                    label: "3m"
-                    tap_action:
-                      action: call-service
-                      service: script.cc_skip
-                      service_data:
-                        entity_id: media_player.living_room_tv
-                        seconds: 180
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: 'mdi:skip-forward'
-                    label: "15m"
-                    tap_action:
-                      action: call-service
-                      service: script.cc_skip
-                      service_data:
-                        entity_id: media_player.living_room_tv
-                        seconds: 900
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: 'custom:gap-card'
-                height: 10
-      #PS3 controls
-      - type: conditional
-        conditions:
-          - entity: sensor.harmony_activity_upstairs
-            state: "Play PS3"
-        card:
-            type: vertical-stack
-            cards:
-            #Controller top row
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    show_icon: false
-                    show_label: true
-                    label: "SELECT"
-                    styles:
-                      card:
-                        - background: 'rgba(255,255,255,0.45)'
-                        - width: 65px
-                        - height: 45px
-                        - border-radius: 10px
-                        - margin-top: 3px
-                      label:
-                        - color: '#303741'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Select
-                  - color_type: card
-                    show_name: false
-                    styles:
-                      card:
-                        - background: 'rgba(255,255,255,0.45)'
-                        - width: 50px
-                        - height: 50px
-                        - border-radius: 50%
-                      icon:
-                        - width: 32px
-                        - color: '#303741'
-                    type: 'custom:button-card'
-                    icon: 'mdi:playstation'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: PS
-                    hold_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: PSHold
-                  - <<: *actionbutton
-                    show_icon: false
-                    show_label: true
-                    label: "START"
-                    styles:
-                      card:
-                        - background: 'rgba(255,255,255,0.45)'
-                        - width: 65px
-                        - height: 45px
-                        - border-radius: 10px
-                        - margin-top: 3px
-                      label:
-                        - color: '#303741'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Start
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: 'custom:gap-card'
-                height: 3
-              #Up and triangle buttons
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-up-drop-circle-outline'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: DirectionUp
-                  - <<: *blankbutton
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:triangle-outline'
-                    styles:
-                      card:
-                        - background: 'rgba(255,255,255,0.45)'
-                        - width: 45px
-                        - height: 45px
-                        - border-radius: 50%
-                      icon:
-                        - width: 30px
-                        - color: 'rgb(61,244,131)'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Triangle
-                  - <<: *blankbutton
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              #Left/OK/Right/Square/Menu/Circle buttons
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-left-drop-circle-outline'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: DirectionLeft
-                  - <<: *actionbutton
-                    show_label: true
-                    show_icon: false
-                    label: 'OK'
-                    styles:
-                      card:
-                        - background: 'rgba(255,255,255,0.45)'
-                        - width: 45px
-                        - height: 45px
-                        - border-radius: 50%
-                      label:
-                        - color: '#303741'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Enter
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-right-drop-circle-outline'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: DirectionRight
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:square-outline'
-                    styles:
-                      card:
-                        - background: 'rgba(255,255,255,0.45)'
-                        - width: 45px
-                        - height: 45px
-                        - border-radius: 50%
-                      icon:
-                        - width: 30px
-                        - color: 'rgb(207,31,226)'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Square
-                  - <<: *actionbutton
-                    icon: mdi:menu
-                    styles:
-                      card:
-                        - background: 'rgba(255,255,255,0.45)'
-                        - width: 45px
-                        - height: 45px
-                        - border-radius: 50%
-                      icon:
-                        - width: 35px
-                        - color: '#303741'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: TopMenu
-                  - <<: *actionbutton
-                    icon: 'mdi:circle-outline'
-                    styles:
-                      card:
-                        - background: 'rgba(255,255,255,0.45)'
-                        - width: 45px
-                        - height: 45px
-                        - border-radius: 50%
-                      icon:
-                        - width: 30px
-                        - color: 'rgb(200,0,0)'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Circle
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              #Down and X buttons
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    icon: 'mdi:arrow-down-drop-circle-outline'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: DirectionDown
-                  - <<: *blankbutton
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *blankbutton
-                  - <<: *actionbutton
-                    show_icon: false
-                    show_label: true
-                    label: 'X'
-                    styles:
-                      card:
-                        - background: 'rgba(255,255,255,0.45)'
-                        - width: 45px
-                        - height: 45px
-                        - border-radius: 50%
-                      label:
-                        - color: 'rgb(14,111,175)'
-                        - font-size: 30px
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Cross
-                  - <<: *blankbutton
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: 'custom:gap-card'
-                height: 10
-              #Additional Media Controls Row 1
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    icon: mdi:play
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Play
-                  - <<: *actionbutton
-                    icon: mdi:pause
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Pause
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:stop'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Stop
-                  - <<: *actionbutton
-                    icon: 'mdi:eject'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Eject
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              #Additional Media Controls Row 2
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    icon: mdi:skip-backward
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Prev
-                  - <<: *actionbutton
-                    icon: 'mdi:rewind'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: ScanPrev
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:fast-forward'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: ScanNext
-                  - <<: *actionbutton
-                    icon: 'mdi:skip-forward'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Sony PS3
-                        command: Next
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: 'custom:gap-card'
-                height: 10
-      #Volume controls
-      - type: conditional
-        conditions:
-          - entity: sensor.harmony_activity_upstairs
-            state_not: "PowerOff"
-          - entity: media_player.living_room
-            state: "off"
-        card:
-            type: vertical-stack
-            cards:
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    <<: *skipbutton
-                    icon: mdi:speaker
-                    label: "INPUT"
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Vizio Amp
-                        command: InputNext
-                  - <<: *actionbutton
-                    icon: 'mdi:volume-off'
-                    styles:
-                      card:
-                        - background: 'rgba(255,255,255,0.45)'
-                        - width: 45px
-                        - height: 45px
-                        - border-radius: 50%
-                      icon:
-                        - width: 25px
-                        - color: 'rgb(200,0,0)'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Vizio Amp
-                        command: Mute
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:volume-minus'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Vizio Amp
-                        command: VolumeDown
-                    hold_action:
-                      action: call-service
-                      repeat: 300
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Vizio Amp
-                        command: VolumeDown
-                  - <<: *actionbutton
-                    icon: 'mdi:volume-plus'
-                    tap_action:
-                      action: call-service
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Vizio Amp
-                        command: VolumeUp
-                    hold_action:
-                      action: call-service
-                      repeat: 300
-                      service: remote.send_command
-                      service_data:
-                        entity_id: remote.harmony_hub_upstairs
-                        device: Vizio Amp
-                        command: VolumeUp
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-      #Music controls
-      - type: conditional
-        conditions:
-          - entity: media_player.living_room
-            state_not: "off"
-        card:
-            type: vertical-stack
-            cards:
-              - type: horizontal-stack
-                cards:
+        - type: 'custom:button-card'
+          color_type: blank-card
+        - <<: *activitybutton
+          icon: 'mdi:power'
+          styles:
+            card:
+              - background: 'rgba(255,255,255,0.45)'
+              - width: 55px
+              - height: 55px
+              - border-radius: 50%
+            icon:
+              - width: 35px
+              - color: 'rgb(200,0,0)'
+          tap_action:
+            action: call-service
+            service: remote.turn_on
+            service_data:
+              entity_id: remote.harmony_hub_upstairs
+              activity: "Listen to Music"
+        - <<: *activitybutton
+          icon: 'mdi:cast-connected'
+          state:
+            - value: "Watch TV"
+              <<: *activityon
+            - <<: *activityoff
+          tap_action:
+            action: call-service
+            service: remote.turn_on
+            service_data:
+              entity_id: remote.harmony_hub_upstairs
+              activity: "Watch TV"
+        - <<: *activitybutton
+          icon: mdi:playstation
+          state:
+            - value: "Play PS3"
+              <<: *activityon
+            - <<: *activityoff
+          tap_action:
+            action: call-service
+            service: remote.turn_on
+            service_data:
+              entity_id: remote.harmony_hub_upstairs
+              activity: "Play PS3"
+        - <<: *activitybutton
+          icon: 'mdi:wii'
+          state:
+            - value: "Wii"
+              <<: *activityon
+            - <<: *activityoff
+          tap_action:
+            action: call-service
+            service: remote.turn_on
+            service_data:
+              entity_id: remote.harmony_hub_upstairs
+              activity: "Wii"
+        - type: 'custom:button-card'
+          color_type: blank-card
+    - type: horizontal-stack
+      cards:
+        - type: 'custom:gap-card'
+          height: 10
+    #Chromecast controls
+    - type: conditional
+      conditions:
+        - entity: sensor.harmony_activity_upstairs
+          state: "Watch TV"
+      card:
+          type: vertical-stack
+          cards:
+            - type: horizontal-stack
+              cards:
                 - <<: *spacer
-                - type: custom:mini-media-player
-                  entity: media_player.living_room
-                  artwork: full-cover
-                  hide:
-                    name: true
-                    icon: true
-                  style:
-                    .: |
-                      ha-card > div.mmp-player {
-                        padding-left: 0px !important;
-                        padding-right: 0px !important;
-                        padding-bottom: 0px !important;
-                        --paper-slider-knob-color: white;
-                        --paper-slider-active-color: white;
-                        --paper-slider-container-color: #303741;
-                      }
-                      ha-card > div.mmp-player div {
-                        padding-left: 10px !important;
-                        padding-right: 10px !important;
-                        background: rgba(0,0,0,0.8);
-                      }
-                      ha-card > div.mmp-player div .entity__info,
-                      ha-card > div.mmp-player div .entity__info__media {
-                        background: rgba(0,0,0,0);
-                        padding: 0px !important;
-                      }
-                      ha-card > div.mmp-player div .entity__info__media span:nth-of-type(2)::before {
-                        content: '\000A' !important;
-                        white-space: pre !important;
-                      }
-                      ha-card > div.mmp-player div .entity__info__media span {
-                        color: #FFFFFF !important;
-                      }
-                      ha-card > div.mmp-player .mmp-player__adds mmp-media-controls {
-                        padding-bottom: 10px !important;
-                      }
+                - icon: mdi:youtube-tv
+                  entity: media_player.living_room_tv
+                  tap_action:
+                    action: call-service
+                    service: media_player.media_play_pause
+                    service_data:
+                      entity_id: entity
+                  hold_action:
+                    action: more-info
+                  double_tap_action:
+                    action: call-service
+                    service: media_player.turn_off
+                    service_data:
+                      entity_id: entity
+                  label: >
+                    [[[
+                    if (typeof entity.attributes.media_title != "undefined") {
+                      var title = entity.attributes.media_title;
+                      var app_name = entity.attributes.app_name;
+                    }
+                    else {
+                      var title = entity.attributes.app_name;
+                      var app_name = '';
+                    }
+                    return(entity.state === 'off'
+                      ? '<span style="font-size:18px">' + 'Not Casting</span>'
+                      : '<span style="font-size:18px">' +
+                      title +
+                      '</span><br>' + '<span style="font-size:15px">' +
+                      app_name
+                      + ' &#183; ' + entity.state.charAt(0).toUpperCase() +
+                      entity.state.slice(1)
+                        + '</span>');
+                      ]]]
+                  state:
+                    - value: "off"
+                      styles:
+                        icon:
+                          - color: '#303741'
+                  <<: *playerbutton
                 - <<: *spacer
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:gap-card'
+                  height: 10
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:button-card'
+                  color_type: blank-card
+                - <<: *actionbutton
+                  <<: *skipbutton
+                  icon: 'mdi:skip-backward'
+                  label: "15s"
+                  tap_action:
+                    action: call-service
+                    service: script.cc_skip
+                    service_data:
+                      entity_id: media_player.living_room_tv
+                      seconds: -15
+                - <<: *spacer
+                - <<: *actionbutton
+                  <<: *skipbutton
+                  icon: 'mdi:skip-forward'
+                  label: "15s"
+                  tap_action:
+                    action: call-service
+                    service: script.cc_skip
+                    service_data:
+                      entity_id: media_player.living_room_tv
+                      seconds: 15
+                - <<: *actionbutton
+                  <<: *skipbutton
+                  icon: 'mdi:skip-forward'
+                  label: "3m"
+                  tap_action:
+                    action: call-service
+                    service: script.cc_skip
+                    service_data:
+                      entity_id: media_player.living_room_tv
+                      seconds: 180
+                - <<: *actionbutton
+                  <<: *skipbutton
+                  icon: 'mdi:skip-forward'
+                  label: "15m"
+                  tap_action:
+                    action: call-service
+                    service: script.cc_skip
+                    service_data:
+                      entity_id: media_player.living_room_tv
+                      seconds: 900
+                - type: 'custom:button-card'
+                  color_type: blank-card
+            - type: 'custom:gap-card'
+              height: 10
+    #PS3 controls
+    - type: conditional
+      conditions:
+        - entity: sensor.harmony_activity_upstairs
+          state: "Play PS3"
+      card:
+          type: vertical-stack
+          cards:
+          #Controller top row
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:button-card'
+                  color_type: blank-card
+                - <<: *actionbutton
+                  show_icon: false
+                  show_label: true
+                  label: "SELECT"
+                  styles:
+                    card:
+                      - background: 'rgba(255,255,255,0.45)'
+                      - width: 65px
+                      - height: 45px
+                      - border-radius: 10px
+                      - margin-top: 3px
+                    label:
+                      - color: '#303741'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Select
+                - color_type: card
+                  show_name: false
+                  styles:
+                    card:
+                      - background: 'rgba(255,255,255,0.45)'
+                      - width: 50px
+                      - height: 50px
+                      - border-radius: 50%
+                    icon:
+                      - width: 32px
+                      - color: '#303741'
+                  type: 'custom:button-card'
+                  icon: 'mdi:playstation'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: PS
+                  hold_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: PSHold
+                - <<: *actionbutton
+                  show_icon: false
+                  show_label: true
+                  label: "START"
+                  styles:
+                    card:
+                      - background: 'rgba(255,255,255,0.45)'
+                      - width: 65px
+                      - height: 45px
+                      - border-radius: 10px
+                      - margin-top: 3px
+                    label:
+                      - color: '#303741'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Start
+                - type: 'custom:button-card'
+                  color_type: blank-card
+            - type: 'custom:gap-card'
+              height: 3
+            #Up and triangle buttons
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:button-card'
+                  color_type: blank-card
+                - <<: *blankbutton
+                - <<: *actionbutton
+                  icon: 'mdi:arrow-up-drop-circle-outline'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: DirectionUp
+                - <<: *blankbutton
+                - <<: *spacer
+                - <<: *spacer
+                - <<: *spacer
+                - <<: *blankbutton
+                - <<: *actionbutton
+                  icon: 'mdi:triangle-outline'
+                  styles:
+                    card:
+                      - background: 'rgba(255,255,255,0.45)'
+                      - width: 45px
+                      - height: 45px
+                      - border-radius: 50%
+                    icon:
+                      - width: 30px
+                      - color: 'rgb(61,244,131)'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Triangle
+                - <<: *blankbutton
+                - type: 'custom:button-card'
+                  color_type: blank-card
+            #Left/OK/Right/Square/Menu/Circle buttons
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:button-card'
+                  color_type: blank-card
+                - <<: *actionbutton
+                  icon: 'mdi:arrow-left-drop-circle-outline'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: DirectionLeft
+                - <<: *actionbutton
+                  show_label: true
+                  show_icon: false
+                  label: 'OK'
+                  styles:
+                    card:
+                      - background: 'rgba(255,255,255,0.45)'
+                      - width: 45px
+                      - height: 45px
+                      - border-radius: 50%
+                    label:
+                      - color: '#303741'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Enter
+                - <<: *actionbutton
+                  icon: 'mdi:arrow-right-drop-circle-outline'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: DirectionRight
+                - <<: *spacer
+                - <<: *spacer
+                - <<: *spacer
+                - <<: *actionbutton
+                  icon: 'mdi:square-outline'
+                  styles:
+                    card:
+                      - background: 'rgba(255,255,255,0.45)'
+                      - width: 45px
+                      - height: 45px
+                      - border-radius: 50%
+                    icon:
+                      - width: 30px
+                      - color: 'rgb(207,31,226)'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Square
+                - <<: *actionbutton
+                  icon: mdi:menu
+                  styles:
+                    card:
+                      - background: 'rgba(255,255,255,0.45)'
+                      - width: 45px
+                      - height: 45px
+                      - border-radius: 50%
+                    icon:
+                      - width: 35px
+                      - color: '#303741'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: TopMenu
+                - <<: *actionbutton
+                  icon: 'mdi:circle-outline'
+                  styles:
+                    card:
+                      - background: 'rgba(255,255,255,0.45)'
+                      - width: 45px
+                      - height: 45px
+                      - border-radius: 50%
+                    icon:
+                      - width: 30px
+                      - color: 'rgb(200,0,0)'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Circle
+                - type: 'custom:button-card'
+                  color_type: blank-card
+            #Down and X buttons
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:button-card'
+                  color_type: blank-card
+                - <<: *blankbutton
+                - <<: *actionbutton
+                  icon: 'mdi:arrow-down-drop-circle-outline'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: DirectionDown
+                - <<: *blankbutton
+                - <<: *spacer
+                - <<: *spacer
+                - <<: *spacer
+                - <<: *blankbutton
+                - <<: *actionbutton
+                  show_icon: false
+                  show_label: true
+                  label: 'X'
+                  styles:
+                    card:
+                      - background: 'rgba(255,255,255,0.45)'
+                      - width: 45px
+                      - height: 45px
+                      - border-radius: 50%
+                    label:
+                      - color: 'rgb(14,111,175)'
+                      - font-size: 30px
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Cross
+                - <<: *blankbutton
+                - type: 'custom:button-card'
+                  color_type: blank-card
+            - type: 'custom:gap-card'
+              height: 10
+            #Additional Media Controls Row 1
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:button-card'
+                  color_type: blank-card
+                - <<: *actionbutton
+                  icon: mdi:play
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Play
+                - <<: *actionbutton
+                  icon: mdi:pause
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Pause
+                - <<: *spacer
+                - <<: *actionbutton
+                  icon: 'mdi:stop'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Stop
+                - <<: *actionbutton
+                  icon: 'mdi:eject'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Eject
+                - type: 'custom:button-card'
+                  color_type: blank-card
+            #Additional Media Controls Row 2
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:button-card'
+                  color_type: blank-card
+                - <<: *actionbutton
+                  icon: mdi:skip-backward
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Prev
+                - <<: *actionbutton
+                  icon: 'mdi:rewind'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: ScanPrev
+                - <<: *spacer
+                - <<: *actionbutton
+                  icon: 'mdi:fast-forward'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: ScanNext
+                - <<: *actionbutton
+                  icon: 'mdi:skip-forward'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Sony PS3
+                      command: Next
+                - type: 'custom:button-card'
+                  color_type: blank-card
+            - type: 'custom:gap-card'
+              height: 10
+    #Volume controls
+    - type: conditional
+      conditions:
+        - entity: sensor.harmony_activity_upstairs
+          state_not: "PowerOff"
+        - entity: media_player.living_room
+          state: "off"
+      card:
+          type: vertical-stack
+          cards:
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:button-card'
+                  color_type: blank-card
+                - <<: *actionbutton
+                  <<: *skipbutton
+                  icon: mdi:speaker
+                  label: "INPUT"
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Vizio Amp
+                      command: InputNext
+                - <<: *actionbutton
+                  icon: 'mdi:volume-off'
+                  styles:
+                    card:
+                      - background: 'rgba(255,255,255,0.45)'
+                      - width: 45px
+                      - height: 45px
+                      - border-radius: 50%
+                    icon:
+                      - width: 25px
+                      - color: 'rgb(200,0,0)'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Vizio Amp
+                      command: Mute
+                - <<: *spacer
+                - <<: *spacer
+                - <<: *spacer
+                - <<: *actionbutton
+                  icon: 'mdi:volume-minus'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Vizio Amp
+                      command: VolumeDown
+                  hold_action:
+                    action: call-service
+                    repeat: 300
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Vizio Amp
+                      command: VolumeDown
+                - <<: *actionbutton
+                  icon: 'mdi:volume-plus'
+                  tap_action:
+                    action: call-service
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Vizio Amp
+                      command: VolumeUp
+                  hold_action:
+                    action: call-service
+                    repeat: 300
+                    service: remote.send_command
+                    service_data:
+                      entity_id: remote.harmony_hub_upstairs
+                      device: Vizio Amp
+                      command: VolumeUp
+                - type: 'custom:button-card'
+                  color_type: blank-card
+    #Music controls
+    - type: conditional
+      conditions:
+        - entity: media_player.living_room
+          state_not: "off"
+      card:
+          type: vertical-stack
+          cards:
+            - type: horizontal-stack
+              cards:
+              - <<: *spacer
+              - type: custom:mini-media-player
+                entity: media_player.living_room
+                artwork: full-cover
+                hide:
+                  name: true
+                  icon: true
+                style:
+                  .: |
+                    ha-card > div.mmp-player {
+                      padding-left: 0px !important;
+                      padding-right: 0px !important;
+                      padding-bottom: 0px !important;
+                      --paper-slider-knob-color: white;
+                      --paper-slider-active-color: white;
+                      --paper-slider-container-color: #303741;
+                    }
+                    ha-card > div.mmp-player div {
+                      padding-left: 10px !important;
+                      padding-right: 10px !important;
+                      background: rgba(0,0,0,0.8);
+                    }
+                    ha-card > div.mmp-player div .entity__info,
+                    ha-card > div.mmp-player div .entity__info__media {
+                      background: rgba(0,0,0,0);
+                      padding: 0px !important;
+                    }
+                    ha-card > div.mmp-player div .entity__info__media span:nth-of-type(2)::before {
+                      content: '\000A' !important;
+                      white-space: pre !important;
+                    }
+                    ha-card > div.mmp-player div .entity__info__media span {
+                      color: #FFFFFF !important;
+                    }
+                    ha-card > div.mmp-player .mmp-player__adds mmp-media-controls {
+                      padding-bottom: 10px !important;
+                    }
+              - <<: *spacer
 icon: 'mdi:remote'
 title: Remote

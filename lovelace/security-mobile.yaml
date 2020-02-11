@@ -59,21 +59,21 @@ cards:
               entity_id: cover.garage_door
           layout: icon_name_state2nd
           show_label: true
-          label_template: >
-            return states['cover.garage_door'].state.charAt(0).toUpperCase() + states['cover.garage_door'].state.substring(1);
+          label: >
+            [[[ return states['cover.garage_door'].state.charAt(0).toUpperCase() + states['cover.garage_door'].state.substring(1); ]]]
           state:
             - icon: 'mdi:garage-open'
               operator: template
               value: >
-                return states['cover.garage_door'].state === 'open';
+                [[[ return states['cover.garage_door'].state === 'open'; ]]]
             - icon: 'mdi:arrow-up-bold-circle'
               operator: template
               value: >
-                return states['cover.garage_door'].state === 'opening';
+                [[[ return states['cover.garage_door'].state === 'opening'; ]]]
             - icon: 'mdi:arrow-down-bold-circle'
               operator: template
               value: >
-                return states['cover.garage_door'].state === 'closing';
+                [[[ return states['cover.garage_door'].state === 'closing'; ]]]
             - icon: 'mdi:garage'
               operator: 'default'
           styles:

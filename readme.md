@@ -64,7 +64,8 @@ ui-lovelace.yaml:
 
 ### HACS Supported
 I highly recommend setting up [HACS](https://custom-components.github.io/hacs/) so that you can update these automatically.
-* Compact Custom Header
+* Custom Header
+* Lovelace Swipe Navigation
 * Button Card
 * Mini Media Player
 * Text Element
@@ -72,9 +73,9 @@ I highly recommend setting up [HACS](https://custom-components.github.io/hacs/) 
 * Slider-Entity-Row
 * Bar Card
 * Card-Mod (replaced Card-Modder on 7/30)
-* Card-Loader
 * Popup-Card
 * Card-Tools
+* Browser Mod
 
 ### Other Resources
 * Dark Sky Weather Card: I'm using a fairly customized version of the card at

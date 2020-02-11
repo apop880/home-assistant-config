@@ -9,7 +9,8 @@ anchors:
     icon: mdi:youtube-tv
     show_name: false
     show_label: true
-    label_template: >
+    label: >
+      [[[
       if (typeof entity.attributes.media_title != "undefined") {
         var title = entity.attributes.media_title;
         var app_name = entity.attributes.app_name;
@@ -31,6 +32,7 @@ anchors:
         + ' &#183; ' + entity.state.charAt(0).toUpperCase() +
         entity.state.slice(1)
           + '</span>');
+      ]]]
     tap_action:
       action: call-service
       service: media_player.media_play_pause
@@ -38,7 +40,7 @@ anchors:
         entity_id: entity
     hold_action:
       action: more-info
-    dbltap_action:
+    double_tap_action:
       action: call-service
       service: media_player.turn_off
       service_data:
@@ -97,140 +99,136 @@ anchors:
 background: var(--background-image)
 badges: []
 cards:
-  - type: custom:card-loader
-    wait:
-      - button-card
-    card:
-      type: vertical-stack
+  - type: vertical-stack
+    cards:
+    - type: horizontal-stack
       cards:
-      - type: horizontal-stack
-        cards:
-          - <<: *spacer
-          - <<: *tvbutton
-            entity: media_player.bedroom_tv
-          - <<: *spacer
-      - type: conditional
-        conditions:
-          - entity: media_player.bedroom_tv
-            state_not: "off"
-        card:
-            type: vertical-stack
-            cards:
-              - type: 'custom:gap-card'
-                height: 7
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *skipbutton
-                    icon: 'mdi:skip-backward'
-                    label: "15s"
-                    tap_action:
-                      action: call-service
-                      service: script.cc_skip
-                      service_data:
-                        entity_id: media_player.bedroom_tv
-                        seconds: -15
-                  - <<: *spacer
-                  - <<: *skipbutton
-                    icon: 'mdi:skip-forward'
-                    label: "15s"
-                    tap_action:
-                      action: call-service
-                      service: script.cc_skip
-                      service_data:
-                        entity_id: media_player.bedroom_tv
-                        seconds: 15
-                  - <<: *skipbutton
-                    icon: 'mdi:skip-forward'
-                    label: "3m"
-                    tap_action:
-                      action: call-service
-                      service: script.cc_skip
-                      service_data:
-                        entity_id: media_player.bedroom_tv
-                        seconds: 180
-                  - <<: *skipbutton
-                    icon: 'mdi:skip-forward'
-                    label: "15m"
-                    tap_action:
-                      action: call-service
-                      service: script.cc_skip
-                      service_data:
-                        entity_id: media_player.bedroom_tv
-                        seconds: 900
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: 'custom:gap-card'
-                height: 7
-              - type: horizontal-stack
-                cards:
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-                  - <<: *actionbutton
-                    icon: 'mdi:volume-off'
-                    styles:
-                      card:
-                        - background: 'rgba(255,255,255,0.45)'
-                        - width: 45px
-                        - height: 45px
-                        - border-radius: 50%
-                      icon:
-                        - width: 25px
-                        - color: 'rgb(200,0,0)'
-                    tap_action:
-                      action: call-service
-                      service: script.media_mute
-                      service_data:
-                        entity_id: media_player.bedroom_tv
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *spacer
-                  - <<: *actionbutton
-                    icon: 'mdi:volume-minus'
-                    tap_action:
-                      action: call-service
-                      service: media_player.volume_down
-                      service_data:
-                        entity_id: media_player.bedroom_tv
-                    hold_action:
-                      action: call-service
-                      repeat: 500
-                      service: media_player.volume_down
-                      service_data:
-                        entity_id: media_player.bedroom_tv
-                  - <<: *actionbutton
-                    icon: 'mdi:volume-plus'
-                    tap_action:
-                      action: call-service
-                      service: media_player.volume_up
-                      service_data:
-                        entity_id: media_player.bedroom_tv
-                    hold_action:
-                      action: call-service
-                      repeat: 500
-                      service: media_player.volume_up
-                      service_data:
-                        entity_id: media_player.bedroom_tv
-                  - type: 'custom:button-card'
-                    color_type: blank-card
-              - type: entities
-                show_header_toggle: false
-                entities:
-                  - type: 'custom:slider-entity-row'
-                    entity: media_player.bedroom_tv
-                    full_row: true
-                    hide_state: true
-                style: |
-                  ha-card {
-                    border-radius: 10px;
-                    padding: 0px 5px 0px 5px;
-                    margin: 10px;
-                    --paper-slider-container-color: #FFFFFF;
-                  }
-                  .card-content {
-                    padding: 0px;
-                    --background-card-color: 'rgba(255,255,255,0.45)';
-                  }
+        - <<: *spacer
+        - <<: *tvbutton
+          entity: media_player.bedroom_tv
+        - <<: *spacer
+    - type: conditional
+      conditions:
+        - entity: media_player.bedroom_tv
+          state_not: "off"
+      card:
+          type: vertical-stack
+          cards:
+            - type: 'custom:gap-card'
+              height: 7
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:button-card'
+                  color_type: blank-card
+                - <<: *skipbutton
+                  icon: 'mdi:skip-backward'
+                  label: "15s"
+                  tap_action:
+                    action: call-service
+                    service: script.cc_skip
+                    service_data:
+                      entity_id: media_player.bedroom_tv
+                      seconds: -15
+                - <<: *spacer
+                - <<: *skipbutton
+                  icon: 'mdi:skip-forward'
+                  label: "15s"
+                  tap_action:
+                    action: call-service
+                    service: script.cc_skip
+                    service_data:
+                      entity_id: media_player.bedroom_tv
+                      seconds: 15
+                - <<: *skipbutton
+                  icon: 'mdi:skip-forward'
+                  label: "3m"
+                  tap_action:
+                    action: call-service
+                    service: script.cc_skip
+                    service_data:
+                      entity_id: media_player.bedroom_tv
+                      seconds: 180
+                - <<: *skipbutton
+                  icon: 'mdi:skip-forward'
+                  label: "15m"
+                  tap_action:
+                    action: call-service
+                    service: script.cc_skip
+                    service_data:
+                      entity_id: media_player.bedroom_tv
+                      seconds: 900
+                - type: 'custom:button-card'
+                  color_type: blank-card
+            - type: 'custom:gap-card'
+              height: 7
+            - type: horizontal-stack
+              cards:
+                - type: 'custom:button-card'
+                  color_type: blank-card
+                - <<: *actionbutton
+                  icon: 'mdi:volume-off'
+                  styles:
+                    card:
+                      - background: 'rgba(255,255,255,0.45)'
+                      - width: 45px
+                      - height: 45px
+                      - border-radius: 50%
+                    icon:
+                      - width: 25px
+                      - color: 'rgb(200,0,0)'
+                  tap_action:
+                    action: call-service
+                    service: script.media_mute
+                    service_data:
+                      entity_id: media_player.bedroom_tv
+                - <<: *spacer
+                - <<: *spacer
+                - <<: *spacer
+                - <<: *actionbutton
+                  icon: 'mdi:volume-minus'
+                  tap_action:
+                    action: call-service
+                    service: media_player.volume_down
+                    service_data:
+                      entity_id: media_player.bedroom_tv
+                  hold_action:
+                    action: call-service
+                    repeat: 500
+                    service: media_player.volume_down
+                    service_data:
+                      entity_id: media_player.bedroom_tv
+                - <<: *actionbutton
+                  icon: 'mdi:volume-plus'
+                  tap_action:
+                    action: call-service
+                    service: media_player.volume_up
+                    service_data:
+                      entity_id: media_player.bedroom_tv
+                  hold_action:
+                    action: call-service
+                    repeat: 500
+                    service: media_player.volume_up
+                    service_data:
+                      entity_id: media_player.bedroom_tv
+                - type: 'custom:button-card'
+                  color_type: blank-card
+            - type: entities
+              show_header_toggle: false
+              entities:
+                - type: 'custom:slider-entity-row'
+                  entity: media_player.bedroom_tv
+                  full_row: true
+                  hide_state: true
+              style: |
+                ha-card {
+                  border-radius: 10px;
+                  padding: 0px 5px 0px 5px;
+                  margin: 10px;
+                  --paper-slider-container-color: #FFFFFF;
+                }
+                .card-content {
+                  padding: 0px;
+                  --background-card-color: 'rgba(255,255,255,0.45)';
+                }
 icon: mdi:hotel
 title: TV
