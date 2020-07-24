@@ -50,7 +50,7 @@ sensor:
         - if:
             condition:
               and:
-                - lambda: 'return x == x;'
+                - lambda: 'return x < 1.5;'
                 - lambda: 'return id(garage_door).state == COVER_CLOSED;'
             then:
               - delay: 250ms
@@ -59,7 +59,7 @@ sensor:
               - if:
                   condition:
                     and:
-                      - lambda: 'return x != x;'
+                      - lambda: 'return (x != x || x >= 1.5);'
                       - lambda: 'return id(garage_door).state == COVER_OPEN;'
                   then:
                     - delay: 750ms
@@ -110,7 +110,7 @@ cover:
     id: garage_door
     # set the value so that it is higher than value when door is in open state. In my case it reads 5cm so set it at 10cm #
     lambda: !lambda |-
-      if ((id(door_sensor).state > 105) or (id(door_sensor).state < 95)) {
+      if ((id(door_sensor).state > 105) or (id(door_sensor).state < 90)) {
         return COVER_CLOSED;
       } else {
         return COVER_OPEN;

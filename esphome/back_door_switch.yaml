@@ -1,0 +1,146 @@
+esphome:
+  name: back_door_switch
+  platform: ESP8266
+  board: esp01_1m
+
+wifi:
+  ssid: !secret ssid
+  password: !secret pass
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "back_door_switch_hs"
+    password: !secret back_door_switch_pass
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+output:
+  - platform: esp8266_pwm
+    id: white
+    pin:
+      number: GPIO4
+      inverted: True
+
+  - platform: esp8266_pwm
+    id: red
+    pin:
+      number: GPIO5
+      inverted: True
+
+light:
+  - platform: monochromatic
+    name: "Back Door Switch Red LED"
+    output: red
+    id: red_light
+  
+  - platform: monochromatic
+    name: "Back Door Switch White LED"
+    output: white
+    id: white_light
+
+binary_sensor:
+  - platform: gpio
+    # https://esphome.io/components/binary_sensor/gpio.html
+    pin:
+      number: GPIO13
+      inverted: true
+    id: button
+    name: Back Door Switch Lights Button
+    on_multi_click:
+    - timing:
+        - ON for at least 0.75s
+      then:
+        - logger.log: "Held"
+        - while:
+            condition:
+              binary_sensor.is_on: button
+            then:
+              - homeassistant.service:
+                  service: light.turn_on
+                  data:
+                    entity_id: light.rec_room
+                    brightness_step_pct: '-10'
+              - delay: 0.5s
+    - timing:
+        - ON for at most 0.75s
+        - OFF for at most 0.5s
+        - ON for at least 0.75s
+      then:
+        - logger.log: "Double Clicked and Held"
+        - while:
+            condition:
+              binary_sensor.is_on: button
+            then:
+              - homeassistant.service:
+                  service: light.turn_on
+                  data:
+                    entity_id: light.rec_room
+                    brightness_step_pct: '10'
+              - delay: 0.5s
+    - timing:
+        - ON for at most 0.75s
+        - OFF for at least 0.5s
+      then:
+        - logger.log: "Single Clicked"
+        - if:
+            condition:
+              text_sensor.state:
+                id: light_state
+                state: 'off'
+            then:
+              - homeassistant.service:
+                  service: light.turn_on
+                  data:
+                    entity_id: light.rec_room
+                    brightness_pct: '90'
+            else:
+              - homeassistant.service:
+                  service: light.turn_off
+                  data:
+                    entity_id: light.rec_room
+    - timing:
+        - ON for at most 0.75s
+        - OFF for at most 0.5s
+        - ON for at most 0.75s
+      then:
+        - logger.log: "Double Clicked"
+        - switch.toggle: relay
+    internal: True
+    
+switch:
+  - platform: gpio
+    # https://esphome.io/components/switch/gpio
+    pin: GPIO12
+    id: relay
+    name: "Patio Light"
+
+text_sensor:
+  - platform: homeassistant
+    id: light_state
+    name: "Rec Room Light State"
+    entity_id: light.rec_room
+    internal: True
+    on_value:
+      then:
+        lambda: |-
+          if(x == "on") {
+            auto call = id(white_light).turn_off();
+            call.perform();
+          }
+          else {
+            auto call = id(white_light).turn_on();
+            call.perform();
+          }
+  # - platform: homeassistant
+  #   id: group_state
+  #   name: "Dining Group State"
+  #   entity_id: group.dining
+  #   internal: True
