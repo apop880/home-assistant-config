@@ -125,7 +125,19 @@ cards:
               entity_id: remote.harmony_hub_upstairs
               activity: "Watch TV"
         - <<: *activitybutton
-          icon: mdi:playstation
+          icon: 'mdi:nintendo-switch'
+          state:
+            - value: "Switch"
+              <<: *activityon
+            - <<: *activityoff
+          tap_action:
+            action: call-service
+            service: remote.turn_on
+            service_data:
+              entity_id: remote.harmony_hub_upstairs
+              activity: "Switch"
+        - <<: *activitybutton
+          icon: mdi:sony-playstation
           state:
             - value: "Play PS3"
               <<: *activityon
@@ -137,7 +149,7 @@ cards:
               entity_id: remote.harmony_hub_upstairs
               activity: "Play PS3"
         - <<: *activitybutton
-          icon: 'mdi:wii'
+          icon: 'mdi:nintendo-wii'
           state:
             - value: "Wii"
               <<: *activityon

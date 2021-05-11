@@ -47,6 +47,17 @@ cards:
           entity: device_tracker.julie
           name: Julie
         - <<: *spacer
+    - type: custom:state-switch
+      entity: template
+      template: "{% if not is_state('device_tracker.alex_mobile_app', 'home') or not is_state('device_tracker.julie_mobile_app', 'home') %} show {% else %} hide {% endif %}"
+      states:
+        show:
+          type: map
+          aspect_ratio: 16:9
+          default_zoom: 14
+          entities:
+            - device_tracker.alex_mobile_app
+            - device_tracker.julie_mobile_app
     - type: horizontal-stack
       cards:
         - <<: *spacer

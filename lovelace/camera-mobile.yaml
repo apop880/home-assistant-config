@@ -1,0 +1,8 @@
+background: var(--background-image)
+badges: []
+cards:
+  - type: picture-entity
+    entity: camera.camera1
+    camera_view: live  
+icon: 'mdi:cctv'
+title: Cameras

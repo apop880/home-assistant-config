@@ -47,7 +47,17 @@
                   action: none
                 style:
                   top: 35px
-                  right: -45px
+                  right: 45px
+                  font-size: 30pt
+              - type: state-label
+                entity: sensor.rounded_temp
+                tap_action:
+                  action: none
+                hold_action:
+                  action: none
+                style:
+                  top: 35px
+                  right: -15px
                   font-size: 30pt
             image: /local/images/monkey.png
             type: picture-elements

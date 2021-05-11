@@ -124,7 +124,7 @@ cards:
               entity_id: remote.harmony_hub
               activity: "Chromecast"
         - <<: *activitybutton
-          icon: 'mdi:xbox'
+          icon: 'mdi:microsoft-xbox'
           state:
             - value: "Play Xbox One"
               <<: *activityon
@@ -302,7 +302,7 @@ cards:
                       - width: 32px
                       - color: '#303741'
                   type: 'custom:button-card'
-                  icon: 'mdi:xbox'
+                  icon: 'mdi:microsoft-xbox'
                   tap_action:
                     action: call-service
                     service: remote.send_command
@@ -505,7 +505,7 @@ cards:
             - type: horizontal-stack
               cards:
                 - <<: *spacer
-                - icon: mdi:xbox-controller
+                - icon: mdi:microsoft-xbox-controller
                   entity: media_player.xbox_one
                   show_name: false
                   show_label: true
@@ -531,7 +531,7 @@ cards:
                       value: >
                         [[[ return entity.attributes.source === "Home" ||
                         entity.attributes.source === "Sign In" ]]]
-                      icon: mdi:xbox
+                      icon: mdi:microsoft-xbox
                     - operator: template
                       value: >
                         [[[ return typeof entity.attributes.source === "undefined" ]]]

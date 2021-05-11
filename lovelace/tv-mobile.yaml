@@ -230,5 +230,5 @@ cards:
                   padding: 0px;
                   --background-card-color: 'rgba(255,255,255,0.45)';
                 }
-icon: mdi:hotel
+icon: mdi:bed
 title: TV

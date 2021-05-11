@@ -164,8 +164,8 @@ cards:
           - cards:
               - <<: *spacer
               - <<: *lightbutton
-                entity: light.kitchen_sink
-                name: Sink
+                entity: light.kitchen_can_light_switch
+                name: Can Lights
               - <<: *lightbutton
                 entity: light.kitchen_table
                 name: Table
@@ -188,8 +188,8 @@ cards:
           - cards:
               - <<: *spacer
               - <<: *lightbutton
-                entity: light.living_room_main_lights
-                name: Main
+                entity: light.living_can_lights
+                name: Can Lights
               - <<: *lightbutton
                 entity: light.living_room_fan_light
                 name: Fan
@@ -314,8 +314,22 @@ cards:
                         - color: '#303741'
                     value: 'off'
                     icon: 'mdi:sleep-off'
-              - type: 'custom:button-card'
-                color_type: blank-card
+              - <<: *lightbutton
+                entity: input_boolean.lullabies
+                name: Lullabies
+                state:
+                  - label: 'On'
+                    styles:
+                      icon:
+                        - color: 'rgb(43,143,224)'
+                    value: 'on'
+                    icon: 'mdi:music-note-eighth'
+                  - label: 'Off'
+                    styles:
+                      icon:
+                        - color: '#303741'
+                    value: 'off'
+                    icon: 'mdi:music-note-off'
               - <<: *spacer
             type: horizontal-stack
         type: vertical-stack
@@ -335,8 +349,8 @@ cards:
           - cards:
               - <<: *spacer
               - <<: *lightbutton
-                entity: light.stairs
-                name: Stairs
+                entity: light.rec_room
+                name: Rec Room
               - <<: *lightbutton
                 entity: light.theater
                 name: Theater
@@ -345,8 +359,26 @@ cards:
           - cards:
               - <<: *spacer
               - <<: *lightbutton
-                entity: light.bar
+                entity: light.stairs
+                name: Stairs
+              - <<: *lightbutton
+                entity: light.bar_bulb
                 name: Bar
+              - <<: *spacer
+            type: horizontal-stack
+          - cards:
+              - <<: *spacer
+              - <<: *lightbutton
+                entity: light.basement_smart_plug
+                name: Desk Lamp
+                state:
+                  - label: 'On'
+                    styles:
+                      icon:
+                        - color: 'rgb(250,218,94)'
+                    value: 'on'
+                    icon: 'mdi:lightbulb'
+                  - <<: *lightoff
               - <<: *lightbutton
                 entity: light.led_strip
                 name: LED Strip
@@ -389,8 +421,17 @@ cards:
                     value: 'on'
                     icon: 'mdi:lightbulb'
                   - <<: *lightoff
-              - type: 'custom:button-card'
-                color_type: blank-card
+              - <<: *lightbutton
+                entity: switch.patio_light
+                name: Patio
+                state:
+                  - label: 'On'
+                    styles:
+                      icon:
+                        - color: 'rgb(250,218,94)'
+                    value: 'on'
+                    icon: 'mdi:lightbulb'
+                  - <<: *lightoff
               - <<: *spacer
             type: horizontal-stack
         type: vertical-stack
