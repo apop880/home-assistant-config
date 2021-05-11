@@ -82,12 +82,12 @@ switch:
     turn_on_action:
       - light.turn_on: blue_led
       - switch.turn_on: relay
-      - script.stop: my_timer
-      - script.execute: my_timer
+      # - script.stop: my_timer
+      # - script.execute: my_timer
     turn_off_action:
       - light.turn_off: blue_led
       - switch.turn_off: relay
-      - script.stop: my_timer
+      # - script.stop: my_timer
       
 script:
   id: my_timer

@@ -1,5 +1,5 @@
 esphome:
-  name: living_main_lights
+  name: living_fan_light
   platform: ESP8266
   board: esp01_1m
 
@@ -9,8 +9,8 @@ wifi:
 
   # Enable fallback hotspot (captive portal) in case wifi connection fails
   ap:
-    ssid: "living_main_hs"
-    password: !secret living_main_pass
+    ssid: "living_fan_hs"
+    password: !secret living_fan_pass
 
 captive_portal:
 
@@ -33,8 +33,8 @@ tuya:
 
 light:
   - platform: "tuya"
-    name: "Living Room Main Lights"
+    name: "Living Room Fan Light"
     dimmer_datapoint: 2
     switch_datapoint: 1
     min_value: 10
-    max_value: 1444
+    max_value: 1000

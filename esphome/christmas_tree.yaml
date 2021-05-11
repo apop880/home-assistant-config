@@ -1,0 +1,223 @@
+esphome:
+  name: christmas_tree
+  platform: ESP8266
+  board: nodemcuv2
+  includes:
+    - christmas_tree_crossfade.h
+
+globals:
+  - id: crossfade
+    type: int
+    restore_value: no
+    initial_value: '0'
+
+wifi:
+  ssid: !secret ssid
+  password: !secret pass
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "christmas_tree_hs"
+    password: !secret christmas_tree_pass
+
+captive_portal:
+
+# Enable logging
+logger:
+  level: 'NONE'
+
+# Enable Home Assistant API
+api:
+
+ota:
+
+custom_component:
+- lambda: |-
+    auto my_custom = new MyCustomComponent();
+    return {my_custom};
+
+text_sensor:
+  - platform: homeassistant
+    id: mode
+    name: "Tree Mode"
+    entity_id: input_select.tree_mode
+    internal: True
+    on_value:
+      then:
+        - script.stop: breathe
+        - globals.set:
+            id: crossfade
+            value: '0'
+        - if:
+            condition:
+              text_sensor.state:
+                id: mode
+                state: 'Off'
+            then:
+              - light.turn_off: tree
+        - if:
+            condition:
+              text_sensor.state:
+                id: mode
+                state: 'Color'
+            then:
+              - if:
+                  condition:
+                    switch.is_off: color
+                  then:
+                    - light.turn_off: tree
+                    - delay: 1s
+                    - switch.turn_off: white
+                    - switch.turn_on: color
+              - light.turn_on:
+                  id: tree
+                  brightness: 70%
+        - if:
+            condition:
+              text_sensor.state:
+                id: mode
+                state: 'White'
+            then:
+              - if:
+                  condition:
+                    switch.is_off: white
+                  then:
+                    - light.turn_off: tree
+                    - delay: 1s
+                    - switch.turn_off: color
+                    - switch.turn_on: white
+              - light.turn_on:
+                  id: tree
+                  brightness: 100%
+        - if:
+            condition:
+              text_sensor.state:
+                id: mode
+                state: 'Dim Color'
+            then:
+              - if:
+                  condition:
+                    switch.is_off: color
+                  then:
+                    - light.turn_off: tree
+                    - delay: 1s
+                    - switch.turn_off: white
+                    - switch.turn_on: color
+              - light.turn_on:
+                  id: tree
+                  brightness: 40%
+        - if:
+            condition:
+              text_sensor.state:
+                id: mode
+                state: 'Dim White'
+            then:
+              - if:
+                  condition:
+                    switch.is_off: white
+                  then:
+                    - light.turn_off: tree
+                    - delay: 1s
+                    - switch.turn_off: color
+                    - switch.turn_on: white
+              - light.turn_on:
+                  id: tree
+                  brightness: 70%
+        - if:
+            condition:
+              text_sensor.state:
+                id: mode
+                state: 'Breathe'
+            then:
+              - script.execute: breathe
+        - if:
+            condition:
+              text_sensor.state:
+                id: mode
+                state: 'Crossfade'
+            then:
+              - globals.set:
+                  id: crossfade
+                  value: '1'
+switch:
+  - platform: gpio
+    id: white
+    pin: GPIO13
+    name: "IN1"
+    restore_mode: ALWAYS_OFF
+    internal: True
+  - platform: gpio
+    id: color
+    pin: GPIO12
+    name: "IN2"
+    restore_mode: ALWAYS_ON
+    internal: True
+
+output:
+  - platform: esp8266_pwm
+    id: pwm
+    pin: GPIO14
+
+light:
+  - platform: monochromatic
+    name: "Christmas Tree"
+    output: pwm
+    id: tree
+    restore_mode: ALWAYS_OFF
+    internal: True
+
+script:
+ - id: breathe
+   then:
+    while:
+      condition:
+        text_sensor.state:
+          id: mode
+          state: 'Breathe'
+      then:
+        - light.turn_off:
+            id: tree
+            transition_length: 2s
+        - delay: 2s
+        - switch.toggle: white
+        - switch.toggle: color
+        - light.turn_on:
+            id: tree
+            transition_length: 2s
+            brightness: !lambda |-
+              if (id(white).state) { return 1.0; } else { return 0.7; }
+        - delay: 1min
+  
+#     effects:
+#       - lambda:
+#           name: Fade
+#           update_interval: 20s
+#           lambda: |-
+#             auto call = id(tree).turn_on();
+#             call.set_brightness(0);
+#             call.set_transition_length(3000);
+#             call.perform();
+#             //id(white).toggle();
+#             //id(color).toggle();
+#             //call.set_brightness(1.0);
+#             //call.perform();
+#       # - lambda:
+#       #     name: Solid White
+#       #     update_interval: 1s
+#       #     lambda: |-
+#       #       //
+#       - lambda:
+#           name: Solid Colors
+#           lambda: |-
+#             id(white).toggle();
+#             id(color).toggle();
+      # - lambda:
+      #     name: Dim White
+      #     update_interval: 1s
+      #     lambda: |-
+      #       //
+      # - lambda:
+      #     name: Dim Colors
+      #     update_interval: 1s
+      #     lambda: |-
+      #       //

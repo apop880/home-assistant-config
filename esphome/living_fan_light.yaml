@@ -1,3 +1,5 @@
+##This is for the old fan lights. Will need to be reflashed
+
 esphome:
   name: living_fan_lights
   platform: ESP8266
@@ -24,14 +26,6 @@ api:
 
 ota:
 
-sensor:
-  - platform: uptime
-    name: Living Room Fan Light Uptime
-    
-  - platform: wifi_signal
-    name: Living Room Fan Light Wifi Signal
-    update_interval: 60s
-
 uart:
   rx_pin: GPIO3
   tx_pin: GPIO1
@@ -45,4 +39,4 @@ light:
     dimmer_datapoint: 2
     switch_datapoint: 1
     min_value: 10
-    max_value: 1000
+    max_value: 1444
