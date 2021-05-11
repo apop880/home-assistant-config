@@ -1,18 +1,18 @@
 homeassistant:
   # Name of the location where Home Assistant is running
-  name: Home
+  #name: Home
   # Location required to calculate the time the sun rises and sets
-  latitude: !secret latitude
-  longitude: !secret longitude
+  #latitude: !secret latitude
+  #longitude: !secret longitude
   # Impacts weather/sunrise data (altitude above sea level in meters)
-  elevation: 279
+  #elevation: 279
   # metric for Metric, imperial for Imperial
-  unit_system: imperial
+  #unit_system: imperial
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-  time_zone: America/Chicago
+  #time_zone: America/Chicago
   # Customization file
   customize: !include customize.yaml
-  whitelist_external_dirs:
+  allowlist_external_dirs:
     - /config
 
 hacs:
@@ -23,13 +23,64 @@ system_health:
 
 mobile_app:
 
+logger:
+  default: error
+
 # Enables the frontend
 frontend:
-  javascript_version: latest
   themes: !include themes.yaml
 
 lovelace:
   mode: yaml
+  resources:
+    #HACS Resources (Updated Automatically)
+    - url: /hacsfiles/kiosk-mode/kiosk-mode.js
+      type: module
+    - url: /hacsfiles/lovelace-swipe-navigation/swipe-navigation.js
+      type: module
+    - url: /hacsfiles/button-card/button-card.js
+      type: module
+    - url: /hacsfiles/mini-media-player/mini-media-player-bundle.js
+      type: module
+    - url: /hacsfiles/text-element/text-element.js
+      type: module
+    - url: /hacsfiles/lovelace-gap-card/gap-card.js
+      type: module
+    - url: /hacsfiles/lovelace-slider-entity-row/slider-entity-row.js
+      type: module
+    - url: /hacsfiles/bar-card/bar-card.js
+      type: module
+    - url: /hacsfiles/lovelace-card-tools/card-tools.js
+      type: module
+    - url: /hacsfiles/lovelace-card-mod/card-mod.js
+      type: module
+    - url: /hacsfiles/zha-network-card/zha-network-card.js
+      type: module
+    - url: /hacsfiles/Home-Assistant-Lovelace-HTML-Jinja2-Template-card/html-template-card.js
+      type: module
+    - url: /hacsfiles/bignumber-card/bignumber-card.js
+      type: module
+    - url: /hacsfiles/lovelace-state-switch/state-switch.js
+      type: module
+    - url: /hacsfiles/lovelace-layout-card/layout-card.js
+      type: module
+    #Non-HACS Resources
+    - url: /local/custom-lovelace/weather-card/dark-sky-weather-card.js?v=7.4
+      type: module
+    - url: 'https://fonts.googleapis.com/css?family=Lato'
+      type: css
+    - url: /local/custom-lovelace/font.css?v=3
+      type: css
+    - url: /local/custom-lovelace/card-templater/lovelace-card-templater.js?v=0.0.2
+      type: module
+  dashboards:
+    ui-morgan:
+      mode: yaml
+      filename: ui-morgan.yaml
+      title: Morgan
+      icon: mdi:human-female
+      show_in_sidebar: true
+      require_admin: false
 
 # Enables configuration UI
 config:
@@ -38,10 +89,12 @@ config:
 google_assistant:
   project_id: home-assistant-227322
   service_account: !include service-account.json
+  report_state: true
   exposed_domains:
     - switch
     - light
     - input_boolean
+    - input_select
     - script
   entity_config:
     light.sink_1:
@@ -80,13 +133,55 @@ google_assistant:
       expose: false
     light.morgan_fun_5:
       expose: false
+    light.basement_can_1:
+      expose: false
+    light.basement_can_2:
+      expose: false
+    light.basement_can_3:
+      expose: false
+    light.basement_can_4:
+      expose: false
+    light.basement_can_5:
+      expose: false
     light.morgan_s_fun_lamp_group:
       expose: false
     light.morgankiosk:
       expose: false
-    light.alex_laptop:
+    light.bottom_of_stairs_blue_led:
       expose: false
-    light.alex_phone:
+    light.bottom_of_stairs_green_led:
+      expose: false
+    light.bottom_of_stairs_red_led:
+      expose: false
+    light.entry_blue_led:
+      expose: false
+    light.entry_green_led:
+      expose: false
+    light.entry_red_led:
+      expose: false
+    light.top_of_stairs_blue_led:
+      expose: false
+    light.top_of_stairs_green_led:
+      expose: false
+    light.top_of_stairs_red_led:
+      expose: false
+    light.blue_room_switch_red_led:
+      expose: false
+    light.blue_room_switch_white_led:
+      expose: false
+    light.back_door_switch_red_led:
+      expose: false
+    light.back_door_switch_white_led:
+      expose: false
+    light.theater_switch_red_led:
+      expose: false
+    light.theater_switch_white_led:
+      expose: false
+    light.bar_blue_led:
+      expose: false
+    light.bar_green_led:
+      expose: false
+    light.bar_red_led:
       expose: false
     light.julie_phone:
       expose: false
@@ -122,6 +217,16 @@ google_assistant:
       expose: false
     switch.outdoor_plug_2:
       name: Humidifier
+    switch.adguard_filtering:
+      expose: false
+    switch.adguard_parental_control:
+      expose: false
+    switch.adguard_protection:
+      expose: false
+    switch.adguard_safe_browsing:
+      expose: false
+    switch.adguard_safe_search:
+      expose: false
     light.kitchen_sink:
       name: KITCHEN SINK
       aliases:
@@ -129,10 +234,8 @@ google_assistant:
 
 # Discover some devices automatically
 discovery:
-    ignore:
-      - igd
-      - harmony
-      - roku
+
+#zeroconf:
 
 # Allows you to issue voice commands from the frontend in enabled browsers
 conversation:
@@ -148,10 +251,6 @@ recorder:
       - device_tracker
       - input_boolean
     entities:
-      - sensor.load_15m
-      - sensor.disk_use_percent_home
-      - sensor.memory_free
-      - sensor.processor_use
       - cover.garage_door
       - binary_sensor.front_door
       - binary_sensor.garage_entry_door
@@ -177,7 +276,13 @@ recorder:
       - light.morgan_fun_3
       - light.morgan_fun_4
       - light.morgan_fun_5
+      - light.basement_can_1
+      - light.basement_can_2
+      - light.basement_can_3
+      - light.basement_can_4
+      - light.basement_can_5
       - light.morgan_s_fun_lamp_group
+      - light.morgan_s_fun_lamp_zha_zha_group_0x0001
       - light.morgankiosk
       - light.alex_laptop
       - light.alex_phone
@@ -190,6 +295,24 @@ recorder:
       - input_boolean.show_commute
       - input_boolean.tv
       - input_boolean.projector
+      - light.bar_blue_led
+      - light.bar_green_led
+      - light.bar_red_led
+      - light.bottom_of_stairs_blue_led
+      - light.bottom_of_stairs_green_led
+      - light.bottom_of_stairs_red_led
+      - light.entry_blue_led
+      - light.entry_green_led
+      - light.entry_red_led
+      - light.top_of_stairs_blue_led
+      - light.top_of_stairs_green_led
+      - light.top_of_stairs_red_led
+      - light.blue_room_switch_red_led
+      - light.blue_room_switch_white_led
+      - light.back_door_switch_red_led
+      - light.back_door_switch_white_led
+      - light.theater_switch_red_led
+      - light.theater_switch_white_led
     event_types:
       - service_removed
       - service_executed
@@ -218,7 +341,7 @@ zwave:
   usb_path: /dev/ttyUSB0
 
 zha:
-  usb_path: /dev/ttyUSB1
+  #usb_path: /dev/ttyUSB1
   database_path: /config/zigbee.db
 
 folder_watcher:
@@ -227,9 +350,6 @@ folder_watcher:
       - '*.yaml'
 
 config_check:
-
-mqtt:
-  broker: !secret mqtt_broker
 
 # Switches
 
@@ -295,8 +415,13 @@ sensor:
   - platform: template
     sensors:
       local_time:
-        value_template: "{{as_timestamp(now()) | timestamp_custom('%-I:%M %p')}}"
-        entity_id: sensor.time
+        value_template: "{{ as_local(states.sensor.time.last_changed).strftime('%-I:%M %p') }}"
+      rounded_temp:
+        value_template: "{{ states('sensor.dark_sky_temperature')|round|int }}"
+        unit_of_measurement: "°"
+      pi_temp:
+        value_template: "{{ '%0.0f'| format((states('sensor.rpi3_temperature')|float -32) * (5/9)) }}"
+        unit_of_measurement: "°"
       harmony_activity:
         value_template: '{{ states.remote.harmony_hub.attributes.current_activity }}'
         friendly_name: 'Harmony Activity'
@@ -306,7 +431,6 @@ sensor:
       kitchen_motion_battery:
         value_template: "{{ states.zwave.zooz_zse40_4_in_1_sensor.attributes.battery_level }}"
         friendly_name: "Kitchen Motion Battery"
-        entity_id: zwave.zooz_zse40_4_in_1_sensor
         unit_of_measurement: '%'
   - platform: min_max
     type: mean
@@ -321,10 +445,44 @@ sensor:
     round_digits: 1
     entity_ids:
       - sensor.stairs_button
-  - platform: command_line
+  - platform: dnsip
+  - platform: mqtt
     name: CPU Temperature
-    command: "cat /sys/class/thermal/thermal_zone0/temp"
-    value_template: '{{ value | multiply(0.001) | round(1) }}'
+    state_topic: "pve/cpu_temp"
+    value_template: "{{ value | multiply(0.001) | round(1) }}"
+  - platform: mqtt
+    name: Proxmox Updates Available
+    state_topic: "pve/upgrades"
+  - platform: mqtt
+    name: Ubuntu LXC Updates Available
+    state_topic: "ubuntu/upgrades"
+  - platform: mqtt
+    name: 11ty-dev LXC Updates Available
+    state_topic: "11ty-dev/upgrades"
+  - platform: mqtt
+    name: Temperature Probe 1
+    state_topic: "temperature/outside/grill/probe1"
+    unit_of_measurement: "°"
+  - platform: mqtt
+    name: Temperature Probe 2
+    state_topic: "temperature/outside/grill/probe2"
+    unit_of_measurement: "°"
+  - platform: mqtt
+    name: Temperature Probe 3
+    state_topic: "temperature/outside/grill/probe3"
+    unit_of_measurement: "°"
+  - platform: mqtt
+    name: Temperature Probe 4
+    state_topic: "temperature/outside/grill/probe4"
+    unit_of_measurement: "°"
+  - platform: mqtt
+    name: Propane Level
+    state_topic: "temperature/outside/grill/propane_level"
+    unit_of_measurement: "%"
+  - platform: mqtt
+    name: iGrill Battery Level
+    state_topic: "temperature/outside/grill/battery_level"
+    unit_of_measurement: "%"
 
 # Text to speech
 tts:
@@ -337,10 +495,24 @@ device_tracker:
       alex: 'location/alex'
       julie: 'location/julie'
 
+proximity:
+  alex:
+    zone: home
+    devices:
+      - device_tracker.alex_mobile_app
+    unit_of_measurement: mi
+  julie:
+    zone: home
+    devices:
+      - device_tracker.julie_mobile_app
+    unit_of_measurement: mi
+
 # Cloud
 cloud:
 
-http: !secret http
+http:
+  cors_allowed_origins:
+    - "http://192.168.0.202:8080/"
 
 light:
   - platform: group
@@ -365,6 +537,8 @@ light:
       - light.theater_1
       - light.theater_2
       - light.theater_3
+      - light.basement_can_1
+      - light.basement_can_2
   - platform: group
     name: Entry
     entities:
@@ -384,7 +558,13 @@ light:
     entities:
       - light.kitchen_table
       - light.chandelier
-      - light.dining_lamp
+      - light.dining_lamp   
+  - platform: group
+    name: Rec Room
+    entities:
+      - light.basement_can_3
+      - light.basement_can_4
+      - light.basement_can_5
   - platform: template
     lights:
       morgan_fun:
@@ -415,9 +595,10 @@ light:
            brightness: "{{ brightness }}"
 
 media_player:
-  - platform: onkyo_custom
+  - platform: onkyo
     host: !secret onkyo
     name: receiver
+    receiver_max_volume: 91
   # - platform: xboxone
   #   device: !secret xboxone
   #   name: Xbox One
@@ -508,6 +689,15 @@ input_select:
       - Green/Gold
       - Purple/Pink
       - Rainbow
+  tree_mode:
+    name: Christmas Tree Mode
+    options:
+      - "Off"
+      - Breathe
+      - Color
+      - White
+      - Dim Color
+      - Dim White
 
 input_number:
   tablet_level:
@@ -520,16 +710,18 @@ input_number:
     min: 0
     max: 100
 
+input_datetime:
+
 browser_mod:
   devices:
-    79636ce4-fb4ff72b:
+    e4e2b7ae-bf3c6a52:
       name: morgankiosk
-    53e31f06-5c77d879:
-      name: alex_laptop
-    a2eadc1b-7c5cfb65:
-      name: alex_phone
-    d5101afa-30549193:
-      name: julie_phone
+  disable:
+    - all
+
+stream:
+
+breaking_changes:
 
 group: !include groups.yaml
 automation: !include automations.yaml
